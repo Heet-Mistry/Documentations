@@ -1,0 +1,42 @@
+strings in the javascript can be enclosed with the 
+'' or "" or ``;
+
+advantage of the `` is that we can have the multiline strings here.
+
+\n = new line character 
+\r = sometimes used inside the windows combined with teh \r\n for the 
+new break
+\t = tab 
+\' \" = for quotes
+
+\ is called the escape character.
+
+str.length = for the length of the string
+str[0] = works for fetching the character at the specific index returns undefined for unbound
+str.charAt(index) = for fetching the character at the index == returns '' for unbound
+
+for iterating we can make use of the for of.
+
+strings are immutable in javascript we can change the whole string but we 
+can not change the specific character there.
+
+str.toLowerCase()
+str.toUpperCase()
+str.indexOf(substr,pos) = returns -1 elsewise
+str.lastIndexOf(substr,pos)
+str.includes(substr,pos)
+str.startsWith(substr)
+str.endsWith(substr)
+str.slice(start,end)
+str.substr(start,length) = returns the substring from the start with given length
+str.trim() = for removing the spaces from the beginning and the end
+
+uppercase ASCII = 65 to 90 
+lowerCase ASCII = 97 to 122 
+0 to 9 = 48 to 57
+> A lowercase letter is always greater than the uppercase
+
+
+
+NOTE : ~2 = -(2+1)
+

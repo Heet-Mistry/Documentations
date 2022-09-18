@@ -1,0 +1,84 @@
+Javascript is single threaded, non-blocking, asynchronous concurrent 
+programming language. Here when we say the word asynchronous then it does 
+not mean that we are running the task parallely it is just we are switching the 
+requests of the execution order.
+
+
+
+Asynchronous programming is the technique through which we can start potentially 
+long running jobs and still be able to responsive to other events while the task 
+runs rather than having to wait untill the task has finished.
+
+for e.g. fetch() API
+
+Let say we have an input box and iti takes a number and generates the prime numbers 
+, and below the input box we have the text area where we can write the text now 
+if we generate the large prime numbers and directly tap into the text area it will 
+not be responsive as the sync js is still running the computation for calculating 
+the prime numbers, here is the need of async js.
+
+A event handler is just the another type of the callback. A callback is 
+just the function passed to the another function, with the exception that the 
+callback will be called at the appropriate time.
+
+when we implement the async programs with the callbacks then we may sometimes 
+be caught inside the callback hell. where there is too much callbacks and they 
+are nested ones.
+
+Asynchronous in other way means that it is initiated but it may finish later.
+
+
+*** Promises ***
+promises are the foundation of async programming. A promise is the object 
+returned by the async function which represents the current state of the 
+operation.
+
+The promise object represents the eventual completion of an asynchronous 
+operation and its returning value.
+
+
+A promise can be in three states.
+1. pending = the promise is created 
+2. fullfilled = the async function has succeded 
+3. rejected = the async function has failed 
+
+
+>> callback functions 
+callback functions are like after something do something.
+
+>> we can implement the callbacks with the help of the promises in a better 
+readable way and without teh callback hell.
+
+>> even in the promises we can have the large linear structure there, we can 
+still improvise it by using the async and await functions.
+
+async and await ===>
+async function always returns a promise. if we have the return value inside the 
+async function then the promise returned from the async function will be fullfilled 
+by that return value.
+
+asynccall().then((message)=>console.log(message)); ===> here the message is the 
+value with which the promise is full filled.
+
+async and await are used for avoiding the promise chains. those chains can be 
+represented in a better way with the async and await.
+
+for the catch statement in the async await function we have to make use of try 
+and catch block.
+
+
+*** await ***
+
+[rv] = await expression;
+// here the expression can be the promise or any value to be wait for 
+
+[rv] = it is the fullfilled value of the promise and if not the promise then 
+it returns the direct value.
+
+also in the await if the promise is rejected then the rejected value will be 
+thrown and it will be caught by the catch block.
+
+
+NOTE : Promise.all([array of promises]).then((arr)=> here the arr is 
+    the array of resolved values
+).catch((rejection)=> here the rejection is the rejection value of any one of the promise)

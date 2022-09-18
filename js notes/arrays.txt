@@ -1,0 +1,145 @@
+*** Arrays ***
+We can declare the array by using the constructor syntax or the premitive syntax.
+let arr = []
+let arr = new Array();
+let arr = [1,2,3,"fruits"]
+
+arr.length = returns the length of the array 
+
+if we want to fetch the last element of the array then we can directly give 
+the negative indexing arr[-1] like that we have to give it by doing like 
+arr.at(-1)
+
+arr.push(val) = it will append the elements at the end 
+arr.shift() = it will remove the first element of the array and returns it
+arr.pop() = it will remove the element from the end of the array 
+arr.unshift(val) = it adds the element at the front of the array 
+
+Array in the javascript is also the object. and it is the contigous memory location.
+we can also add the property in teh arrays like arr.propname = some value;
+
+we can traverse the array like 
+for(let item of array){
+  do something;
+}
+
+for(let key in array){
+  arr[key]
+}
+
+if we change the array.length property explicitely then the values in there will 
+also be changed.
+
+let arr = new Array("a",1,2)
+let arr = new Array(num) ==> it will create the new array of length num 
+
+when we do something on the array then first it will be converted into the string 
+[] ==> ""
+[1] ==> "1"
+[1,2] ==> "1,2"
+
+[] +1 ==> "1"
+
+when we compare the premitives then they will automatically typecasted to the type 
+until they are not equal typed.
+
+0 == [] ==> [] ==> "" ==> 0 // true 
+'0' == [] ==> [] ==> "" != "0" //false 
+
+we should not compare the arrays with the direct == operation we have to 
+check the values elementwise.
+
+
+*** Array methods ***
+arr.push(item) = add the item at the end 
+arr.pop() = extract the item from the end 
+arr.shift() = extract the item from the beginning 
+arr.unshift() = add item at the beginning
+
+arrays are the objects also for deleting the item we can make use of the 
+delete operator there, like 
+delete arr[1];
+
+but here when we do this the arr[1] will be deleted but the length of the array 
+will remain the same, just that item will be undefined because the delete operator 
+deletes the item by the key.
+
+arr.splice(start,deletecnt,elem1,elem2)==> it deletes the array items from the 
+start index till the deletecnt and then inserts the elem1 and elem2 ... there.
+
+NOTE : In the splice the negative indexing is allowed.it will count from the end
+
+arr.slice(start,end) ==> returns the array copy including item [start,end)
+arr.slice() = it will copy the whole array
+arr.concat(arg1,arg2) = here the arg1 and arg2 can be array or values it will 
+concatenate with teh arr and returns the new concatanated array
+
+arr.forEach((item,index,array)=>{
+    // do something with the item 
+});
+
+// here the indexof follows the strict equality === comparisons 
+// also the includes method handles the NaN where the indexOf can not
+arr.indexOf(item,from) = returns the index if not found then -1
+arr.lastIndexOf(item,from) = search from the right to left
+arr.includes(item,from) = return true or false
+
+let a = arr.find((item,index,arr)=> some bool condition) = the iterations is stopped 
+when the truth condition happends the the value is returned if not 
+undefined is returned
+
+arr.findIndex(func) = > it returns the index where the element is found if not -1
+arr.findLastIndex(func) = > search from the right to left
+
+let res = arr.filter(func) ==> returns the filtered items 
+
+
+let res = arr.map((item,index,arr)=>
+    // return the new value changed value 
+)
+
+arr.sort(func) => it sorts the array inplace changing its element order but 
+here there will be some ambiguity in the output because the array will be 
+by default sorted as the string, for default behaviour we have to pass the 
+compare function 
+
+function compare(a,b){
+    if(a>b) return 1;
+    if(a==b) retur 0;
+    if(a<b) return -1;
+}
+
+arr.reverse() = reverse the array 
+
+let arr = string.split(separator,maxsplitcnt);
+when the seperator is '' it will split into the characters.
+
+let str = arr.join('join operaotr')
+
+reduce and reduce right 
+this methods are helpful for calculating the single values based on the array 
+computation.
+
+let value = arr.reduce((accumulator,item,index,arr)=>{
+},[initial])
+
+
+// example
+// here if we do not give the initial value then the reducer will automatically 
+// take the first value of the array as the initial value
+// same as the reduce the reduceright go from the right to the left
+let arr = [1, 2, 3, 4, 5];
+let result = arr.reduce((sum, current) => sum + current, 0);
+alert(result); // 15
+
+
+// Array.isArray()
+arrays are also the objects in the javascript so typeof operator does not 
+help to distinguish between the types we have to make use of the 
+array.isArray()
+
+alert(typeof {}); // object
+alert(typeof []); // object (same)
+
+alert(Array.isArray({})); // false
+alert(Array.isArray([])); // true

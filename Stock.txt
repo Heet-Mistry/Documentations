@@ -1,0 +1,24 @@
+************************** STOCK MARKET *************************************
+
+BSE = Bombay stock exchange 
+NSE = National Stock exchange 
+
+
+stable government is the most positive factor for the stock market investments.
+
+Difference between interest and dividend = in the fixed deposit we get the interest where in the stock market we get the dividend 
+in the return. Interests are mandatory and the interest rate will be fixed at the beginning. And the rate can not change 
+in between the run, also in the case of the dividend it is not mandatory it will be in the shares. Many companies can deny to give the divident on the shares, because they invest that money inside their company operations and when the share prices increases 
+we will get more refund then the divident.
+
+Dividend is TAX Free in interests we will have to pay the taxes.
+LTCG = Long term capital gain , when we hold the investment for more than one year and earns profit then it is called as the 
+long term capital gain.
+
+Dividend is basically the return in investment in shares. It is the company's decision to whether to give the dividend or not. Dividend and LTCG is tax free, subject to limits.
+
+
+Dividend is payed on the face value of the company.
+Face value = face value is basically the value of the share at the beginning or at the IPO release, the face value is just for the calculation of the dividend, market share price can be higher than the face value, also at the IPO the owner can also sell the shares at the price higher than the face value which is called the share premium. When we have the dividend then it will be on the face value of the share.
+
+Promoter is the person who started the company.

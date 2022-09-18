@@ -1,0 +1,25 @@
+Evrything in the javascript runs or executes inside the execution context. it is
+like the big box which has two parts memory (variable environment) where all 
+the variables are stored as the key:value pair. also the functions.
+
+The second component is called the code component ( thread of execution ) where 
+the whole code will be executed one line at a time.
+
+Javascript is the synchronou single threaded language. it means that javascript 
+can only execute one command at a time and it can only execute them in the order.
+
+*** How the js program runs ***
+when the js script runs first it will create the global execution context. also 
+this execution context is created in two phases first is the memory creation phase.
+In the memory creation phase js will only allocate the memory to the variables 
+it will not store their values first it will store the undefined there. In case 
+of the functions it will store the whole code.
+
+after that in the second phase (code execution phase) when the line by line execution will happen, 
+the values will be assigned to the variables, and when we encounter the 
+function call then what will happen is that there will be created one nested 
+execution context, for the function.
+
+what happens in the call stack is that when we create the GEC then it will be 
+pushed in the stack and when the new function runs, then it will push that 
+exectuion context there.

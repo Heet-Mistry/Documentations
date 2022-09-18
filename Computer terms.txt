@@ -1,0 +1,42 @@
+>> What is Software Architecture?
+In the software architecture we mostly focus on the structure of the software rather then the implementation details. So it is basically foocused on the 
+strcture of the system or the software rather then the implementation part. It focuses on How the components of the app will be going to communicate with each other 
+and How they interact with each other.
+
+
+>> Static website vs Dynamic website
+Static website is the one in whcih the content stays almost constant, where in the dynamic website the content will change accordingly to the users 
+or they can change and can be fetched by the user inetractions.
+
+
+>> What are the API?
+Application Programming Interface, API basically is the interface or the separating line between some tasks, so it can be helpful for fetching the data , 
+for hiding the complexity, or for security applications also, everything is the API in general.
+
+
+>> HTTP Requests 
+Hyper text transfer protocol ( Application layer protocol )
+TCP = Transmission control protocol
+> TCP manages the internet connections, it is the protocol that implements the 
+communication between the client and the server.
+> HTTP is like the command language, client and server communicates with this language.
+
+
+When we try to communicate with the server what happens is we first establish 
+the connection between the client and the server, after that the client 
+requests something such as GET, POST, PUT or DELETE request.
+
+
+>>> Single page application 
+Single page application or SPA is the type of application such that it only 
+loads or refresh the component which is required not the whole page. So in the
+general websites it will not refresh just the component rather it will refresh 
+the whole page and fetch everything again.
+
+
+>>> Linux is the unix like operating system, where the kernel is the heart of 
+the OS where all the computing and the management part happens. git is the 
+version control system, where the github is the cloud based repository 
+storage system.
+
+>>> default shell for the MACOS system is Zshell.

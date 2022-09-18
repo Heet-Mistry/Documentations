@@ -1,0 +1,341 @@
+At the starting it is recommended to use the toolchain or the framework 
+for developing the apps with the react. They provide better and comfortable 
+tools for development environment but require local node.js installation.
+
+it is recommended to use the create react app at start but it is not that much 
+good for the routing or the data fetching.
+
+> npx create-react-app appname 
+
+In the general react app we have a single HTML file with just the root container 
+div and then what we do in the index.js file is that 
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App/>);
+
+*** Components ***
+components in the react are the building blocks of the UI, it is the fundamental
+concept of the react to work with. React lets us combine the markup, css and the 
+javascript into the custom components reusable UI components.
+
+A component is nothing but a javascript function that we can sprinkle with the 
+markup. components is the simple javascript function but the name of the 
+component should start with the capital letter itself.
+
+function Profile() {
+  return (
+    <img
+      src="https://i.imgur.com/MK3eW3As.jpg"
+      alt="Katherine Johnson"
+    />
+  );
+}
+
+when we use create-react-app the root component will be defined as the 
+src/app.js and in the Next.js it is defined as the pages/index.js
+
+export function comp(){}
+import {comp} from './srcfile' // named export and the import
+
+JSX is the syntax extension of the javascript it lets us write the HTML like 
+markup inside the javascript file.
+
+** NOTE DIFFERENCE BETWEEN JSX AND REACT 
+JSX is the syntax extension of the javascript and the react is just the transpiler 
+which converts the JSX tree into the valid javascript.
+
+Rules for the JSX 
+- return only single root element 
+- <></> it is called the react fragment it will not create the container so 
+  there will not be any trace of the <></> in the DOM tree
+- we have to close all the tags 
+- camelCase almost all the things 
+    for eg class is written as the className 
+
+When we want to write the Javascript inside the markup then we have to make use
+of the curly braces. if the attribute is the string then it will work as it is 
+but if it is the dynamic value then we have to make use of the curly braces there.
+
+Inside the tag the dynamic behaviour will not work 
+for an example <{tag}> it will not work.
+
+In the markup if we want to pass the style inside the markup then we have to 
+pass the javascript object in there, for that we have to make use of the double 
+curly braces there.
+
+<li style={{backgroundColor:something}}
+
+
+*** Props ***
+React components uses props to communicate with each other,every parent can 
+pass some information to its child by the props.
+
+The props we pass to the predefined HTML elements are called the predefined props 
+such as style and src and all. 
+
+ <Avatar
+      person={{ name: 'Lin Lanying', imageId: '1bX5QH6' }}
+      size={100}
+    />
+
+function Avatar({ person, size } or props) { // here the props is the object 
+  // person and size are available here
+}
+
+props which we pass to the component is then converted into the javascript 
+object and we can collect it by using the object destructuring or directly by the 
+props.
+
+we can also provide the default value to the props, but it will only work 
+when we do not pass that props or we put the prop as the undefined, if we 
+pass the prop as the null or 0 it will not work.
+
+function Avatar({ person, size = 100 }) {
+  // ...
+}
+
+sometimes we have to pass the whole props to the child component then we have to 
+make use of the spread syntax there.
+
+function Profile(props) {
+  return (
+    <div className="card">
+      <Avatar {...props} />
+    </div> 
+  );
+}
+
+<Card>
+  <Avatar />
+</Card>
+
+when we nest the content inside the JSX tag then the parent will recieve the 
+props called the children inside and we can render it. It will be wrapped in the 
+props there. keep the props immutable.
+
+*** conditional rendering ***
+When we do not render something then we have to render the null. It is recommended
+to make use of the ternary syntax for rendering this type of components.
+
+return (
+  <li className="item">
+    {isPacked ? name + ' ✔' : name}
+  </li>
+);
+
+we can also conditionally render the component by making use of the && syntax 
+
+return (
+  <li className="item">
+    {name} {isPacked && '✔'}
+  </li>
+);
+
+it is like if the flag isPacked is true then render the right tick else render 
+nothing there. react considers the false as the hole in the JSX tree just like 
+the null and the undefined.
+
+NOTE = DO NOT PUT THE NUMBERS ON THE LEFT SIDE OF THE && OPERATOR.''
+
+
+*** Rendering the lists ***
+We can render the list with the help of the array filter() and the map() 
+methods.
+
+const listItems = people.map(person => <li>{person}</li>);
+return <ul>{listItems}</ul>;
+
+const chemists = people.filter(person =>
+  person.profession === 'chemist'
+); // this is the example of how we can make use of the filter method
+
+NOTE = JSX Elements directly inside the map call always need the key props
+keys helps the react to update the DOM tree optimally. It helps react to 
+differentiate between the JSX elements.
+
+if we want more than one element in the list of the react component and we 
+do not want to create the separate div then we have to make use of the <Fragment>
+component from the react by default which will disappear from the DOM tree and 
+it will just put the element inside the fragement in the DOM tree.
+
+import { Fragment } from 'react';
+
+// ...
+
+const listItems = people.map(person =>
+  <Fragment key={person.id}>
+    <h1>{person.name}</h1>
+    <p>{person.bio}</p>
+  </Fragment>
+);
+
+we can generate the random unique keys by random uuid package.
+
+> keys must be unique in the sibilings 
+> we can have two same keys inside the different arrays
+
+It is recommended that we do not put the key as the index of teh array element.
+
+
+Keep the react component pure >>
+> for the given input every time the output should be the same.
+> it should not change the variable or objects that existed before it was called.
+
+for checking the purity of the components react has the inbuilt feature named 
+strict mode, which is like it will call the component two times in the 
+developement mode for checking.
+
+In react side effects usually belongs inside the event handlers, so event handlers 
+do not need to be pure. useEffect is also a way to make use of the side effects.
+useEffect runs after the rendering and before the browser paint.
+
+*** Adding interactivity event handlers ***
+Event handlers are the function which will be triggered when some events happens.
+
+export default function Button() {
+  function handleClick() {
+    alert('You clicked me!');
+  }
+
+  return (
+    <button onClick={handleClick}>
+      Click me
+    </button>
+  );
+}
+
+By convention, it is common to name event handlers as handle followed 
+by the event name. You’ll 
+often see onClick={handleClick}, onMouseEnter={handleMouseEnter}, and so on.
+
+<button onClick={() => {
+  alert('You clicked me!');
+}}> 
+
+Event handlers will also catch the events in the child components also, this is 
+called that the event propogates through the tree. It starts with where the event 
+happend and then goes up the tree.
+
+export default function Toolbar() {
+  return (
+    <div className="Toolbar" onClick={() => {
+      alert('You clicked on the toolbar!');
+    }}>
+      <button onClick={() => alert('Playing!')}>
+        Play Movie
+      </button>
+      <button onClick={() => alert('Uploading!')}>
+        Upload Image
+      </button>
+    </div>
+  );
+}
+
+Here after clicking the button it will also call the parent event handler. Event 
+handlers by default recieves and argument named event object, which has the 
+specific method named e.stopPropagation() it stops the event bubbling further.
+
+Some browser events have default behaviour associated with them, for example 
+thr form submit event which reloads the page by default. we can stop this by doing 
+event.preventDefault()
+
+Event handlers can contain the side effects, event handlers need not to be the pure 
+
+
+
+*** State : A components memory ***
+- local variables do not persist between the rerenders 
+- also change in the local variables do not trigger the re render
+
+useState() hook is used here, it returns a state variable and the setter function 
+for the state variable.
+
+import {useState} from 'react';
+const [index, setIndex] = useState(0); // array destructuring
+
+function handleClick() {
+  setIndex(index + 1);
+}
+
+NOTE : Hooks are the special function which are only available when the react 
+is rendering. They starts with the use keyword. we have to make use of the 
+hooks calls at the top of the component, it can not be nested.
+
+state for the component is local to the component, if we render the same 
+component twice on the screen then they all have their separate states.
+
+
+*** Render and commit ***
+Before the components get displayed on the screen they should be rendered by the 
+react. rendering is like just cooking the dinner while commit is sending it to 
+customer. so the rendering is converting the JSX into the javascript notation 
+and the commiting is to paint the DOM.
+
+Initial render is done inside the createRoot and the root.render() method when the 
+app first starts. when the state is changed the react will not render all the 
+component rather it will render the component and its child component whose 
+state has been updated.
+
+for the commiting, in case of the initial commit react uses the appendChild()
+method to put all the DOM nodes in the screen. For re renders it does diffing 
+it will change the componetns based on their changes if any.
+
+               commit phase |
+rendering ---> DOM Tree updation ---> Browser paint
+
+
+when we set the state then it will only changes at the next render.
+
+<button onClick={() => {
+  setNumber(number + 1); // react prepares to change the number -> number+1 on next render 
+  setNumber(number + 1);// react prepares to change the number -> number+1 on next render
+  setNumber(number + 1);// react prepares to change the number -> number+1 on next render
+  // so the final outcome is the same
+}}>+3</button> // here the state will be updated only one time number +1
+
+
+state in the react is like the snapshot which means whichever the functionality 
+maybe it will only be executed their that state even if we inlcude the setTimeout()
+
+
+React batches the state updates===> 
+react waits untill all the code inside the event handler has run before processing 
+any state updates.
+
+if we want to change the state  based on the previous state value then we can 
+make use of the state updater function 
+
+setNumber(n => n + 1);
+        setNumber(n => n + 1);
+        setNumber(n => n + 1);
+
+When we directly change the value then the react will directly update the state 
+while if we use the function then it will put it in the queue.
+
+NOTE : THE UPDATER FUNCTION MUST BE PURE, SETTING STATE DOES NOT DIRECTLY change
+THE STATE BUT IT TRIGGERS THE NEXT RENDER.
+
+
+*** Updating states in Object ***
+when we have the object as the state then we have to create the new one 
+for updating the state because if we update the value inside the object then 
+it will not trigger the rerender, rather we have to create the new object.
+
+Mutation = changing the content inside the object then it is called the mutation.
+
+Objects in react are generally mutable but when we have the object in the 
+state then we should treat it as read only or immutable.
+
+In some cases we want the other data in teh state to be as it is 
+and we want to update some limited data then we have to make use of the 
+object spread syntx there.
+
+setObj({
+  ...obj,
+  newfield:newfield
+})
+
+we can set the dynamic property of the objects by doing like [some variable or
+synamic propert]. also for the case of the arrays, arrays are mutable in the 
+javascript, but when we store it inside the state we should treat it as immutable.
+

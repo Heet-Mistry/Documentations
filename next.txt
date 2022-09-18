@@ -1,0 +1,207 @@
+React is the frontend library. Where the next.js is the framework for the 
+production and it is the full stack framework for the production. By the 
+framework it means that it handles toolings and the configurations 
+to work with the react and provides some easy features.
+
+
+Next.js has its own advantages such as server side rendering and routing 
+which is also there in the react but we have to manually set it up. Also next 
+prvides its own file based routing which is very easy to set up in the next. 
+Also the another win for the next.js is the fullstack capabilities.
+
+rendering = rendering in the nutshell means to convert the react components 
+into the DOM nodes, computation of styles, position etc, where the browser 
+paint is the process of painting the DOM nodes on the screen pixel by pixel.
+
+The DOM is the Document object model which is the object representation 
+of the elements present in the UI, it is the programming concept created 
+so that the programming languages can manipulate with the DOM and that changes 
+can be reflected on the screen.
+
+React flow ===>
+Run lazy initializers (Mounting phase) --> render --> React updation of DOM --> cleanUp layout 
+effects --> run layout effects --> browser paints the screen ...
+
+Any Web UI 
+UI = How the user will communicate with the application 
+routing = How the user will navigate between the parts 
+data fetching = where the data lives and how to fetch 
+rendering = when and where we render the content 
+integrations = how the app is using the third party integrations 
+infrastructure = where we deploy store and run the code. 
+
+*** Next.js docs summerized ***
+
+When the user first visits some website the server will return the HTML file 
+and then the browser will read teh HTML and generates the DOM. So the DOM is 
+the object representation of the HTML Elements, its a tree like structure. The 
+HTML represents the initial web content where the DOM represents the updated file 
+content.
+
+When we manipulate the DOM Contents with the plain javascript it is the way 
+of the imperative programming whene the code grows it is very difficult to maintain
+the plain js code, so the React is the declarative programming library there we
+just tell the react what we need to show everything else will be handled automatically.
+
+When we work with the react, react also keeps its own virtual DOM Tree where 
+it renders the content first and then it will check for the original DOM Tree 
+this is called the DIFFING, and it will only update those DOM objects which are
+changed.
+
+JSX is not the language it is just the syntax extension of the javascript which 
+allows us to write the Javascript and the HTML Mixed up. Browsers do not 
+directly understands the JSX, we need to install the Babel compiler/transpiler 
+for the conversion of high level javascript to the low level js.
+
+The main components in the Next app is needed to be exported as the default export 
+so all the components inside the main will be exported as the default.
+
+Fast refresh = It is like the live server next provides this feature, so whenever 
+we change something it will atomatically directly be changed at the website itself.
+
+The environment is the context in which our code is executing. for the production 
+purposes Next provides features such as minifier, bundler and other enhancers.
+
+So basically the minification is the process of removing the unnecessary code 
+formatting and the comments without the change of the code's functionality. Same
+goes for the bundling it is the process of bundling the modules together inside 
+the single modules.
+
+Code splitting = it is the process of splitting the application's bundles into 
+smaller chunks required by each entry point. The goal is to improve the 
+initial load time by only loading the code required to run that page. Next has the 
+inbuilt support for the code splitting each and every file inside the pages 
+folder will become a chunk. Here there can be the dynamic imports to manually 
+impose the code splitting.
+
+Build time is the time for the application to be prepared for the production,
+so the next will generate the HTML file which will statically generated pages 
+Javascript code for the rendering the pages on the server, javascript code 
+for making the pages interactive on the client side and css files.
+
+Run time referes to the period of time when our application runs in response to 
+the user's request after it has been built and deployed.
+
+
+Rendering in Next.js 
+In nutshell we can say that the process of converting the react code we have 
+written inside the HTML representation of the UI, which is called the rendering.
+
+rendering can happen at the server or the client, on the server side it can 
+happen when the build happens or for each of the request.
+
+Pre-rendering ===
+Here the fetching of the external data and transformation of the react 
+components to the HTML happens before the results are sent to the client.
+
+1. server side rendering = the HTML will be generated on each request
+2. static site generation = The html content are generated only once 
+at the build time there is no server at run time.
+
+In the basic react client side rendering what happens is that the client will 
+recieve the plain HTML file and the javascript instructions to add interactivity 
+so the initial rendering happens at the client side.
+
+Hydration = In the basic react client side rendering we do not have the DOM 
+created so we have to render the initial HTML, but in the SSR the client will 
+recieve the pregenerated static HTML and the process of adding the dynamic 
+behvaiour inside that or interactivity is called the Hydration.
+
+When we manually set up the next application it is not necessary to 
+create the _app.js file, it will be used when we need some sort of context 
+provider and we want the app to be wrapped up in that.
+
+
+*** Routing ***
+There is the file based routing system in the next.js, so every page in the 
+pages folder will by default be available for the routes.
+
+/ ==> index
+/notes ==> notes
+
+Now let say we have many notes, so we want something like inside the notes
+we have the id based routing /notes/1, /notes/2 etc. So if we create the folder
+named notes and when we go to the path /notes then we have to create the index 
+file inside the notes folder, so that whenever we go to the /notes the index 
+file will be served first.
+
+for the dynamic routes we can make use of the square bracket syntax such as 
+[parameter Name].js ==> this will be the name of the file.
+
+we can also fetch the parameter name inside the component by making use of the 
+useRouter hook of the next.
+
+const router = useRouter();
+const {id} = router.query;
+
+
+catch all routes feature in next ==> This feature helps us to catch all the 
+routes such as let say someone goes to index/docs/documentations and after that
+they go to index/docs/documentations/a/s/f/g/g something like this, but here 
+let say we just want the user to stop at the documentations after that there 
+is not files so we can make use of the catch all routes syntax.
+
+syntax file name ==> [...params].js it will take all the things
+
+Also when we have the catching all routes and the individual [id] page 
+then first it will check for that specific [id] and if not found it will 
+go to the catching all routes page.
+
+NOTE = If we want to put the pages folder other place then it will also 
+work there because, next will check for the pages folder, so if we want to change
+the directory structure it is allright.
+
+we can also route between the pages with the help of the <Link> component 
+of the next. This is only for the client side rendering, there is no
+request from the server here, so this is properly for the client side rendering.
+
+the inside text of the <Link> component always wrap it around the <a> tag 
+without the href, it is recommended from the docs.
+
+<Link href="/notes">
+    <a>Notes</a>
+</Link>
+
+In the href we can put directly the variable link but it is recommended that
+we have to first give the href as the string and then we have to pass the 
+another argument in the `as` prop, there we can include the variable dynamic 
+route.
+
+<Link href="/notes/[id]" as={`/notes/${id}`}>
+    This is the note.
+</Link>
+
+Now let say we want to navigate in the pages with the response of some event then 
+we have to do it by like,  making use of the useRouter hook.
+
+const router = useRouter();
+<button onClick = ()=>{
+    router.push("/");
+}
+
+router.push(href,as prop)
+router.push("/notes/[id]",`/notes/${id}`);
+
+also the href path should be relative to the pages root folder there.
+
+
+*** CSS Support in Next.js ***
+
+- global level css 
+If we want to add some global CSS support in Next.js we can add it by creating a 
+style sheet and then importing it inside the _app.js file as 
+import './styles/style.css' it will be applied to all the pages of the application.
+
+
+- component level stylesheet  
+we can import the styles as the component level inside the next.js using the 
+css modules support, by naming the file as the [name].module.css 
+
+import styles from './Button.module.css' // here the styles object 
+will contain the all classes and the other stuffs
+
+In the production this many css files will be converted into the many minified 
+and code split css files.
+
+
+?? css in react and the next globals and the modules also

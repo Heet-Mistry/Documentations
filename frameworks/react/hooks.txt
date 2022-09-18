@@ -1,0 +1,188 @@
+1. useState(initialState) == returns the stateful value and 
+   a function to update the state.
+
+- also the react ensures the setState function identity is stable 
+and won't change on the rerenders. so it is safe to omit from 
+the useEffect and useCallback.
+
+- we can also pass the updater function inside the useState 
+
+we can also pass the initial state as the lazy initial state 
+resulting from the heavy computations. the initial state will only 
+be conunted on the initial render, after that it will be disregared.
+
+const [state, setState] = useState(() => {
+  const initialState = someExpensiveComputation(props);
+  return initialState;
+});
+
+
+2. useCallback() == this returns the memoized callback.
+const memoizedcallback = useCallback(
+    () => {
+        doSomething(a,b);
+    },
+    [a,b],
+);
+
+it will return a memoized function that we passed in the argument,
+it will only change its reference when the dependency list changes.
+
+this is helpful when we are passing the functions to the child 
+components and they are relying on the reference of the function 
+to change something or rendering something.
+(basically parent component creates the callback 
+and then send it to the children and children has some useEffect 
+and it will only run when the function changes)\
+
+
+3. useMemo(()=> some return value) == it is used for memoized 
+heavy computation, where the function given inside the useMemo 
+will only run again if the dependency changes and it will return 
+the memoized value.
+
+- the function passed inside the useMemo will run during the 
+rendering
+
+- mostly write the code which does not include the use of useMemo
+
+NOTE = Side effects does not belong to the useMemo they should be in 
+the useEffect()
+
+
+4. useEffect() == for introducing the side effects, basically it 
+is mainly used for the data fetching when something changes.
+
+useEffect(()=>{
+  // this code will run when the component renders
+  // everytime because we have not passed any dependency
+},[]); // SO THIS IS FOR THE ONMOUNT EXECUTION
+
+even if we give the dependency list, at the initial mount the useEffect will 
+run because mainly we give the state as the dependency list, so 
+at the first mount the state will go from nothing to something so still 
+the useEffect will be executed.
+
+// defining the states 
+const [resourceType, setResourceType] = useState('products');
+const [items, setItems] = useState([]);
+
+  // useEffect for fetching the data
+  useEffect(() => {
+    fetch(`https://dummyjson.com/${resourceType}`)
+      .then(res => res.json())
+      .then(json => setItems(json[`${resourceType}`]));
+  },[resourceType]);
+
+  return (
+    <>
+      {console.log("component rendering...")}
+      <div>
+        <button onClick={() => setResourceType('products')}>products</button>
+        <button onClick={() => setResourceType('users')}>Users</button>
+        <button onClick={() => setResourceType('comments')}>Comments</button>
+      </div>
+      <h1>{resourceType}</h1>
+      {items.map((item, index) => 
+        <p>{index} item is {JSON.stringify(item)}</p>
+      )}
+    </>
+  );
+
+So at first the component renders and then the useEffect will be called
+, for visualizing the effect just add the setTimeOut inside the fetching 
+data part of the useEffect and then see the rendering and then fetching.
+
+useEffect also helps to add the event listeners to the page, or creating 
+some custom hooks like, let say something like below. Here we have 
+introdued the cleanup shown below, so we can see that when the next 
+render will happen the useEffect cleanup will run. 
+
+so basically after the render when the next useEffect will run first the 
+cleanup will run and the cleanup will take the function which runs before 
+the next useEffect.
+
+
+const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const handleResize = useCallback(() => {
+    console.log("added the listener...")
+    setWindowWidth(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      console.log("removed the listener...")
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [handleResize]);
+
+  return (
+    <>
+      <div>
+        {windowWidth}
+      </div>
+    </>
+  );
+
+
+=====
+components are unmounted when the parent component is no longer rendered or 
+the parent component performs the update that does not render this instance.
+
+useEffects run before the browser paint.
+[] == means it will run only once 
+nothing as the second argument == it will run everytime when the component 
+renders
+
+
+
+5. useRef() === 
+let say we want to show how many times the component rendered. useRef when 
+changed will not trigger the re render, it will return an object which has 
+a field current which will be set to the initial value we gave to the 
+ref hook.
+
+The major usecase of the useRef hook is to reference the HTML element 
+inside the jsx. Each and every element in the document has ref attribute 
+we can set it to any ref.
+
+the main usecase of the useRef is to focus on some input element, 
+
+const [name, setName] = useState('');
+  const inputRef = useRef();
+  const focus = () => {
+    inputRef.current.focus();
+  }
+  return (
+    <div>
+      <input ref={inputRef} value={name} onChange={e => setName(e.target.value)}></input>
+      <div>My name is {name}</div>
+      <button onClick={focus}>Focus</button>
+    </div>
+  );
+
+we can also store the previous value of the state inside the ref 
+
+const prev = useRef('');
+useEffect(()=>{
+  prev.current = state;
+},[state]); // because when the state changes the component will re render 
+and then browser will be painted. so the content of the browser paint 
+are generated and then the useEffect will run.
+
+const inputRef = useRef();
+<input ref={inputRef}/>
+
+
+
+
+
+
+
+
+=== remaining things
+useLayoutEffect 
+react life cycles
+fetch API
+useQuery

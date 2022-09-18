@@ -1,0 +1,39 @@
+Version control = A version control system (VCS) provides an automatic way to
+track changes in the software projects, giving creators the power to view 
+the previous versions and changes.
+
+> git help == guidelines for git usage
+> which git == for checking if the git executable is there or not 
+> git --version == for checking the version of the git
+
+
+when we first install the git into the system then we have to do some global setup 
+to configure the git, run the following commands.
+
+> git config --global user.name "some name"
+> git config --global user.email "some email"
+> git config --global init.defaultBranch main 
+
+the third command sets the default git branch to the name as the main,
+which is recommended by the community.
+
+> git status =- for checking the status of the current repo
+
+Untracked = this means that currently the git is not tracking the files 
+which are shown under the untracked label, for tracking this files we have 
+to make use of the git add command.
+
+Staging area = staging area is the area in which the we will put those files 
+which we are sure that we will commit into the repo. 
+
+> git add -A == for adding all the files in the staging area 
+
+Untracked/Unstaged ----> Staged ----> Local Repository ----> Remote Repository
+Commit = commit is like for finally commiting a version to the repo 
+
+> git commit -m "Some message" == for commiting the files to the repo
+> git log == for seeing the log of our commits
+
+
+All the commits in the git are identified by the hash function which is unique 
+every time as it is created by the SHA algorithm.

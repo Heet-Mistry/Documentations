@@ -1,0 +1,13 @@
+new Set(iterable) = for creating the set 
+set.add(value)
+set.delete(value)
+set.has(value)
+set.clear()
+set.size
+
+for(let item of set) something computation 
+
+set.forEach((value,value,set)=> some computation )
+set.values() = arr of values 
+set.keys() = arr of valyes
+set.entries() = array of pair [value,value]

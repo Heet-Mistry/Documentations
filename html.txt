@@ -1,0 +1,42 @@
+cmnts = <!-- --> 
+HTML = Hyper Text Markup Language 
+XML = Extensible Markup Language 
+GML = Generalized markup Language 
+Foundation of websites 
+<start tag attributes> Content <endtag>
+
+Heading = <h1> to <h6? get smaller 
+Line Break = <br> self closing tag 
+Horizontal rule = <hr> self closing tag 
+Centring = <center></center>
+Paragraph = <p>
+
+Boilerplate = This is the code chunk that will be used again and again in the website, emmet plugin in vscode !+enter 
+html {head{meta,title},body{}}
+
+meta elements give the extra data to the webpage, its the data about the website, most generally the utf-8 charset is used in the websites because it covers most of the languages and the characters.
+
+Always make use of the <em> tag instead of the <i> tag as it will be really emphasizes the text, and also the <strong> tag instead of the <b> bold tag.
+
+Lists in the HTML 
+<ul> // <ol>
+    <li> First item </li>...
+</ul> // <ol>
+
+
+Image tag = <img src="source of the image" alt=alternative text when browser can not add the image>
+Anchor tag = <a href="link to the destination">Site name</a>
+
+table -> tr -> td
+table header = thead -> tr -> th
+table footer = tfoot
+table body = tbody
+for attributes go to MDN docs
+
+HTML FORMS 
+In the html forms tags the value attribute is for the default value in the input or other.
+for the button it is taken as the text on the button.
+for attribute value will be the id of the corresponding tag.
+
+for directly mailing the content to the default mail address we have to it like mailto:emailaddress
+and put the enctype=text/plain so that the sent message will be the plain text.

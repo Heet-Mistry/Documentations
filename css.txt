@@ -1,0 +1,329 @@
+> css = cascading stylesheet 
+
+1. Inline CSS
+-> written inside the html tag itself
+
+2. Internal CSS
+-> we have to create the tag <style> in the head section of the site, and then we write the css inside it, and
+
+styling the whole HTML element 
+html-element{
+    style code
+}
+
+No websites are completely unstyled, there is always default CSS 
+which is there in the websites.
+
+hr has some attributes 
+border-style etc, everything is the box in the website, where the for 
+example when we specify the hr border-style to none this means that there 
+is no border 0px then it will display nothing in the webpage.
+
+The good practice is that, do not specify the pixel (Absolute) values 
+in the website, as specify the percentage value in the website for making 
+it more general.
+
+Also in the border-top we can specify the values as - size style color of 
+the border
+also if we just write the border then we can also do it like, 
+border: top right bottom left.
+
+For debugging always make use of the chrome developer tools.
+
+--> CSS SYNTAX
+selector{property:value;}
+selector - who
+property - what
+value - How
+
+3 type of selectors in the CSS
+1. Tag selectors
+2. ID selectors - ID should be unique, also for id selector we have to make use of the # and for the class selector we make use of the .
+3. Class selectors - class selector can not contain the name with the space although it can contain the name with hyphens or the underscore. Also class can be same for two elements.
+
+We can have only single instance of the one particular id name, 
+in the one HTML page. But there can be more classes. T
+here are always default CSS there in the website which is called the user agent style sheet, and when we specify the class or the id selectors then it will override the user agent style sheet there.
+
+For making a image or box circular we have to do - border-radius:100%
+
+An element can have multiple classes which are seperated by the space, 
+but it can not have the multiple IDs.
+
+==> Pseudo classes 
+Every HTML element has different different states, some like when we hover
+ over some elements then it is different state. We can apply something in the 
+ HTML that is called the pseudo class, in mdn docs it is specified by the : 
+ in front of the class name that is called the pseudo class.
+
+--> Intermediate CSS
+The icon on the title of the site is called the favorite icon, which is favicon. 
+So after making the favicon, if we want to load it into the site we have to 
+create a link whose rel="icon".Also mostly keep the favicon in the 
+dir where the index is lying. ALso when we create the site without 
+the favicon the browser cache the site, so sometimes the favicon does not show 
+up, for that in the favicon 
+link href do like href="path?v=2" this will load the new version of the site.
+
+HTML Divs
+divs are for the dividing the section, divs does not affect the layout, 
+of the site, 
+if it does not contain the text or content there. 
+In order to do something for the div we have to use the css.
+
+margin-before = top
+margin-after = below
+margin-start = left
+margin-end = right
+
+viewport is the screen we are viewing the website.
+default border is 3px, and the border does not contained 
+in the size of the box it gets outside of the box. 
+But the padding will be introduced inside the box, 
+from the edge of the div or the box. 
+Also the margin will come after the border, 
+and the margin is just the bufferzone between the current box and 
+the other box in neighborhood.
+
+
+CSS Display property 
+Display types 
+1. Block
+2. Inline 
+3. Inline-Block 
+4. None
+
+**Block elements take the whole width of the webpage, 
+such as the <h> and the <p> tag. 
+So the block elements block the any other elements to sit on the next to it. 
+Also the block elements height will be decided by the content. 
+Even if we can change the width of the div, 
+still it will take the whole width for the display.
+
+Block elements
+1. paragraphs
+2. headers
+3. divisions
+4. lists and list items
+5. forms
+
+When we want to style some specific content inside the block element,
+then we can make use of the <span> element and then style the content inside it.
+
+** Span is the inline display element. 
+Inline display element only takes up as much space it needs 
+to cover the content of the span.
+Inline elements
+1. img - mostly taken as the inline block
+2. anchors
+3. span
+
+--> The main problem of the iline elements is that we can not change 
+the width of the element, it only takes as much width as the content 
+inside it. But in case of the block elements we can change the width of 
+the elements, but it still will not allow any other elements to sit next to it.
+
+Inine Block - in this case of the display we can change the width of the 
+block also it allows to sit next to it.
+
+None - this just removes the element from the webpage, 
+ It will not be there in the layout.
+
+This is for question answer type of tasks, like we can also set the 
+display property to none, or else we can also do it like visibility to hidden. 
+It will not display there but there will be blank space at the element.
+
+CSS Positioning Rules (css has position property)
+1. Content is everything
+2. Order comes from the HTML code
+3. children sit on the parents, concept of the Z index
+
+1. Static position - All the HTML elements are by default the static 
+by the nature. Without changing the css position property.
+
+2. Relative position - This is the way of positioning as compared to the 
+elements would have been in the static form. And when we set the left:30px or 
+right or top or bottom, it will push the element from the left to the 30px with 
+relative to the static.
+e.g. when we do the left it will go to the right. 
+It is like the relative margin relative to the static position.
+
+Things to remember;
+1. when we position some element with the relative position, 
+it does not affect the any other element's position.
+ It overlaps with other in some cases.
+
+
+3. Absolute Positioning
+In the absolute position we position the elements with respect to the 
+parent of that element. when we give the right to 20px, 
+it will see its parent's right edge then it will give the padding of the 30px.
+ Also when we do the absolute positioning make sure to make the parent to
+  relative, if it is the body then it will worka s it is. 
+
+-> When we do the absolute positioning it does affect the flow of 
+the HTML elements., So when we have to take the element out of the flow 
+of the document we have to use the absolute positioning.
+
+
+4. Fixed
+When we have the fixed positioning, when we scroll the website, 
+it will not go anaywhere but it will remain there, even if we scroll 
+thewebsite. Here the main point is that, it is the absolute 
+positioning type, same like the parent is the relative and the 
+elemnt is the fixed. all rules are the same, but the main catch is 
+that this stay where we have fixed in the website.
+
+There is another position such as sticky which is of type relative but 
+it is based on the offset value till which we are able to scroll the viewport.
+
+==>Centering the elements
+The most common way of centring the elements is 
+text-align property in the parent container. 
+This will work as long as we have the inline block elements, 
+or the full width block elements,
+ but when we change the let say the width of the <h> tag then this 
+ will not center the elements. 
+
+Another way of centering the elements is with the use of the margin,
+margin property we can do it like horizontal centring or 
+the verticle centring based on the provided values, 
+
+Horizonal centering - margin:0 auto 0 auto == margin:0 auto; ( first is top and bottom, second left,right) for the verticle its the other way around.
+
+If we have the 3 value in the margin it will be top 
+left and right and the bottom. 
+Also when we use the % in the size or anything it will be relative 
+to the parent container, for taking the view port as the relative we 
+have to use the 100vh, something like this.
+
+Font family 
+there are major two types of fonts there in the pc, 
+serif and the sans serif. When we specify the font family such as the 
+with the comma the browser will first render the first one and then 
+if not available then the second one. There is a thing named web safe 
+fonts this means that the most browsers will be able to rendr that  correctly. 
+If we want to render the page with some font then we have to more 
+generally use the fall back, like copy the font fall back from the 
+cssfontstack and then paste it in the font family property value. 
+for the more specific experience we have to use the something called the 
+font embedding, headover to the font.google.com and then import the API url.
+
+
+Font sizes
+When we change the font size in the pixels, and if the user goes in the 
+site settings and then change the default font size to the large, 
+even though the font size in the website will not change because we have 
+set it in the pixel. So the pixel specification is not the dynamic size.
+
+In the font size ==> 100% -> 16px; So if we set the font size in 
+the percentage then the font size will dynamically change with the user 
+preferences.
+
+Also there is other way of doing this,
+as 1em => 16px
+
+16px = 100% = 1em
+
+But the main difference with the em is that, it will be inherited from the 
+parent containers, let say we have the body element with the some 
+font-size 2em and then in the body we have the h1 tag and in the h1 
+we specify the font size as the 5em then the h1 font size will be 
+inherited to the the parent size on the top, so in the percentage it is 
+also same.
+
+The solution is in the CSS3 for the above problem which is that, 
+make use of the rem term, which meanas that root em. 
+ignore all the parent font settings and just apply the rem given.
+
+When we specify the image height in percentage 
+then it will be the percentage of the box containing the image.
+
+
+we can directly target and element to style and also we can put the classes 
+and the id for the styling. id should be unique where the clases can be 
+many and duplicate. 
+
+.className{
+    some styles 
+}
+#id{
+    some styles
+}
+
+class1 class2 == by this we can also add multiple classes in the elements
+id will be the universion 
+
+External css = link of the css file 
+Internal css = at the head part when we write the style tag 
+Inline css = when we give the css inline in the HTML element itself
+
+
+> CSS Box Model 
+
+Everything in the css is the box.
+
+Extrinsic size = we explicitely give the size to the content or the box
+Intrinsic size = we let the browser to decide the size or the styles of the css boxes
+
+* width:min-content = this will take the width of the longest word so the content 
+will not overflow in any case, in this case the width will be evaluated 
+based on the min width such that it will not overflow the content
+
+* width : max-content = this represents a box's ideal size in given axis when 
+given infinite available space, here the width will be calculated based on the 
+maximum widest element
+
+* width : fit-content = this will accordingly take the max-content or the
+min-content as the width depending on the parent container. When the infinite 
+width is given then the width will be taken as the max-content and if the 
+width is limited then the width will be taken as the min-content.
+
+NOTE = max-content will have undesirable effect when it is used inside the 
+parent container of the fixed width.
+
+Box Model = Margin --> Border --> Padding --> Content 
+scrollbars will take the space of the padding box.
+
+All boxes have the box-sizing as the content box. which means when we apply the 
+width and height then it will be applied to the content box.
+
+
+*** CSS Layout ***
+
+display property 
+1. Block 
+2. Inline = behaves like the word they sit next to each pther
+3. Inline-block 
+4. none 
+
+display:flex ==> this makes the box as the block level box and 
+also converts the children to the flex items.
+
+*** Flexbox ***
+It is the layout system for the one dimensional lauouts. By default what it does 
+is it converts the childrens into the inline and then stretch them to the block 
+level so, also if the content over grows it will not wrap the content rather 
+what it does is it will squash the content. it can be changed by the flex-wrap property 
+
+flex-wrap = wrap ==> property of the flexbox (parent)
+
+flexbox also converts the children into the flex-items so we can individually style 
+them also.
+
+flex: flex-grow flex-shrink flex-basis;
+default is  0 1 and auto;
+
+Main axis and the cross axis :-
+This axis are defined by the flex-direction property where if the direction is 
+the row then the main axis is the horizontal axis. and the cross axis is the other 
+way around.
+
+display:flex will turn the box into the block level box and converts its child 
+items into the flex-items.
+
+flex-direction ==>
+1. row 
+2. row reverse 
+3. column 
+4. column reverse

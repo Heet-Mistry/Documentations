@@ -1,0 +1,71 @@
+*** Modules in javascript ***
+
+export function func(){}
+import {func} from './module script path';
+
+when we import the script as the module then we have to explicitely tell the 
+browser to treat the script as the module, by <script type="module">
+
+Modules are by default defered in javascript.
+
+- modules always work in the strict mode 
+- The modules code will be evaluated only the first time it is imported
+  after that no matter how many times we import it it will take the same 
+  executed script
+- In a module this will be undefined 
+
+if the app is working in the older browser then maybe we want to put some message 
+then we have to enclose it inside the <script nomodule> tag.
+
+for exporting the modules or variables we can do it by the list like 
+function a(){}
+function b(){}
+
+export {a,b}
+import {a,b} from './asd';
+import * as obj from './asd';
+
+generally it is recommended that we do not use the wildcard import or the export.
+Modern build tools bundles the modules together and optimize them for speedup 
+loading and it will remove the unused stuff, this is called the tree shaking.
+
+// import as 
+import {sayHi as hi, sayBye as bye} from './say.js';
+hi('John'); // Hello, John!
+bye('John'); // Bye, John!
+
+// export as 
+export {sayHi as hi, sayBye as bye};
+import * as say from './say.js';
+say.hi('John'); // Hello, John!
+say.bye('John'); // Bye, John!
+
+const a = 5;
+export default a;
+import a from './asd';
+
+when we have the default export then we can import them using any name it does 
+not matter there.
+
+export default class User {
+  constructor(name) {
+    this.name = name;
+  }
+}
+export function sayHi(user) {
+  alert(`Hello, ${user}!`);
+}
+
+import {default as User, sayHi} from './user.js';
+// also in the wildcard import the default will be the obj.default.
+
+we can reexport something like 
+export {something} from './asd';
+export {default as user} from './asf' // it is just the another notation for 
+the importing and then exporting
+
+for reexporting the default export we have to do it like 
+export {default} from './asd';
+
+
+NOTE : import and the exports should be at the top, it should not be the nested.

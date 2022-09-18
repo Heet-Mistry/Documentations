@@ -1,0 +1,109 @@
+*** Objects ***
+Objects are the data storage for storing the key:value pair in the data.
+
+let obj = new Object(); // object construtor syntax 
+let obj = {}; // object litral syntax
+
+obj = {
+  name:"dire",
+  surname:"localhost"
+}
+
+obj.name 
+obj.surname
+
+for deleting the property we can make use of the delete operator 
+delete obj.name;
+
+we can also use the multiline property names as the key but they should be quoted 
+like "some multiline key"
+
+let obj = {
+  "full name":"something"
+}
+
+for accessing this type of the keys we have to make use of the square bracket 
+obj["full name"]
+
+If the key does not exist in the object it will give the undefined if we access it.
+also we can give the property name as the variable name for doing that we 
+have to make use of the square bracket, this is called the COMPUTED PROPERTIES.
+
+let a = "name";
+let obj = {
+  [a]:"some name"
+}
+
+when we have the key and the value as the same then we can put it in the 
+shorthand notation such as 
+
+let obj = {
+  name,
+  surname
+}
+
+NOTE = In the objects if we give some key as the litral other then the string 
+then the given value will be converted to the string by default automatically.
+
+For checking if some key exist in the object we can make use of the in operator 
+> "key" in obj => true/false ===> it is recommended to check it with this for 
+checking if the key exists inside the ibject or not.
+
+for iterating in the object we can iterate them like 
+for(let key in obj){
+  log(obj[key]);
+}
+
+we can also iterate in the object by doing like 
+for(let [k,v] of Object.entries(obj)){
+  
+}
+
+NOTE = Very Important to note that the objects and arrays are stored as the 
+reference where the strings and other primitive types are not. so if we create 
+some object and then we assign it to some other and then if we change something 
+in the second one then it will also be reflected into the first one.
+
+when we assign some object to the variable then that variable will not be storing 
+the object but it will have the value of the address where the object is lying.
+
+let a = {}
+let b = {}
+a==b ==> false because the reference is different
+
+
+
+
+*** This pointer in the objects ***
+The value of the this is the object before the dot. The value of the this pointer 
+is evaluated at the runtime depending on the context. Rathet then the other 
+programming languages the this pointer in the javascript is not bound, it does
+not depend on the method where it is created but it is dependent on the method 
+where it is called inside the code.s
+
+Also the arrow function in the javascript have no this. Do not use the arrow 
+function in the object methods where we are using the this pointer.
+
+we can create the objects using the object literal syntax and also we can 
+make the object with the function constructor syntax.
+
+function User(name){
+  // this = {} // this is the thing that js do actually
+  this.name = name;
+  this.surname = "some surname";
+  // return this; // same thing js do
+}
+
+let obj = new User("dhairya")
+
+when we execute the function in the new what happens is it will create the 
+new emty object and then it will assign it to this and then when the function 
+body executes then it will then modifies the this.
+
+NOTE = Technically any functions can be used as the constructor except the 
+arrow function as they do not have the this pointers.
+
+Optional chaining ===> ?.
+when we do it like obj?.prop?.otherProp ==> it will check each and every 
+property in the chain and it will stop when one is undefined or null and 
+it will return the undefined, it will not throw any error.

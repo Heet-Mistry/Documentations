@@ -1,0 +1,56 @@
+*** Funtions in javascript ***
+1. function declaration 
+   function funcname(args){func body}
+   function funcname(arg1,arg2=something){} ==> function with the default body
+
+if we require the parameter inside the function declaration and we do not 
+pass it in the function calling then we can explicitely check it for the 
+undefined because when we do not pass the parameters it will be taken as the 
+undefined.
+
+return; ==> void return
+when we do not have the return type of the function then it will return the 
+undefined there.
+the values passed into the function as parameters are copied to its local 
+variables.
+
+
+2. function expression 
+let somevar = function(params){
+  function body
+}
+
+In the javascript any function is the value itself when we use function 
+declaration or the function expressions it does not matter it will be the 
+same thing just the difference is in the hoisting. Also at the end of the 
+function expression we require the semicolon because it is the part of the 
+statement, when we use the function expression then we have to put the 
+semicolon at the end.
+
+callbacks function in the javascript is nothing but for imposing some sort of the 
+order in the execution as let say if something happens we should do this and 
+if not we should do something else.
+
+The main difference between the function expression and the function declaration 
+is that the function expression is created when the code flow reaches there 
+and also it is useful after that only. But in the case of the function 
+declaration when the javascript first executes the script at first it will check 
+for the global declaration of the functions and then create it. so this 
+functions will be available every time. Function declaration in the javascript 
+is block scoped.
+
+3. IIFE = Immediately invoked function expression 
+(function(){
+  some computations;
+})(); // this thing will run automatically when it is reached
+
+
+
+*** Arrow functions ***
+Same as the function expressions the arrow function will not be hoisted in js.
+Arrow functions should not be used to declare the methods in the object 
+when we use the this otherwise it is fine.We have to use the function expression 
+then.
+
+let a = (args)=>{function body}
+let a = ()=>something we want to return

@@ -1,0 +1,113 @@
+*** Destructuring ***
+Destructuring helps us to unpack the array or the object into needed values 
+
+// Array destructuring
+let arr = ["John", "Smith"]
+
+// destructuring assignment
+// sets firstName = arr[0]
+// and surname = arr[1]
+let [firstName, surname] = arr;
+
+alert(firstName); // John
+alert(surname);  // Smith
+
+let [firstName, surname] = "John Smith".split(' ');
+alert(firstName); // John
+alert(surname);  // Smith
+
+for ignoring the elements we have to make use of the comma separator.
+let [a,,b] = arr;
+
+
+let user = {};
+[user.name, user.surname] = "John Smith".split(' ');
+
+alert(user.name); // John
+alert(user.surname); // Smith
+
+
+for looping in the objects we generally use the method Object.entries(obj)
+it returns the array of the [key,value], same for the map it is the of 
+operator which is there.
+
+let user = new Map();
+user.set("name", "John");
+user.set("age", "30");
+
+// Map iterates as [key, value] pairs, very convenient for destructuring
+for (let [key, value] of user) {
+  alert(`${key}:${value}`); // name:John, then age:30
+}
+
+The rest parameter is used for combining the rest items in the array or the object.
+
+let [name1, name2, ...rest] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+
+// rest is array of items, starting from the 3rd one
+alert(rest[0]); // Consul
+alert(rest[1]); // of the Roman Republic
+alert(rest.length); // 2
+
+we can also put the default value in the destructuring..
+// default values
+let [name = "Guest", surname = "Anonymous"] = ["Julius"];
+
+alert(name);    // Julius (from array)
+alert(surname); // Anonymous (default used)
+
+
+In the object the name of the destructured and the name of the object key 
+should be the same. Later we can rename them.
+let {var1, var2} = {var1:…, var2:…}
+let {width: w, height: h, title} = options;
+
+let options = {
+  title: "Menu"
+};
+
+let {width = 100, height = 200, title} = options;
+
+alert(title);  // Menu
+alert(width);  // 100
+alert(height); // 200
+
+rest operator works the same in here.
+let {title, ...rest} = options;
+
+when we destructure something then we have to do it on the declaration 
+let {} or let [], we can not first define the variables and then assign them.
+
+// smart function parameters
+function showMenu({ title = "Menu", width = 100, height = 200 } = {}) {
+  alert( `${title} ${width} ${height}` );
+}
+
+showMenu(); // Menu 100 200
+
+
+If we define the function with only takes three arguments and even if we call 
+that function with passing 4 or 5 arguments then also it will not give the error 
+but it will in computation only consider the first three arguments.
+
+for catching all the arguments 
+function func(...args){
+  for(let item of args) something computation...
+}
+
+this is calle the rest parameter, it should be at the end of the arguments.also 
+sometimes we want to do something which is completely reverse of it like...
+
+function func(a,b,c){
+
+}
+let arr = [1,2,3]
+func(...arr);
+
+NOTE : The spread syntax works only with the iterables.
+for array [...arr]
+for objects {...obj}
+
+NOTE : Here the spread syntax only does the shallow copy it does not perform the 
+deep copy so for performing the deep copy we have to manually go to the every 
+deep level and then make use of the spread syntax.

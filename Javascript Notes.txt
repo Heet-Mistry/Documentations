@@ -1,0 +1,45 @@
+Basically the javascript was developed to make the webpages alive, or we can say to add the interactivity in the webpages.
+Each and every browser has an embedded machine for running the javascript which is called as the javascript virtual machine. An 
+engine basically reads the script it parses it and then it compiles it to the machine language and then machine code runs.
+
+Make sure that we use the scripts inside the different modules this is because when we make them in seprate modules it is good 
+for the browsers, because they cache it and use it again and again. if the script tag has the content and the src attribute 
+together then the content will be ignores and the src will be taken as the source.
+
+"use strict" = directive, this should be at the top of the script file, if it is placed below then it will be ignored.
+
+Variables are basically the named storage for the data we want to put it in, always make use of the let keyword to declare the variable as it will declare the 
+variable in the block scope and var will declare the variable in the global scope as they are hoisted. Also we can declare the constants using the const keyword,
+in the variable name the $ and the underscore are the only allowed characters.
+
+
+
+
+** Error Handling **
+try catch blocks are used for the error handling in the javascript, also the try catch blocks are only used for the runtime errors in the javascript they 
+do not work for the syntax errors and all. Also the try and catch blocks run synchronously , so for the example let say we have the try block and inside it 
+we have the setTimeOut and a callback inside it let say the callback is generating some error, then this will not go into the catch block as the 
+try block will have been executed when the callback will run so, only put the synchronous things inside the try block.
+
+When the error occurs the javasscript will generate the error object which will be binding the error details and it will then be passed to the catch,
+every built in error will have some inbuilt properties such as 
+
+1. name  = it will be the error name ReferenceError and all.
+2. message = textual message about the error
+
+try {
+  // ...
+} catch (err) { // <-- the "error object", could use another word instead of err
+  // ...
+}
+
+If we want to throw our own error then also we can do this, by using the throw operator. we can create our own error object 
+
+let error = new Error(message)
+let synError = new SyntaxError(message)
+
+also in the throw operator we can give anything we want let say a premitive type also, but it is recommended to use the error object notation 
+such as an object with the field of the name and the message. we can also rethrow the error from the catch block also, but for catching the error we have to 
+make use of the outer catch block. we can also have another code clause as the finally, this will run in every case such as, if the error occurs then after the catch 
+if not then after the try. finally clause will be executed when the try or catch blocks are executed or exited, even if it was the return statement in the 
+try block then also the finally block will get executed.

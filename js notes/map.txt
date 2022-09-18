@@ -1,0 +1,42 @@
+Map is the key-value data type just like the object but the main difference 
+here is that it can allow any type of keys here.
+
+new Map() = creates the map 
+map.set(ley,value) = stores the key value
+map.get(key) = returns the value and if not exist then undefined 
+map.has(key) = returns true if key exis else false 
+map.delete(key) = removes the value by the key 
+map.size = gives the size 
+map.clear() = clear the whole map 
+
+general object converts the key into the string, but map keeps the type so it is
+different in that way.
+
+every map.set call returns the map itself so we can use the chaining 
+map.set(x,a).set(a,c)
+
+map.keys() = returns the keys of the map
+map.values() = returns the iterable of values
+map.entries() = returns the iterable [key,value]
+
+for let [k,v] of map.entries() it is the same as the for let[k,v] of mp
+for let k of mp.keys()
+
+map.forEach((value,key,mp)=> some computation)
+
+for initializing the map we can make use of new Map() where we can pass 
+the 2D array consisting of key and value pair 
+
+let mp = new Map([[1,2],[3,4]])
+
+if we have the object then we have to make use of the Object.entries(obj)
+
+
+Also we can create the object with the help of the Object.fromEntries([[]])
+it will create the object
+
+
+when we have the map and then we want to convert it into the object then 
+we can do it by doing like 
+
+let obj = Object.fromEntries(map.entries());

@@ -1,0 +1,49 @@
+*** Datatypes in javascript ***
+Javascript allows to work with the premitives as they are the objects ofc they 
+are not the objects but we can still call the methods on them.
+
+there are 7 premitive types. string, number, bigint, symbol, boolean, null, undefined
+
+Javascript creates a wrapper around the premitive types to work with them 
+as the object, they are called the Number, String, Boolean, Bigint like this 
+and typeof 0 is the number where the typeof Number(0) is the object.
+
+NOTE : null and undefined has no methods.
+
+> number in javascript 
+- there are two types of numbers in javascript, one which is simply stored as 
+  the 64 bit precision values or double precision floating point numbers.
+- we can write the number like many ways 
+  let num = 100000
+  let num = 1_00_000
+  let num = 1e9
+- we can also write the number as the binary octal or the hex form 
+  let num = 0b10101
+  let num = 0o34
+  let num = 0xfff // in the hex numbers the case does not matter
+- we can change the base of the number by the method num.toString(base) if we
+  want to call the method directly on the premitive value then we have to call it 
+  by wrapping them around the braces (1234).toString(2);
+
+- there are two special values in javascript for the numbers 
+  Infinity and -Infinity  and NaN
+
+- we can not compare the NaN directly as this is the special value in the 
+  javascript where NaN == NaN is not the same also because this special value 
+  is not equal to itself also.
+
+- Also the NaN is the falsy value for the comparison.
+
+- isNaN(some var) ==> for checking if the value is NaN or not 
+
+- isFinite(some var) ==> it first converts the argument in the number and then 
+  checks if the NaN ancountered it will return false
+  there are more strict version of the 
+
+NOTE = For checking the edge cases and the same value of the two variables 
+make use of the method Object.is(a,b) it will also run for NaN and 0 and -0 are 
+technically different in the computer. It is the strict comparison.
+
+*** parseInt and the parseFloat ***
+parseInt will return the number, it will check the data given and then it will 
+convert the read data into the number until it can not find the numbers.

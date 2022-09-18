@@ -1,0 +1,100 @@
+*** Variables ***
+we can use let, var and const to declare the variables. the variables which are 
+declared using let will be locally scoped where the variables which are declared 
+using var will be globally scoped (function scoped). and const also is locally scoped.
+
+In the case of the var we can reference the variable before the declaration 
+because the var variables are hoisted where the let and the const are not 
+so for good practice always make use of the let and const.
+
+
+**** Datatypes in js ***
+There are eight different data types in javascript. The javascript is dynamically
+typed language so it will not require to use the type.
+
+- number (Infinity,-Infinity,NaN)
+- BigInt (for the numbers larger than the -(2^53-1) to 2^53-1, for declaring the 
+bigint type we just have to append the n in the data value let x = 1213n)
+- string 
+- boolean 
+- null (reference to a non existing object or null pointer)
+- undefined (this means that the variable is defined but the value is not assigned)
+- object
+- symbols
+
+Template literals are just like the f strings in the python 
+`${any variable or expression}`
+
+NOTE = We can check the type of the variables by using the type of operator 
+but the thing here is that when we use it for the function it will give the 
+function type there is no separate function type in the javascript functions 
+are included in the object type. also the null behvaiour is wrong for the type
+of operator. (e.g typeof varname)
+
+fun fact = % operator works for the float nmbers in the javascript 
+
+
+*** Type conversion ***
+String(value) = converts the value in the string type
+Boolean(value) = 0, null, undefined, NaN becomes false else true 
+Number(value) = if the proper conversion does not take place then the NaN
+- undefined becomes NaN 
+- null becomes 0 
+- true and false becomes 0 or 1 
+- "" becomes 0 
+- whitespaces from the start and end will be removed and then the conversion takes
+  place 
+
+for the numeric expressions the type conversion will happen automatically 
+log("1"/"2") or "1"/2 will work the same
+
+
+NOTE = For javascript the lowercase letter will have the greater value 
+as compared to the uppercase based on its unicode table it used to encode the 
+letters.
+
+
+
+*** Basic operations ***
+WHEN THE JAVASCRIPT COMPARES DIFFERENT TYPES IT WILL FIRST CONVERT THE DATA 
+INTO NUMBERS AND THEN COMPARES IT. FOR THE EQUALITY THE CASES FOR THE 
+NULL AND UNDEFINED ARE EXCEPTIONS.
+
+null == undefined ===> this is only true not other values instead of anyone
+
+0 == false ==> This is true
+'' == false ==> true 
+=== ===> this will check the equality without the type conversion 
+null == undefined ===> true ( Sweet couple )
+
+
+
+*** Nullish coalescing operator ***
+Basically the nullish coalescing operator woorks on the basis of the 
+defined value of the variable, if it is defined then return it. It is different 
+from the || and && because || returns the value which is truthy where the 
+&& returns the value which is not truthy.
+
+This operator is written as two question marks ??.
+Here it treats the null and undefined as the same so we will treat the 
+value as defined when it is not null or undefined.
+
+a??b ==> if the a is defined then a else b
+
+height = 0 
+height || 100 ==> it will return the first truthy value so it will give 100 
+height ?? 100 ==> this will give the first defined value so it will be the 0
+
+?? has the precedance lesser than the math operators
+but a little higher than the = and the ?, better to use the braces.
+
+NOTE = We can not use the ?? with the && and ||. Javascript forbids using that.
+if we use proper braces then it is allowed.
+
+NOTE = We can not use the continue or the bteak statement at the right side of the ?.
+so basically the ternary syntax can not make use of the continue or the break 
+statement.
+
+NOTE = when we do +someString then it will be converted into the numbers. Also 
+in the switch statemenets the equality checks are always strict so they will 
+also check the type of the value that is being checked.

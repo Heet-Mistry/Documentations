@@ -1,0 +1,30 @@
+*** DOM Manipulation ***
+The whole document is the class in the browser. when the HTML is rendered it will 
+be converted into the document and we will can iterate through it using 
+queryselector.
+
+document.querySelector("query") = returns the first element that matches the query 
+document.querySelectorAll() = all elements list that matches the query 
+document.getElementsByClassName() = returns the array of the objects
+document.getElementById() = returns the element by the ID
+
+element.classList.add(classname)
+element.classList.remvoe(className)
+element.classList.toggle(className)
+element.classList.replace(init,final)
+element.hasAttribute(attr name)
+element.getAttribute(attr name) = it will give the value of the attribute 
+element.setAttribute(attr name,value)
+element.removeAttribute(attr name)
+
+lastChild = it gives the last item inside the element whether it is the 
+element or the content 
+
+lastElementChild = this give the last element which is there
+innerText = this gives the text 
+innerHTML = we can append the HTML and we can have the HTML 
+
+append = here we are able to append the node or the strings or the anything 
+appendChild = here we are only able to append the nodes text will not work 
+
+document.createElement(element name) = we can create the certain element
