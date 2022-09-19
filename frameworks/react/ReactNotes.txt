@@ -339,3 +339,13 @@ we can set the dynamic property of the objects by doing like [some variable or
 synamic propert]. also for the case of the arrays, arrays are mutable in the 
 javascript, but when we store it inside the state we should treat it as immutable.
 
+
+
+*** Reacting to input with the state ***
+In imperative programming we describe How the UI will change accroding
+to the user interactions. where in the declarative programming 
+we have to describe the UI state.
+
+see the state structure and see if there are any duplications 
+or any redundant states are there, which can be removed or combine 
+the states.
