@@ -23,3 +23,33 @@ execution context, for the function.
 what happens in the call stack is that when we create the GEC then it will be 
 pushed in the stack and when the new function runs, then it will push that 
 exectuion context there.
+
+
+
+*** Hoisting in javascript ***
+Hoisting is the phenomena in the javascript by which we can 
+access those variables even before we have declared them. Hoisting lies 
+inside the memory creation phase.
+
+Even before the code starts executing the memory will be allocated to the 
+variables and functions.
+
+so what happens is in the memory creation phase the variables are being 
+allocated the memory and then we can access them, though they are not given 
+the value. so they will be undefined, where the function will store the whole 
+code so it can be executed.
+
+function declaration == hoisted 
+function expression, arrow function == not hoisted 
+
+Because in the case of the function expression and arrow function what we do
+is we store the function as the variable so in the memory creation phase 
+they will be undefined so we can not call the function which is undefined.
+
+
+
+>>> this pointer 
+>>> window object 
+>>> closures and scope chain 
+>>> settimeout 
+>>> event loop and microstack queue

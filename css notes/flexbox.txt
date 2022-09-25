@@ -1,0 +1,145 @@
+*** Flexbox ***
+It is the layout system for the one dimensional lauouts. By default what it does 
+is it converts the childrens into the inline and then stretch them to the block 
+level so, also if the content over grows it will not wrap the content rather 
+what it does is it will squash the content. it can be changed by the flex-wrap property.
+
+NOTE = With the help of the flexbox we can render the items away and without 
+worrying their order in the HTML DOM nodes.
+
+flex-wrap = wrap ==> property of the flexbox (parent)
+
+flexbox also converts the children into the flex-items so we can individually style 
+them also.
+
+flex: flex-grow flex-shrink flex-basis;
+default is  0 1 and auto;
+
+Main axis and the cross axis :-
+This axis are defined by the flex-direction property where if the direction is 
+the row then the main axis is the horizontal axis. and the cross axis is the other 
+way around.
+
+display:flex will turn the box into the block level box and converts its child 
+items into the flex-items.
+
+initial values of the flexbox container>>>
+> Items display as row
+> they do not wrap 
+> they do not grow to fill the container 
+> they line up at the start of the container.
+
+
+flex-direction ==>
+1. row 
+2. row reverse 
+3. column 
+4. column reverse
+
+NOTE = We should be cautious about changing the display property as the 
+logical order is in the HTML document it just changes the visual order and 
+the user will navigate with the logical order with the keyboard and all so.
+
+
+
+The initial value of the flex-wrap property is nowrap. so that means that if 
+there is not enough space then the container items will overflow.
+
+> flex-wrap === property of the flex container set it to wrap. if this propert is 
+no wrap then the items will be shrinked to the min-content size after that they 
+will overflow.
+
+when we set the flex-wrap then this will create multiple flex lines, so each 
+of the flex lines here will behave as the flex container, where we can not 
+do it like something in the row 2 should be aligned with something in row 1, 
+this can be done by the grid, so that's why the flexbox is the one dimensional.
+
+> flex-flow : flex-direction flex-wrap === shorthand notation
+
+
+
+*** Controlling the space inside the flex-items ***
+let say our flex container has extra space then the items will stop growing at 
+their max-content size. 
+
+initial vallue of the flex properties 
+> flex:initial;
+flex-grow = 0; // items do not grow 
+flex-shrink:1 // items can shrink smaller than the flex basis 
+flex-basis: auto // items have a base size of the auto
+
+to cause the items to grow, while allowing large items to have more space 
+than small ones we can make use of the flex:auto.
+
+flex-grow:1 //items can grow larger than the basis 
+flex-shrink:1 //items can shrink than their flex-basis 
+flex-basis:auto //items have the base size of the auto 
+
+NOTE : flex is the property of the flex items.
+
+flex:auto means that the items will end up of the different sizes. this means that 
+at first the items will be laid out as the max-content and then the remaining 
+space will be distributed.
+
+for making all the items to the consistent size we have to make use of the 
+flex:1 which makes,
+
+flex-grow = 1;
+flex-shrink = 1;
+flex-basis = 0;
+
+here the flex-basis is zero that means that all the items have the zero base 
+size and all the space inside the flex container will be shared equally 
+among the items.
+
+flex:none ==> this will give us the inflexible items they do not grow or 
+shrink.
+
+we can also give the rate of the flex-grow as like 
+flex:1 2 or 3, this will be done to the grow factor, so the more the number the 
+item will take the large space.
+
+
+
+*** flexbox allignment ***
+
+for space distribution 
+> justify-content == space distribution along the main axis (flex container prop)
+> align-content == space distribution along the verticle axis
+
+for alignment 
+> align-self == aligns the single item on the cross axis 
+> align-items == aligns all the items as the group on the cross axis
+
+justify-content ==> flex-start,flex-end,space-between,center, 
+                    space-around, space-evenly
+
+
+when we have the wrapped flex lines we may have the space to distribute on the 
+cross axis, in this case we can use the align-content to align them along the 
+cross axis.
+
+
+>> aligning items on the cross axis 
+we can align the items in the flex line using the align-items and align-self.
+the space available for this alignment will deppend on the height of the flex 
+cotainer, or the flex line in the case of the wrapped flex lines.
+
+the initial value of the align-self is stretch, that is the reason why the 
+flex items in the row stretch to the height of the tallest items by default.
+for changing this we can add the align-self property to any of the 
+flex items.
+
+align-self:flex-start,end,center,stretch
+
+the align-self is applied to the inidividual items, the align-items property 
+will be apllied to the flex-container to set all the individual align-self 
+property as the group.
+
+
+there is not justify self == because the flex-items work as the group on the 
+main axis. so there is no concept of splitting the items.
+
+for centering the items >>>
+justify-content: center;
+align-items:center;

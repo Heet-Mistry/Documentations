@@ -1,0 +1,47 @@
+Sometimes we want that the states of the two components to change 
+together then we have to extract the states from both of the 
+component and then move it to their common parent.
+
+Lifting the state up ...
+
+*** preserving the state ***
+State is isolated in the react tree, react keeps track of the 
+which state belongs to which component in the UI tree.
+
+there are many trees in the browser 
+DOM Tree 
+CSSOM 
+Accessibility tree
+
+
+ReactDOM api is for updating the DOM from the UI tree.
+
+> state is tied to the position in the UI tree 
+  This means that if we render two components side by side in the
+  UI tree then we will have sperate states for those two.
+
+  when we render some other component at the place of that component 
+  then the satets will be lost.
+
+> same component at the same position preserves the state 
+
+e.g. 
+
+{isFancy ? (
+        <Counter isFancy={true} /> 
+      ) : (
+        <Counter isFancy={false} /> 
+      )}
+
+Here the position is in the react UI tree not inside the JSX Markup.
+
+Different components at the same position reset the states. also 
+when we render different components at the position then it will 
+reset the satets of the whole UI subtree.
+
+So in final when we want the states to be reserved then the 
+structure of the UI tree should be the same in the re renders.
+
+if we want to explicitely reset the state then we have to 
+explicitely render them at the different position. or else we 
+have to give the key props in the component.

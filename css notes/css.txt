@@ -300,30 +300,34 @@ display property
 display:flex ==> this makes the box as the block level box and 
 also converts the children to the flex items.
 
-*** Flexbox ***
-It is the layout system for the one dimensional lauouts. By default what it does 
-is it converts the childrens into the inline and then stretch them to the block 
-level so, also if the content over grows it will not wrap the content rather 
-what it does is it will squash the content. it can be changed by the flex-wrap property 
 
-flex-wrap = wrap ==> property of the flexbox (parent)
+box-shadow : rightpx bottompx blur color;
 
-flexbox also converts the children into the flex-items so we can individually style 
-them also.
 
-flex: flex-grow flex-shrink flex-basis;
-default is  0 1 and auto;
+*** max-wirdth and min-width ***
+max-width and min-width are generally used for the making of 
+the websites responsive in nature.
 
-Main axis and the cross axis :-
-This axis are defined by the flex-direction property where if the direction is 
-the row then the main axis is the horizontal axis. and the cross axis is the other 
-way around.
+max-width == this means that the elemtn can increase its width 
+to this proportion.
 
-display:flex will turn the box into the block level box and converts its child 
-items into the flex-items.
+if the width of the element is less than the max-width then 
+the width will be the same as the defined with but if it 
+is greater than the max-width then it will not increasefurther.
 
-flex-direction ==>
-1. row 
-2. row reverse 
-3. column 
-4. column reverse
+min-width is the opposite of the max-width.
+
+
+*** media querry ***
+for making the design responsive we have to make use of the 
+media query where we have to write 
+
+@media all and (selector) and (another selector){}
+@media (selector) {} // this both are the same
+
+and = for anding the selectors 
+, = for the or of the selectors 
+
+here the common selector is the max-width and the min-width.
+
+landscape = width becomes wider than the height
