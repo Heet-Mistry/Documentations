@@ -1,4 +1,4 @@
-*** Variables ***
+*** Variables *** 
 we can use let, var and const to declare the variables. the variables which are 
 declared using let will be locally scoped where the variables which are declared 
 using var will be globally scoped (function scoped). and const also is locally scoped.

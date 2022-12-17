@@ -1,0 +1,87 @@
+Event handlers are the best example of async bunch of code. 
+
+What is a callback?
+A callback is the particular type of function, that is passed into another 
+function, with the exxpectation that the callback will be executed at the 
+appropriate time. 
+
+sometimes using the callbacks result in the callback hell of the callback 
+functions. which is also called the pyramid doom. That's why the promises 
+are used instead of the calllback hell. 
+
+
+## Promise 
+A promise is the object returned by the asynchronous function, which represents 
+the current state of  the operation. 
+
+The promise object represents the eventual completion of an asynchronous 
+operation and its returning value.
+
+A promise can be in three states.
+1. pending = the promise is created 
+2. fullfilled = the async function has succeded 
+3. rejected = the async function has failed 
+
+>> callback functions 
+callback functions are like after something do something.
+
+>> we can implement the callbacks with the help of the promises in a better 
+readable way and without teh callback hell.
+
+>> even in the promises we can have the large linear structure there, we can 
+still improvise it by using the async and await functions.
+
+we can create the promise object by the promise constructor.
+
+const a = new Promise((resolve,reject)=>{
+    some task 
+    if(some error) reject("Some message or any argument")
+    else resolve("some message or argument")
+})
+
+a.then((that message or argument of resolved promise)=>{
+    something manipulation
+}).catch((that message of rejection)=>{
+    something manipulation
+})
+
+here then is for resolved promise and the catch is for the rejected promise.
+and we can fetch the argument of the promise fullfilled or the 
+rejected in the then and catch callback functions. 
+
+we can implement the callback hell with the promise chains, but still it 
+would lead to more linear chain of the promises, we can do it more effectively 
+with the async await function calls. 
+
+
+## async and await 
+for using the await keyword the function should be the async function.
+async function returns a promise. await means it will not go ahead until 
+that task is not completed. 
+
+[rv] = await some expression;
+here the return value of the await will be the value with which the 
+promise is fullfilled. if the expression is not promise then it directly 
+returns the value. 
+
+for the error handling in the async functions we have to make use of the 
+try and catch block of to catch the error is the promise is not fullfilled 
+then the argument will be catched by the catch block. 
+
+we can also make use of the catch block for fetching the rejected error 
+argument. 
+
+NOTE : Promise.all([array of promises]).then((arr)=> here the arr is 
+    the array of resolved values
+).catch((rejection)=> here the rejection is the rejection value of any one of the promise)
+
+we can also make use of the Promise.any() for executing certain task when
+any of the promise is fullfilled. 
+
+
+when we implement the callback hell with the help of the promises then 
+we do not need to pass the callbackk function we will make each and 
+every task to be returning the promises and then in the every then we 
+will fetch the resolve msg and then we will return the other promise return 
+call and make the promise chain. 
+

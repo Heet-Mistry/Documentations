@@ -1,0 +1,27 @@
+> css (overflow, word-break,border,shadow,tansform,animation) = @
+> javascript revision = %
+> react = ^ useReducer
+> graph QL 
+> axios
+
+
+
+> flexbox   =====     DONE
+> typescript =====    DONE 
+> promises and async js  ====   DONE
+> fetch API  ====    DONE 
+> webpack basics and code splitting  ===  DONE
+> html basics  ===   DONE
+> git rebase and merge basics === DONE
+> bootstrap
+> grid 
+> ISR Generation 
+
+
+> next js 
+    - client side = DONE
+    - ISR generation 
+    - global styles and style modules = DONE
+    - layout = Done
+    - _app = Done
+    - _document

@@ -1,0 +1,89 @@
+> Rendering 
+Rendering webpage is the process of turning the HTML, CSS and javascript code 
+into an interactive page. Most of the rendering work is done by the browser.
+But the main part of the browser that does the rendering is called the 
+browser engine. (e.g. Blink for google chrome)
+
+> DOM (Api)
+DOM is the document object model, it is the object and node representation of
+the HTML written so that the programming languages can easily interact with the 
+content. It is the object oriented representation of the webpage.
+
+> CSSOM 
+CSSOM is similar to the DOM, while the DOM manipulates with the HTML content 
+the CSSOM allows the languages to manipulate with the styling. It contains 
+all the selectors and selector properties and style related information.
+
+> Render tree 
+render tree is the collection of objects that has to be rendered by the browsers 
+to present the information in an easily accessible manner. Render tree consists 
+of smaller elements, whose names differ by the browser engines. So in simple 
+words the render tree contains the information of the objects or elements 
+that should be visible in the UI. render tree objects contain the information 
+content with the precomputed styles and UI coordinates and all. 
+
+
+> Rendering steps 
+- HTML fetched from the server and processed into the DOM.
+- Styles are loaded and parsed into CSSOM 
+- Render tree is created using the DOM and CSSOM 
+- Browser creates the layout using the coordinates of the elements with the flow
+  method.
+- Information is displayed on the webpage in the final form, is called browser 
+  painting.
+
+Repaint happens when the browser just has to change the properties which does 
+not affect the layout of the elemtns and webpage, while the Reflow happens when
+the browser has to change the webpage layout actions such as change of positioning 
+change of css properties, adding deleting the DOM nodes etc.
+
+> Single page application vs Multipage application
+SPA concept was brought by Ajax =  Single page application 
+An SPA is a web app that loads only the single web document and then updates the 
+body of the single document via javascript APIs such as fetch and XMLHTTPRequest.
+
+- SPA is fast as the resources are loaded once and then the every change will be 
+done by the javascript files . Only the data is transmitted back and forth.
+- content in the SPA is loaded with the AJAX, a method for fetching the data 
+and updating the data without refreshing the page.
+- If js is diisabled it will not show the content 
+
+In MPA we will have multiplepages and for going to each page it will reload the 
+page,so the server will send the new content every time even if it is repetative.
+MPA's are for the larger and complex websites such as amazon. In react we can have 
+multiple pages but it will not reload the page.
+
+React uses virtual DOM for diffing the changes first the state changes will be done 
+into the virtual DOM and then the browser DOM will be changed.
+
+
+
+> Rendering patterns 
+Rendering can be done in many ways, the main concept is where to fetch and render 
+content is the key to the performance of an application. The chrome team 
+encourages to consider the static rendering over the server side rendering.
+
+
+
+
+
+> Client side rendering (CSR)
+React and Vue are CSR based frameworks. In the client side rendering at the initial 
+request we will only get the barebone html and other content will be rendered 
+by the javascript files at the client side. Such as just the index file in the React
+will have just the div with the root id and then the <App> component will be 
+rendered at the client side and add the UI experiences. Not good for SEO.
+
+
+
+> Server side rendering (SSR)
+The main old way to render the web apps is to use the server side rendering 
+in which all the HTML, JS and CSS contents are pre rendered in the server side 
+and sent to the client and client just display it. All the things are doone 
+at the server side and then the client will just display the information files.
+
+Also there will be no diffing, when we visit the new page it will send the new 
+request to the server and then it will load the new HTML content from the scratch.
+
+When our application takes too much time to load, it is not good because 
+in the initial request we have to wait more time.

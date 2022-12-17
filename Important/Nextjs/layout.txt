@@ -1,0 +1,32 @@
+We can create the site layout inside the _app file of the next.js.
+return (
+    <Layout>
+        <Component/>
+    </Layout>
+)
+
+But in some cases we would not want to create the same lalyout 
+so we can create the per page layout by doing like 
+
+function Login(){
+    return <></>
+}
+
+Login.pageLayout = (page)=>{
+    return <>
+        some header different
+        {page}
+        some footer different
+    </>
+}
+
+and in the _app
+
+if(Component.pageLayout) return Component.pageLayout(<Component/>)
+return (
+    <Layout>
+        <Component/>
+    </Layout>
+)
+
+NOTE = In _app the component is the page itself

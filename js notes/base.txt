@@ -28,8 +28,8 @@ browser will reach the strcipt tag it will execute the script inside it. also th
 tag can not contain both the src attribute and the inside code.
 
 NOTE = The variables will be passed as the value in the javascript but the 
-arrays will be 
-passed as the reference by default.
+arrays will be passed as the reference by default. Objects also. Strings will 
+also be passed as the value not the reference. 
 
 Always put the script tag at the end of the HTML tags because when the browser 
 will hit the script tag it will stop rendering other things and it will run 
@@ -48,10 +48,17 @@ type=module as the browser will automaticaly defer this tags and then also they 
 and due to the defer they will be executed at the end.
 <script type="module> src=file1.js>
 <script type="module> src=file2.js>
+Here in the modules if we have one or more modules and one main module is 
+importing the functionalities of other modules then we just have to include the 
+main module.
 
 
 There are total three ways to insert the js inside the website.
 1. Internal js  = it is written in the script tag in the HTML file itself
 2. Inline js = in script tag inside the html element
 3. External js (script tag with the src)
+
+internal means anywhere written js inside the <script> tag, where the inline 
+is the js written in the html tag such as onclick and all. and the external js 
+is the separate file included in the document. 
 

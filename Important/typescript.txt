@@ -1,0 +1,230 @@
+Typescript is developed by the microsoft. It is built on the top 
+of the javascript. It is statically typed language. In the dynamically 
+typed language the type of the variable is determined at the runtime. 
+
+Typescript = javascript with type checking
+Typescript catches the possible bugs and errors at the compile time and 
+it helps in building the error free apps. 
+
+TS 
+- type checking 
+- code complition 
+- refactoring
+- short notations
+
+Currently not all the browsers understand the typescript so we have to 
+first compile the .ts file into the .js file this process is called 
+the transpilation. 
+
+for compiling the typescript file we have to use the tsc compiler 
+tsc filename.ts ==> this will create the javascript file 
+
+
+common error == https://web.archive.org/web/20180609155906/http://fullstack-developer.academy/cannot-redeclare-block-scoped-variable-name/
+NOTE = When we declare the let variable inside the ts file and then 
+recompile it, it will throw an error telling block scoped variable can not 
+be redeclared, this is because typescript uses theh DOM typing 
+that means it will attach the variable to the window object, for removing 
+this we have to change the tsconfig.json file inside the project dir.
+
+for initializing the tsconfig.json file we have to do it by 
+tsc --init ==> it will create the latest tsconfig.json file
+
+src dir = it is where the typescript will look for the ts files 
+outDir = it is where the compiled files will be generated 
+noEmitOnError = if this is set the ts code will not generate the dist files
+                means the output files
+noImplicitAny = when the feature is false the compile will ignore all the any error
+noUnusedPrams = when set it will give the error when there is unused params
+noImplicitReturns = when set it will give an error when the function does not 
+                    return the specfied type
+noUnusedLocals = when set to true it will give error if there are any unused vars
+
+we can just write the tsc == it will compile all the typescript files
+
+typescript types 
+> number 
+> string 
+> boolean 
+> void = it is the return type of the function if we declare the variable to 
+         it then we can only assign the null and undefined to it.
+> null 
+> undefined 
+> any == wild card
+
+there are other types in typescript also such as 
+any, unknown, never, enum, tuple
+
+function(a:number):returnType{
+
+}
+
+
+> type implicit inference 
+We do noto everytime have to give the types too the variables in typescript 
+typescrit will infer the type based on their initialization
+e.g. let num = 20; the num type will be infered as number
+
+also when we do not initialize a variable the ts will infer to the type as any.
+
+
+> declaring the arrays in ts
+let number:number[] = [1,2,3]
+we can also do elementwise types 
+let nums:[number,string,number]
+
+
+> enums 
+If we declare the enums with the const keyword then the compile will generate the 
+more optimized code
+
+const enum enumName{
+
+}
+
+
+enum Size{
+    Small,
+    Medium,
+    Large
+}
+
+here by default the Small has the value 0 but we can explicitely give the 
+value also
+
+when we give the first value 1 then the other value will automatically become
+from 2 and 3
+enum Size{
+    Small=1,
+    Medium=2,
+    Large=3
+}
+
+let mySize:Size = Size.medium 
+
+we can give the optinal parameter in the function by introducing the question 
+mark, we can also give the default value, if the default value is not given then 
+it will take the undefined 
+
+function(a:number,b?:number=5):number{
+    return a+b
+}
+
+In the functions when we want the default values, then it is necessary to 
+use the optional ?, because if not we have to pass the argument even if we 
+do not want them.
+
+// ✅ Make object optional WITHOUT defaults
+function getPerson4(
+  { name, age }: { name?: string; age?: number } = {}
+) {
+  console.log(name);
+  console.log(age);
+}
+getPerson4(); // 👉️ undefined, undefined
+
+
+function getPerson(
+  { name = 'Tom', age = 30 }: { name?: string; age?: number }
+) {
+  console.log(name);
+  console.log(age);
+}
+// ⛔️ Error: Expected 1 arguments, but got 0.ts(2554)
+getPerson();
+// ✅ OK
+getPerson({});
+
+
+
+for the objects we can define the type like 
+let emp:{
+    readonly id:number,
+    name:string,
+    fax?:string,
+    retire:(date:Date)=>returnType
+} = {
+    id:1,
+    name:"Dhairya"
+}
+
+here the readonly keyword will make the id as the readonly
+
+
+
+> Type aliases 
+we have to follow the DRY principle which is 
+do not repeat yourself. for this we can make use of the type aliases 
+with which we can define the types and we can reuse them. 
+
+type TypeName = {
+  readonly id:string,
+  name:string,
+  retire:(date:Date)=>void
+}
+
+
+> Union Types 
+With the union types we can specify the type of the variable with more 
+than one type. we can introduce the union types with | between the types.
+
+const weight:string | number = 5;
+
+after using the union types when we use the methods then the ts will 
+only show the methods which are common in them, so here we have to make 
+use of the narrowing. 
+
+function kgToLbs(weight:number | string):number{
+  if(typeof weight === "number"){
+    do something
+  }
+  else{
+    do something
+  }
+}
+
+
+> Intersection types 
+This means that the object has both the types at the same time. 
+
+for example 
+type Dragable = {
+  drag:()=>void;
+}
+
+type Resizable = {
+  resize:()=>void
+}
+
+type UIWidget = Dragable & Resizable;
+the uiWidget type will have both of the members of the dragable 
+and the resizable. 
+
+
+> Literal types  
+when we want to restrict the values that a object can have 
+we make use of the literal type, 
+
+type Quantity = 50 | 51;
+const q:Quantity = 50;
+const q:Quantity = 51;
+const q:Quantity = 100; // will give an error
+
+
+> nullable types 
+when using and passing null values inside the function we have to check 
+the null values.
+
+> Optional chaining
+In optional chaining let say we have an object and we do not 
+know that it is undefined or null or not, then we can make use 
+of the optional chaining in which, we will do like 
+
+obj?.prop?.props something like this and if the chain breaks then 
+it will return the undefined.
+
+for the arrays we can also do it like 
+arr?.[0]
+
+for functions we can also do it by like 
+funcName?.(params)

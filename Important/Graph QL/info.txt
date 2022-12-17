@@ -1,0 +1,16 @@
+> API 
+API is the application programming interface which helps two systems to 
+communicate. There are two types of architecture for the API, SOAP and REST 
+SOAP relies more on the XML while, REST is based on the lightweight method.
+using URLs in most cases for fetching the information (GET,PUT,POST,DELETE)
+
+> API Endpoint 
+An API endpoint is the digital location where an API recieves request about 
+a specific resource on its server, In API an endpoint is typically a uniform 
+resource locator (URL) that provides the location of a resource on the server. 
+
+> Why do we need port for the server?
+PORT number allows multiple servers running on the same computer, running 
+on the different port numbers. So the server address is the computer address 
+and then the port address is where we can get the specific resources. It basically 
+identifies the process. 

@@ -16,7 +16,7 @@ NOTE : null and undefined has no methods.
 - we can write the number like many ways 
   let num = 100000
   let num = 1_00_000
-  let num = 1e9
+  let num = 1e9 
 - we can also write the number as the binary octal or the hex form 
   let num = 0b10101
   let num = 0o34

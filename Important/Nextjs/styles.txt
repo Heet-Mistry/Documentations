@@ -1,0 +1,13 @@
+For adding the global styles to the web app we have to 
+add the styles inside the _app file.
+
+import "./styles/globals.css"
+
+we can also make use of the bootstrap inside the _app file.
+
+we can make the component level styles also, by making the file 
+name Component.module.css 
+
+and importing it as
+import styles from "./something"
+and we can make use of the classname as styles.className

@@ -1,0 +1,25 @@
+## Variables in css 
+Variables in css can have both local and the global scope, if the variable 
+is defined inside the :root selector it will have the global scope and it 
+can be accessed within the whole document, while the local variable
+should be declared inside the individual selector in which we are gonna use.
+
+:root{
+    --blue:#000000;
+    --white:#000000;
+}
+
+p{
+    background-color:var(--blue);
+}
+
+## calc function in css 
+we can make use of the calc function in the css for calculation.
+height: calc(some expression here)
+
+
+## scss is nothing but the sassy css, where it has some more extension 
+over the plain css. 
+
+## tailwind css is like the bootstrap, where the classes are predefined 
+and we just have to use them.

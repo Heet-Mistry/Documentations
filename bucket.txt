@@ -1,0 +1,19 @@
+css overflow 
+react notes 
+flexbox notes == first thing first
+next notes remaining concepts and utube videos
+coding notes 
+api endpoint and api information as much as u can = second thing
+figma design of the blogify website
+event loop and microstack queue, js akshay saini
+
+
+> git start 
+
+
+first thing == flexbox notes and one akshay saini video 
+second thing == api endpoint and information 
+break...
+website development and next notes
+break 
+css overflow or comp coding

@@ -28,3 +28,6 @@ append = here we are able to append the node or the strings or the anything
 appendChild = here we are only able to append the nodes text will not work 
 
 document.createElement(element name) = we can create the certain element
+document.createTextNode(some content) = for creating the text node
+this will return the element node and we can set the innerText and innerHTML and 
+all. 

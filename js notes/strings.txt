@@ -4,7 +4,7 @@ strings in the javascript can be enclosed with the
 advantage of the `` is that we can have the multiline strings here.
 
 \n = new line character 
-\r = sometimes used inside the windows combined with teh \r\n for the 
+\r = sometimes used inside the windows combined with the \r\n for the 
 new break
 \t = tab 
 \' \" = for quotes
@@ -15,7 +15,7 @@ str.length = for the length of the string
 str[0] = works for fetching the character at the specific index returns undefined for unbound
 str.charAt(index) = for fetching the character at the index == returns '' for unbound
 
-for iterating we can make use of the for of.
+NOTE = for iterating we can make use of the for of.
 
 strings are immutable in javascript we can change the whole string but we 
 can not change the specific character there.
@@ -33,7 +33,7 @@ str.trim() = for removing the spaces from the beginning and the end
 
 uppercase ASCII = 65 to 90 
 lowerCase ASCII = 97 to 122 
-0 to 9 = 48 to 57
+0 to 9 = 48 to 57 
 > A lowercase letter is always greater than the uppercase
 
 

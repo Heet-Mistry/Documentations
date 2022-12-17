@@ -1,0 +1,94 @@
+> demo git structure 
+main ==> init -> m1 -> m2 -> m3 -> m4
+feature ==> init -> m1 -> m2 -> m3 -> f1
+the branch is taken from the m3 feature
+
+
+> git 
+git is distributed version control system for the softwares, and the github
+is the cloud platform for storing the repositories. 
+
+==> git init = for initializng the git repo 
+==> git status = for seeing the git status 
+==> git log = for listing the commits and timelines 
+==> git add filename = for adding the files into staging area 
+==> git add . = for adding all the files into staging area 
+==> git commit -m "Some message" = for commiting the files in staging area 
+==> git branch = for listing the local branches 
+==> git branch -a = it will list all the branches
+==> git checkout bName = for changing the branch 
+==> git checkout -b bName = for creating the branch bName and going into it
+
+
+
+# collaborating
+
+1. git remote 
+the git remote command is the interface for manging the list of 
+remote entries that are stored in the repo's ./.git/config
+> git remote -v = it lists the remote connections we have
+> git remote add <name> <url> = it will create the connection with the 
+                                repo url with the name of the <name> and 
+                                after this we will be able to use it. 
+> git remote rm <name> = for removing the connection 
+> git remote rename <old-name> <new-name> = for renaming the old connection 
+> git push <remote-name> <bname> 
+
+what is the origin?
+The origin remote is automatically created when we clone the repo using 
+git clone command. 
+
+1. git fetch 
+It downloads the commits, files and refs from the remote repo into yoour 
+local repo, but it doesn't force you to actually merge the changes in local 
+repo, git isolates the fetched content from the existing local content. 
+fetched content has to be explicitely checked out using git checkout. 
+
+for downloading the files we have too approaches git pull and git fetch 
+the pull option is bit more aggressive while the fetch is safer as 
+it does not change the local repo. 
+
+
+# git rebase conflicts 
+coonflicts happens when we have the same file and same line change by 
+two persons. we can resolve this conflicts by rebasing.
+
+for rebaseing
+1. go to the feature branch 
+2. git rebase main ==> here the main branch is onto which we are rebasing 
+3. if the conflicts happens it will ask to choose the change 
+4. the current change will be the change from the main branch, the incoming
+   will be the feature branch change.
+5. after accepting any one change or making some other change 
+6. write git add . == for staging the files 
+7. git rebase --continue == for continuing the rebase 
+8. git rebase --abort for aborting the rebase
+
+
+# git rebase vs git merge
+==> git merge bname = it will merge the bname branch into the current
+                      branch we are on
+
+What git merge and rebase does is that when we run the git merge command on any
+branch let say we are in master and then we run git merge feature, then what 
+happens is that it will merge or rebase the branch with the name provided branch.
+
+Here the main difference is that when we use the merge the git will also checked
+the time of the commits and it will merge the branches as they are evolving, 
+so as per the example project it will be m1-m2-f1-m3-f2, but what the git rebase 
+does is that it will check the commits in both branch which is common and then 
+it will check the current branch whcich we are rebasing, let say we are rebasing 
+the feature, the command will be git rebase main in the feature branch then 
+the git will check the first common commit and then it will see the history of the 
+main branch and then it will first add those commits in rebase history if anything 
+changed and then the feature branch changes will be on the top of the main 
+branch history.
+
+so basically git merge will merge the target branch into the current branch 
+with commit history while the rebase will put the current branch commit
+changes on top of the target branch commit.
+
+so if we write git rebase main in feature then git will first check the common 
+commit then it will check if anything is evolved in the main branch if there 
+then it will first put that in the commit history and then it will put 
+the feature branch on top of the final history. 

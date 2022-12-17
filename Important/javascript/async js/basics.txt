@@ -1,0 +1,70 @@
+javascript is the single threaded, non-blocking, asynchronous, concurrent 
+programming language with lots of flexibility.
+
+By default every line in the javascript run sequentially, one line at 
+a time. The same is applicable when we invoke multiple function in the code.
+
+
+## Synchronous javascript - How function execution stack works
+Javascript engine maintains a stack called function execution stack, to track 
+the function execution. 
+
+- when the js engine invokes the function it will add it to the stack 
+  and the execution starts.
+- if the currently executing function calls another function, the engine 
+  adds the function to the execution stack and starts executing it.
+- once it is done the engine takes it out from the stack.
+- the control goes  back to the exectuion of the first function. 
+
+Everything that happens inside the function execution stack is sequential.
+This is the Synchronous part of the javascript. Javascript's main thread
+controls this part. 
+
+
+## asynchronous js 
+asynchronous means not occuring at the same time. Sometimes we want to 
+execute the code asynchronous, something like fetching the data from the 
+server and all. In this case we may not want to halt the execution of the 
+other code. 
+
+Async trackers 
+1. Browsers API/ Web API events or functions. Yhese include methods like 
+setTimeOut, or event handlers like click, mouse scroll and all.
+
+2. Promises - A unique js object. 
+
+setTimeOut is the browser API. It depends on the concept of the callback 
+functions. A callbackk function executes when the asynchronous operation 
+completes. 
+
+
+## How the javascript callback queue (aka Task Queue) works?
+Javascript maintains a queue of calllbackk functions which is called the 
+callbackk queue or the task queue. The javascript engine keep executing the 
+functions in the call stack, as it does'nt put the callback function straight 
+into the stack, there is no question of any code waiting for execution in task.
+
+The engine creates a Event loop to look into the task queue periodically 
+to find what it needs to pull from there. It pulls the callback function from 
+the queue and push it into the call stack, when the stack is empty, and then 
+the callback function starts executing .
+
+
+## How javascript handles promises 
+In Js promises are the special objects that helps to impose the async behaviour 
+in the code. we can create the promise object by the promise constructor. 
+ for the promises the js engine does not only use the callback queue 
+ but it maintains a separate job queue in javascript. In promise constructor 
+ we can pass a executor function which can resolve or reject. 
+
+Every time the promise occurs the, js engine will push the executor function 
+inside the job queue. The event loop works, as usual, to look into the queue 
+but it gives priority to the job queue items over the callback queue items 
+when the stack is free. 
+
+The item in the callback queue is called the macro task while the item 
+in the job queue is called the micro task. 
+
+It is the fact that the job queue will always comes before the task queue. 
+
+

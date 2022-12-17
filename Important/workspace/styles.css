@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    gap: 1rem;
+    border: 1px solid black;
+    max-width: 400px;
+    height: 200px;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.box{
+    border: 1px solid grey;
+}
+
+#first{
+    align-self: center;
+}

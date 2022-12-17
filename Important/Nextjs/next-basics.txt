@@ -1,0 +1,149 @@
+> Next.js 
+React framework for production. It is not easy in react to implement the 
+backend and routing and authentication etc. Next is the package that uses the 
+react to building the interfaces. Loaded with lot more production ready 
+functionalities. Next.js simplifies the process of building a react application 
+for production.
+
+Pros
+- file based routing 
+- pre-rendering (ssr and all)
+- api routes (full stack framework)
+- support css modules
+- authentication 
+- dev and prod build system
+
+> creating the next app
+npx create-next-app appName 
+- some basic dev dependencies will be installed in the next app directly such as 
+eslint and all we can configure it.
+
+> Next scripts (Next.js CLI)
+dev = for running the application in the development mode 
+build = for making the app code for production 
+start = it starts the app in production mode
+lint = for linting the code
+
+next build = it creates the optimized production build for the appication.
+next dev = it starts the application in development mode with hot code reloading 
+           error reporting and more
+next start = it starts the application in production mode at first the app 
+             should be compiled with the build command.
+next lint = it lints the code
+
+
+> Project structure 
+
+public = it holds all the public resources for the application 
+styles = it contains the global styles and modules of styles
+pages
+- index.js is the default route we can although change it
+- and other files named in the pages will be served as the routes in the next 
+- _api = it is the folder in which we can create the apis 
+- _app.js = it is the file where we can define the layout or we can give the 
+            global contexts or wrap the main components inside the providers 
+
+            for the default file route the component prop inside the next _app
+            file is the index.js file.
+
+
+
+> Routing in next
+In react we have to install react router and react router dom 
+when we create the file inside the pages folder that file will directly be 
+available for the route. In the pages we have to export the component as 
+default export.
+
+# Nested routes in next.js 
+we can create the nested routes in next.js something like 
+blog -> blog/1 -> blog/2 etc
+
+for the nested route we have to create the directory in the pages folder 
+named with the route parent name in this case it is blog, after this when the 
+user hits the route localhost/blog we have to show all the list of the blogs 
+it can be done by the index file in the blog dir. and for the nested route 
+such as blog/first we have to create the file first.js inside the blog dir.
+
+blog 
+    - index 
+    - first 
+    - second ...
+
+But in practical application we will not create the pages for each and every product 
+so we have to make use of the dynamic routes. 
+
+blog 
+    - index 
+    - [blogId] // dynamic route
+
+for fetching the id of the dynamic route we have to make use of the useRouter 
+hook from the next/router.
+
+import {useRouter} from 'next/router'
+consr router = useRouter()
+router.query.blogId == it will give the ID and we can make the API call
+for fetching the particular blog
+Here the ID can be anything string or a number, also whenwe have the dynamic route 
+as well the predefined route such as,
+blog
+    - index 
+    - [blogId]
+    - 1.js 
+then the route blog/1 will match to the predefined route.
+
+
+# Nested dynamic routes 
+localhost/blog/1/review/1 == for this we have to make use of the nested dynamic 
+routes  where we can do it same as making the dirs.
+blog 
+    - index 
+    - [blogId] // dir 
+        - index 
+        - review // dir 
+            - index 
+            - [reviewId]
+
+Inside the nested folder the query will be dynamic and nested so 
+we can fetch the blogId as well as the reviewId inside the [blogId] route with the 
+help of the router hooks.
+
+for catching all routes for specific root route we can do it by creating the 
+dir of the name of the root route and then creating the file inside it with the 
+name [...filename] usually [...params]
+
+pages 
+    - docs // dir
+        - index //localhost/docs
+        - [...params] // this will catch all the routes which have the docs as
+                         the parent route e.g. docs/asd/asdasd/1/2/asd
+we can also fetch the params from the [..parmas] with the help of the router 
+const router = useRouter()
+const {parmas} = router.query;
+
+In this case if we did not create the index file and we go to the docs route 
+it will give error, if we do not want to create the index file then the 
+catch all routes file should be named as [[...params]], then for the docs also 
+it will go into this file. 
+
+# next link component 
+import Link from 'next/link'
+we have to wrap the button inside the Link component 
+<Link href="/blog">
+Click me
+</Link>
+
+we can add one another prop inside the Link component which is replace prop 
+when we have the replace prop set on, it will not add the traversed urls in the 
+history stack rather when we click the back button after going to the route 
+where the replace prop is given it will take us to the root page from where we 
+have come here.
+
+we can also navigate programmatically with the help of the useRouter hook 
+const router = useRouter()
+router.push("/products)
+
+
+> custom 404 page 
+for defining the custom 404 page we just have to define a page named 
+404.js inside the pages directory and inside it we can create the custom 
+404 styling and all. 

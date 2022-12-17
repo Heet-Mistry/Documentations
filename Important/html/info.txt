@@ -1,0 +1,175 @@
+HTML stands for the hyper text markup language. with the help of the emmet 
+extension we can make the boilerplate code of the html by doing like.
+
+! + enter 
+
+boilerplate code starts with 
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+<body>
+</body>
+</html>
+
+
+when we want to add the scripts or the css stylesheet we have to make use of the 
+head tag, inside the head tag we will include the css links and the script files 
+we can also include the script file at the end in the body section.
+
+meta tags are the information about the webpage
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> == this meta tag is related 
+to what version of Internet explorer the page should be rendered as. In the modern 
+browsers we can leave this tag empty. 
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> == this 
+is for the responsive design pov. What happens is first the webpages will be 
+rendered in the virtual viewport which can be larger size than the window screen.
+so what this meta tag does is that some websites are not created as all 
+optimized for all type of mobile screens, so this tag will narrow down or shrunk the 
+rendered page to the window screen of the device no matter how it has been 
+rendered in the viewport, and then the user can zoom in and zoom out 
+to see the content. Here the  width property will be the gooverning 
+attribute which will decide the rendering viewport.
+
+However, this mechanism is not so good for pages that are optimized for 
+narrow screens using media queries — if the virtual viewport is 980px for 
+example, media queries that kick in at 640px or 480px or less will never be 
+used, limiting the effectiveness of such responsive design techniques. The 
+viewport meta tag mitigates this problem of virtual viewport on narrow screen 
+devices.
+
+
+cmnts = <!-- --> 
+HTML = Hyper Text Markup Language 
+XML = Extensible Markup Language 
+GML = Generalized markup Language 
+Foundation of websites 
+<start tag attributes> Content <endtag>
+
+Heading = <h1> to <h6? get smaller 
+Line Break = <br> self closing tag 
+Horizontal rule = <hr> self closing tag 
+Centring = <center></center>
+Paragraph = <p>
+
+Boilerplate = This is the code chunk that will be used again and again in the website, emmet plugin in vscode !+enter 
+html {head{meta,title},body{}}
+
+meta elements give the extra data to the webpage, its the data about the website, most generally the utf-8 charset is used in the websites because it covers most of the languages and the characters.
+Always make use of the <em> tag instead of the <i> tag as it will be really emphasizes the text, and also the <strong> tag instead of the <b> bold tag.
+
+Lists in the HTML 
+<ul> // <ol>
+    <li> First item </li>...
+</ul> // <ol>
+
+
+we can also add the audio file in the html using the <audio> tag 
+we have to embed the audio file source withing the audio tag
+audio tag attributes 
+controls = this specify that the play pause button and all control should be displayed 
+autoplay = for autoplaying the audio 
+loop = for playing the audio in loop
+
+<audio controls>
+            <source src="./file_example_MP3_700KB.mp3" type="audio/mp3">
+            <source>
+            <source>
+</audio>
+
+in the audio tag we can give multiple source the browser will choose the first
+one it supports. 
+
+<iframe src="web url" title="some title"></iframe>
+iframes are generally used for embedding the other documents within the current 
+document. 
+
+We can make use of the noscript tag for priniting some message when the 
+javascript is disabled for the page.
+<noscript>tHE JS IS DISABLED FOR THE PAGE</noscript>
+
+same as the audio element we can also include the video tag. It will not 
+support the utube video for that we have to embed the video inside the iframe 
+as per the youtube api. 
+<video controls>
+            <source src="https://youtu.be/qKVnPXAMfq0" type="video/mp4">
+            Your browser does not support the video
+        </video>
+
+
+textarea 
+textarea is the multiline input field, also it is resizable. 
+<label for="story">Tell us your story:</label>
+<textarea id="story" name="story"
+          rows="5" cols="33" placeholder="some placeholder">
+It was a dark and stormy night... // this is the default value
+</textarea>
+
+- the id attribute allow the textarea to be associated with the label element 
+  for the accessibility purpose.
+- the name attribute set the name of the associated data point submitted to 
+  the server when the form is submitted.
+- rows and columns are for setting the size of the element
+  the rows and cols should be a number and which is the character width
+- for more attributes see the mdn docs
+- for most of the browsers the resize property is by default set in the textarea 
+  but we can change it by doing in css textarea{resize:none}
+
+
+label 
+the label element represent the caption for an item in the ui
+the label elements in the ui are not just the captions for the ui elements
+rather they are also programmatically associated with the UI components 
+such as if we add the label for the input then the clickable area of the 
+input is also focused when we click on the label, this is good UX.
+
+Also for associating this we have to do it by giving some id to the input 
+element and then we have to give the for attribute inside the label for 
+attaching it with the ui component. 
+
+input 
+the input element is for accepting some data from the users. it has many types 
+such as checkbox,text,search,file,image,password,email,tel etc see mdn docs 
+for the more usage. 
+
+
+form 
+<form action="" method="get" class="form-example">
+  <div class="form-example">
+    <label for="name">Enter your name: </label>
+    <input type="text" name="name" id="name" required>
+  </div>
+  <div class="form-example">
+    <label for="email">Enter your email: </label>
+    <input type="email" name="email" id="email" required>
+  </div>
+  <div class="form-example">
+    <input type="submit" value="Subscribe!">
+  </div>
+</form>
+in the form attribute the action is the URL api at where the data will be sent 
+the get method will change the current url and append the data so we should 
+not use the get method for sensitive data we should always make use of the 
+post method. 
+
+
+for the table element 
+<table>
+    <thead>
+        <tr>
+            <th>some heading 1</th>
+            <th> some heading 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td> some data</td>
+            <td> some another data</td>
+        </tr>
+    </tbody>
+</table>
+we have many attributes such as cell spacing, cellpadding, bgcolor and all 
+and we have some styling also we can make using some attributes. see 
+mdn docs for more. 

@@ -1,0 +1,54 @@
+Let say we are building a user dashboard then those functionalities 
+will be proper user specific, so no need to do like SEO no need to 
+worry about pre-render, we can fetch the data at the client side.
+
+In the client side data fetching we fetch the data at the client
+side browser, when the javascript of the component executes. Generally 
+it is done inside the useEffect() hook and states. 
+
+useEffect(()=>{},[]) == RUNS WHEN THE COMPONENT MOUNTS
+
+GENERALLY We put the loading state inside the component, and by 
+default next.js will pre-render the page but the pre-rendered 
+HTML will be the initial state of the component, before the data 
+fetching. (Network tab -> preview of the component request)
+
+For client side data fetching it is recommended to use the 
+SWR library for the data fetching developed by the next.js team 
+
+SWR = stale-while-revalidate
+
+while using the useEffect for the data fetching when the data 
+changes we have to refresh the page it is not real time, but the 
+SWR lib is real time and it has many more feature.
+
+yarn add swr
+
+import useSWR from "swr"
+const fetcher = async ()=>{
+    const res = await fetch()
+    const data = await res.json()
+    return data
+}
+
+function Dashboard(){
+    const {data,error} = useSWR("unique key name",fetcher)
+    if(error) return errorState;
+    if(!data) return LoadingState;
+    return (
+        data display logic
+    )
+}
+
+
+NOTE = Client side data fetching + SSR
+When we do the client side data fetching, we can not change the 
+browser url, rather we can do it by making use of the router of the 
+next/router and shallow routing, in shallow routing the url changes 
+without running the code inside the getServerSideProps(). 
+
+In client side fetcher after fetching the data 
+router.push("target URL",undefined,{shallow:true}) (Video 38)
+
+
+31 to 39 done

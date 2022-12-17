@@ -1,0 +1,45 @@
+> Node.js 
+The main goal of the node.js is that it is the javascript runtime environment 
+without the browser engine. So for executing the javascript we have to 
+install the node.js.
+
+> yarn vs npm 
+yarn installs the packages parallely while the npm does it sequentially, so 
+yarn is faster in time.
+
+> json 
+javascript object notation = A text based data format following 
+javascript object syntax 
+
+Standard text based format for representing the structured data 
+based on javascript object syntax commonly used for transmitting the 
+data across the web 
+
+JSON Exists as a string = useful when we want to transmit the data 
+for accessing the data we have to make use of the json format 
+
+JSON.stringify(js object) = returns the json string 
+JSON.parse(json string) = returns the javascript object
+
+in the parse function we can also have the traversal function which 
+can be used to transform the parsed output 
+json.parse(json string,(key,val)=>{
+    do some computation on value 
+    return value;
+})
+
+when the server sends the response it will be the stringified json 
+we have to convert it into the json. so we have to make use of the json parse 
+method. 
+
+
+
+> window vs document 
+basically in the webpages the window is the global execution context and the 
+main global root element, while the document is the object which contains the 
+parsed html document, document will help to manipulate the DOM, while window has 
+the properties such as url history, location and href, navigator, setTimeOut and all. there is also another
+object which is screen, screen contains the physical details about the display 
+such as width height and all. Also fror accessing any property of the window
+we do not have to write the window. as it is the global object we can 
+directly write the property name. 

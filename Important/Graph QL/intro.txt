@@ -1,0 +1,40 @@
+> Graph QL  (Net ninja GraphQL tut)
+It is a querry language, allows more flexible and efficient approach than REST
+Let say we are developing the book website than,
+
+for fetching the particular book based on the id we have to create the endpoint 
+domain.com/books/:id
+
+for fetching the author 
+domain.com/authors/:id
+
+this can be done with the one request in GraphQL 
+{
+    book(id:123){
+        title
+        genere
+        reviews
+        author{
+            name
+            bio
+            books{
+                name
+            }
+        }
+    }
+}
+
+
+what happens behind the scenes?
+As compared to the REST architecture we do not have to worry about making 
+too many endpoints, rather we create one end point where we map the data 
+on the graph, and based on the frontend querry we land on particular node of
+data and then we can traverse the graph based on the data needs. 
+
+GraphQL is the database?
+GraphQL is the querry language not a database, it has nothing to do with where 
+we store the data, it is just the query language, it map the data stored in the 
+remote database. 
+
+Graphiql?
+It is just the dummy frontend which can test the graphQL server. 
