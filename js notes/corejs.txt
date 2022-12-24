@@ -46,33 +46,3 @@ Because in the case of the function expression and arrow function what we do
 is we store the function as the variable so in the memory creation phase 
 they will be undefined so we can not call the function which is undefined.
 
-
-
->>> this pointer 
->>> settimeout 
-
-
-today >>>
-corejs ===  DONE
-datatypes === DONE 
-object wrappers 
-comparisons === DONE 
-var.txt === DONE 
-hoisting ===   DONE 
-promises and async
-
-
-closures and scope chain lexical scope 
-currying 
-debouncing 
-
-
-tomorrow >>
-currently done modules
-destructuring
-map and set 
-object wrappers 
-promises and async
-
-35 minutes hacking 
-contest - 2 hours

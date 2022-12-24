@@ -1,0 +1,37 @@
+Pseudo-classes let you apply CSS based on state changes. 
+This means that your design can react to user 
+input such as an invalid email address.
+
+pseudo classes are defined by the :className
+
+1. :hover 
+styles are applied when hovered
+
+2. :active 
+this is the state when the object is being interacted. click or currently active.
+
+3. :first-child, :last-child 
+for selecting the first child and styling it generally used in content 
+shharing websites. 
+
+4. :only-child 
+only child targets the element which has no sibilings. 
+
+5. nth-child(n)
+we can style this also. 
+
+NOTE = WE CAN LINK TO THE ID INSIDE THE DOCUMENT BY USING THE <a href="#idname">
+doing like this. 
+
+
+Pseudo elements 
+pseudo elements are like adding some html or stylign it without using the html 
+::selection 
+::first-letter
+::firs-lint
+::after = for adding the content or styling 
+::before = for adding the content or styling
+
+*,*::after,*::before{
+    box-sizing:border-box;
+}

@@ -6,7 +6,7 @@ let arr = [1,2,3,"fruits"]
 
 arr.length = returns the length of the array 
 
-if we want to fetch the last element of the array then we can directly give 
+if we want to fetch the last element of the array then we can not directly give 
 the negative indexing arr[-1] like that we have to give it by doing like 
 arr.at(-1)
 
@@ -106,7 +106,7 @@ compare function
 function compare(a,b){
     if(a>b) return 1;
     if(a==b) retur 0;
-    if(a<b) return -1;
+    if(a<b) return -1; // negative means does not change
 }
 
 arr.reverse() = reverse the array 

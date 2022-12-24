@@ -1,0 +1,295 @@
+## Prototypal inheritance 
+In javascript the objects have special hiddne property [[Prototype]], that 
+can be either null or the reference to the another object which is called 
+a prototype.
+
+When we read a property from object, and it’s missing, JavaScript automatically 
+takes it from the prototype. 
+In programming, this is called “prototypal inheritance”.
+
+
+for setting some obj as the prototype we have to make use of the 
+obj.__proto__ = some another obj
+
+let animal = {
+  eats: true
+};
+let rabbit = {
+  jumps: true
+};
+
+rabbit.__proto__ = animal; // sets rabbit.[[Prototype]] = animal
+Now if we read a property from rabbit, and it’s missing,
+ JavaScript will automatically take it from animal.
+
+
+let animal = {
+  eats: true,
+  walk() {
+    alert("Animal walk");
+  }
+};
+
+let rabbit = {
+  jumps: true,
+  __proto__: animal
+};
+
+// walk is taken from the prototype
+rabbit.walk(); // Animal walk
+
+
+here the __proto__ reference has some limitations 
+1. the reference should not go into the circle 
+2. the __proto__ can only take null or the another object reference. 
+3. also there can be only one prototype for the object.
+
+we can not write the properties in the prototype. let say the A is the 
+prototype of object B then, if we write B. something then it will be written 
+in the B object itself. But in case of accessor properties setter and getter 
+it will work if we write them. 
+
+here the main thing is that this will not be affected by the prototype, as 
+the this will be always the object before the dot. 
+>>>>> TODO:DOUBT
+
+NOTE 
+when we do object.keys(obj) =  it will only return its own keys .
+while when we do for in obj then it will also give the inheritance keys.
+
+
+here in the object literals we can directly set the prototype as __proto__ but 
+when we use the function constructor sytax then we have to set the 
+prototype with the prototype property, and the new operator will 
+automatically set the prototype. Basically the protoype is the object that is 
+used by the object to set the __proto__. 
+
+Rabit (Prototype) -----> animal
+                        [[protoype]]
+                        rabbit 
+
+let animal = {
+  eats: true
+};
+
+function Rabbit(name) {
+  this.name = name;
+}
+
+Rabbit.prototype = animal;
+
+let rabbit = new Rabbit("White Rabbit"); //  rabbit.__proto__ == animal
+
+alert( rabbit.eats ); // true
+
+
+Every function has its own default prototype. The default "prototype" is an 
+object with the only property constructor that points back to the function 
+itself.
+
+function Rabbit() {}
+/* default prototype
+Rabbit.prototype = { constructor: Rabbit };
+*/
+
+functions have == prototype
+literals have == __proto__
+
+Object, Array, Boolean, Number these are the constructor functions they have 
+prototype, while the let arr = [], here the arr has __proto__ which is same 
+as Array.prototype
+
+for seeing this we have to use console.dir(some object)
+
+Modern methods for setting and reading the prototypes of the objects 
+for functions we have to use the prototype property
+Object.getPrototypeOf(obj) – returns the [[Prototype]] of obj.
+Object.setPrototypeOf(obj, proto) – sets the [[Prototype]] of obj to proto.
+
+
+
+### class based 
+class classname{
+    constructor(){}
+    method1(){}
+    method2(){}...
+}
+
+for initializing any object we have to call the classname with the new 
+operator when we use the new operator the constructor will automatically be 
+called. 
+
+class User{
+    constructor(name){
+        this.name = name
+    }
+
+    sayHi(){
+        alert(this.name)
+    }
+}
+let user = new User("dhairya)
+
+
+In js class is basically a function, we can check it using the typeof operator.
+
+What class User {...} construct really does is:
+Creates a function named User, that becomes the result of the class declaration. 
+The function code is taken from the constructor method (assumed empty if we don’t
+write such method). Stores class methods, such as sayHi, in User.prototype.
+
+class User {
+  constructor(name) { this.name = name; }
+  sayHi() { alert(this.name); }
+}
+
+// class is a function
+alert(typeof User); // function
+
+// ...or, more precisely, the constructor method
+alert(User === User.prototype.constructor); // true
+
+// The methods are in User.prototype, e.g:
+alert(User.prototype.sayHi); // the code of the sayHi method
+
+// there are exactly two methods in the prototype
+alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
+
+Losing this problem is solved when we uses the classes, the this is 
+conserved when the methods are wrapped in class. 
+
+
+### class inheritance 
+class inheritance is the way to create classes on top of the other classes
+
+class Animal {
+  constructor(name) {
+    this.speed = 0;
+    this.name = name;
+  }
+  run(speed) {
+    this.speed = speed;
+    alert(`${this.name} runs with speed ${this.speed}.`);
+  }
+  stop() {
+    this.speed = 0;
+    alert(`${this.name} stands still.`);
+  }
+}
+
+class Rabbit extends Animal {
+  hide() {
+    alert(`${this.name} hides!`);
+  }
+}
+
+let rabbit = new Rabbit("White Rabbit");
+rabbit.run(5); // White Rabbit runs with speed 5.
+rabbit.hide(); // White Rabbit hides!
+
+when we declare some method in the child class and it is already there in the 
+parent then it will be overridden. classes provide super method for calling the 
+methods from teh parent. 
+
+super.method() for calling the method 
+super() for calling the constructor
+
+
+overriding the constructor 
+when the child extends the parent and has no constructor then 
+the default constructor will be generated.
+
+class Rabbit extends Animal {
+  // generated for extending classes without own constructors
+  constructor(...args) {
+    super(...args);
+  }
+}
+
+also when we have constructor in both the child and the parent then first we 
+have to call the constructor using the super() method first otherwise it will 
+give the error. So what happens in the inheritance case is that for the regular 
+function is executed with new it will create an empty object and assign to this,
+but in the case of the inheritance the new operator expect its parent to 
+assign the this context so, first we have to call the super method. 
+
+also when we override the field the parent will always use its own field. 
+class Animal {
+  name = 'animal';
+  constructor() {
+    alert(this.name); // (*)
+  }
+}
+
+class Rabbit extends Animal {
+  name = 'rabbit';
+}
+new Animal(); // animal
+new Rabbit(); // animal
+
+
+let say in the case of the parent has the constructor and the child does not have
+it then in this case, when the parent constructors calls the method then it will 
+first check the overriden method, but in the case of the fields it is not so. 
+
+this is because the class fields are initialized 
+1. Before the constructor call for the base class (that does not extend anything)
+2. Immediately after the super() in the derived class.
+
+Example 
+class Animal{
+    name = "animal"
+    constructor() {
+        alert(this.name)
+    }
+}
+
+class Lion extends Animal{
+    name = 'Lion'
+    constructor() {
+        // the base class fields are initialized
+        super()
+        // here the derived class fields are initialized
+        alert(this.name)
+    }
+}
+const lion = new Lion()
+
+
+
+## static properties 
+we can assign the static methods to the class also by using the static keyword.
+
+class Article{
+    static compare(articleA,articleB){
+        return something computation;
+    }
+}
+
+here the static methods can be called as Article.method() also the static methods 
+can not be called with the individual objects.  there can also be the 
+static properties the difference is we have to use the static keyword before the 
+field name. static properties and methods are inherited. 
+
+class something{
+    static publisher;
+}
+
+
+### private and protected properties
+
+Internal and external interface 
+In object oriented programming properties and the methods are split into 
+two groups.
+
+Internal Interface - methods and properties that are accessible from other 
+methods of the class but not from the outside.
+
+external interface - methods and properties that are accessible from outside 
+of the class. protected fields are inheriteted. 
+
+for making the property or function private we have to do it by like 
+putting the # infront of the property or method. 
+
+### instanceof operator 
+obj instanceof className

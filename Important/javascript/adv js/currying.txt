@@ -1,0 +1,24 @@
+Currying is an advanced technique of working with the functions. 
+It is not only used in javascript but is also used in the other 
+languages also. 
+
+currying is basically the transformation of the functions that 
+converts the call f(a,b,c) into f(a)(b)(c)
+
+function fn(a,b){
+    return a+b;
+}
+
+function curry(fn){
+    return function(a){
+        return function(b){
+            return fn(a,b)
+        }
+    }
+}
+
+let curriedSum = curry(fn)
+console.log(curriedSum(a)(b))
+
+
+Why we need currying?

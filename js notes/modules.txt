@@ -7,7 +7,7 @@ when we import the script as the module then we have to explicitely tell the
 browser to treat the script as the module, by <script type="module">
 
 Modules are by default defered in javascript.
-
+ 
 - modules always work in the strict mode 
 - The modules code will be evaluated only the first time it is imported
   after that no matter how many times we import it it will take the same 

@@ -47,3 +47,37 @@ technically different in the computer. It is the strict comparison.
 *** parseInt and the parseFloat ***
 parseInt will return the number, it will check the data given and then it will 
 convert the read data into the number until it can not find the numbers.
+
+
+
+
+>> More about the wrappers in javascript... 
+Javascript is the weakly typed language, which means it allows the implicit type 
+conversion when an operation involves two different types.
+const foo = 42
+const result = foo + "1"
+then the result will be 421 so the foo is converted into the string so that 
+the "1" can be appended onto it. 
+
+all types can be checked except the null type as the typeof null gives the object. 
+
+All premitive types except the null and undefined have their corresponding object 
+wrappers, which allows some useful methods on the premitive types. so when some 
+property is accessed onto the premitive value it is basically happening on the 
+wrapper of the primitive types. 
+
+conceptually the undefined represents the absence of the value while the null 
+represent the absence of the object. 
+
++0 === -0 this is true 
+but the difference comes when we do some computation on the +0 and -0
+
+NaN is the only value in the javascript that is not equal to itself, we have 
+to make use of isNaN() method for checking if it is NaN or not. 
+
+The object wrappers are Number, Boolean, String etc but we may rarely find using 
+them, so for converting one type to another we use the String(something) as the 
+function, we do not use the
+let something  = new String(some another datatype)
+vecause here the something will be an object wrapper, if we check it using 
+the typeof operator. 

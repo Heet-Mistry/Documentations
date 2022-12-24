@@ -36,7 +36,7 @@ lowerCase ASCII = 97 to 122
 0 to 9 = 48 to 57 
 > A lowercase letter is always greater than the uppercase
 
-
+ 
 
 NOTE : ~2 = -(2+1)
 

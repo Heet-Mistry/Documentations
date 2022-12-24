@@ -1,0 +1,81 @@
+1. Border 
+The border has the shorthand notation as 
+border:border-width border-style(required) border-color
+
+there are some default values of the border-style which is none,
+border color is set to text color , and border width is medium.
+
+
+2. border radius 
+border radius allows us to make the rounded corners.
+
+border-radius
+4 values = top-left, top-right, bottom-right, bottol-left
+3 values = tl, tr and bl, br 
+2 values = tl and br, tr and bl 
+1 value = all the corners 
+
+3. Pseudo classes 
+
+4. Pseudo elements 
+
+
+5. text-align 
+text-align property is for aligning the text inside the container.
+left,right,center,justify
+
+6. width and height : min-content 
+this will take the width as the width of the longest word in the content 
+and so the content will not overflow in any case. min-content is the smallest 
+size a box can take without overflowing the content. 
+
+7. max-content 
+this represents the box's ideal size in case of when infinite space is available 
+so it will take the width as the longest tag element in the content. max-content 
+is the box ideal size when infinite space is available.
+
+8. fit-content 
+this will accordingly take the max-content or the
+min-content as the width depending on the parent container. When the infinite 
+width is given then the width will be taken as the max-content and if the 
+width is limited then the width will be taken as the min-content.
+
+NOTE = max-content will have undesirable effect when it is used inside the 
+parent container of the fixed width.
+
+9 overflow 
+the overflow property decides what to do in the case of the overflow in the 
+content of the boxes, 
+- visible = default the content will come out of the box 
+- hidden = the output will be clipped 
+- scroll = there will be scrollbar for both the axis 
+- auto = it will add the scroll bar when necessary 
+
+it should be in the parent container. there is also overflow-x and overflow-y 
+for governing the content on each axis. 
+
+
+10. text-overflow
+this property defines how the overflowed content should be displayed 
+on the screen as ellipsis, or some string like that. it is generally used 
+when the overflow is hidden, because when we apply the text overflow then 
+the scroll bar will not further display the overflowed content. 
+
+11. object-fit proeprrty 
+this property decides how the inner content such as img or video thumbnail
+should be displayed in its parent contaiiner.
+
+object-fit 
+cover = the img keeps the aspect ratio but will be clipped to fit 
+contain = keeps the aspect ratio but resized to fit in the container 
+fill = resized to fill the dimension, can be squished or stretched (default)
+none = the object is not resized 
+scale-down = smalles version of none or contain 
+
+12. transform 
+the transform property is used for transforming the objects based on 
+some requirements. 
+
+
+word-break 
+word-wrap

@@ -1,8 +1,8 @@
 > css (overflow, word-break,border,shadow,tansform,animation) = @
-> javascript revision = %
 > react = ^ useReducer
 > graph QL 
 > axios
+
 
 
 
@@ -13,6 +13,10 @@
 > webpack basics and code splitting  ===  DONE
 > html basics  ===   DONE
 > git rebase and merge basics === DONE
+> javascript revision ===   DONE 
+> debouncing  === DONE
+> currying === DONE 
+> lexical scope and scope chain  === DONE
 > bootstrap
 > grid 
 > ISR Generation 

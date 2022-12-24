@@ -1,0 +1,97 @@
+we can make the animations with simple transition property and 
+a full proof animate property. 
+
+we can make use of the transition property for making the animation.
+
+always make use of the property transition in the base class, not in the 
+hover state, because whenw e put the transition in the hover state then when 
+we hover then it will work, but when we hover out it will not because there 
+will not be any transition property in the base class.
+
+transition: property_to_target delay timing_function delay;
+
+we can target all the properties by putting all in the target property. 
+
+In the timing function we can give different timing function which determines 
+how the animation should play out, like 
+
+1. linear == transition will be equal spaced and timed 
+2. ease-in-out = start and end will be slow but the middle portion will 
+                 be fast 
+
+
+Most developers do not generally by hand write this, what we can do is we can 
+go in the inspect and manipulate the cubic-beizer curve to put the timing 
+function as we want. 
+
+delay is the time the hover effect or the transition takes place. 
+
+
+
+animation property>>>>
+Animation we have to write where we want the animation to happen 
+let say the hover effect
+
+animation:animation_name duration timing_function delay animation_fill_mode
+          iteration_count direction_of_animation;
+here the animation_name is the custom name we specify to the 
+animation just for the sake of the understanding. the name is used for 
+defining the keyframes. after defining the animation we have to define the 
+keyframes for the animation. 
+
+@keyframes animation_name{
+    100%{
+        transform:translateX(100%);
+    }
+}
+
+In the keyframes we specify how the animated object will look like in the 
+duration of 0% and 100%, if we do not specify the 0% then it will take the 
+default class styles there. At the 100% we will specify the styles there. 
+
+Here after the animation completes by default the object will go back to the 
+0% property after the animation, but when we specify the forwards then it will 
+after the animation take the same properties applied in the 100% keyframes. 
+
+alternate direction gives the alternate direction means comes back and forth. 
+
+we can pause the animation in different states by doing like 
+animation-play-state property. 
+
+
+.container{
+    background-color: aqua;
+    height: 400px;
+    width: 400px;
+    overflow: hidden;
+}
+
+.child{
+    background-color: black;
+    height: 40%;
+    width: 40%;
+    /* transition: transform 1s 2s; */
+}
+
+.container:hover .child{
+    animation: left-to-right 1s ease-in forwards;
+}
+
+@keyframes left-to-right {
+    0%{
+        /* transform: rotate(90deg); */
+    }
+
+    33%{
+        transform: rotate(90deg) translateY(100%);
+    }
+
+    66%{
+        transform: translateX(100%) translateY(100%) rotate(90deg);
+    }
+
+    100%{
+        transform: translateX(100%) rotate(90deg);
+        background-color: brown;
+    }
+}

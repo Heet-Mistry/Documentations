@@ -1,7 +1,36 @@
-.red{
-    color: red;
+.container{
+    background-color: aqua;
+    height: 400px;
+    width: 400px;
+    overflow: hidden;
 }
 
-.blue{
-    color: blue;
+.child{
+    background-color: black;
+    height: 40%;
+    width: 40%;
+    /* transition: transform 1s 2s; */
+}
+
+.container:hover .child{
+    animation: left-to-right 1s ease-in forwards;
+}
+
+@keyframes left-to-right {
+    0%{
+        /* transform: rotate(90deg); */
+    }
+
+    33%{
+        transform: rotate(90deg) translateY(100%);
+    }
+
+    66%{
+        transform: translateX(100%) translateY(100%) rotate(90deg);
+    }
+
+    100%{
+        transform: translateX(100%) rotate(90deg);
+        background-color: brown;
+    }
 }

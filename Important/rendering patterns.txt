@@ -20,7 +20,7 @@ to present the information in an easily accessible manner. Render tree consists
 of smaller elements, whose names differ by the browser engines. So in simple 
 words the render tree contains the information of the objects or elements 
 that should be visible in the UI. render tree objects contain the information 
-content with the precomputed styles and UI coordinates and all. 
+content with the precomputed styles. 
 
 
 > Rendering steps 
@@ -84,6 +84,3 @@ at the server side and then the client will just display the information files.
 
 Also there will be no diffing, when we visit the new page it will send the new 
 request to the server and then it will load the new HTML content from the scratch.
-
-When our application takes too much time to load, it is not good because 
-in the initial request we have to wait more time.

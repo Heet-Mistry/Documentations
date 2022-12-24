@@ -21,3 +21,8 @@ dynamic imports it will only be doownloaded when we do some action.
 import(filename).then({default,namedExport}=>{
 
 }) // we can access the properties like this
+
+
+The dynamic imports are converted into chunks and the dependencies are resolved.
+we can also give the name to the chunks if we do not give it then we have to 
+give the name using the magic comments. 

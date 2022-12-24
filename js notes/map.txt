@@ -1,5 +1,6 @@
 Map is the key-value data type just like the object but the main difference 
-here is that it can allow any type of keys here.
+here is that it can allow any type of keys here. In the object the type will 
+be converted into the string so.
 
 new Map() = creates the map 
 map.set(ley,value) = stores the key value
@@ -35,7 +36,7 @@ if we have the object then we have to make use of the Object.entries(obj)
 Also we can create the object with the help of the Object.fromEntries([[]])
 it will create the object
 
-
+ 
 when we have the map and then we want to convert it into the object then 
 we can do it by doing like 
 

@@ -1,0 +1,68 @@
+Whenever the execution coontext is created then the lexical environment is 
+also created. 
+
+lexical in the term means in sequence or heirarchy
+Lexical environment = local memory + lexical environment of the parent
+
+Basically the memory section of the execution context will also have the 
+reference to the lexical environment of its parent. The scope chain is the 
+chain of the lexical environment reference. Scope chain is basically the 
+chain of the references. 
+
+
+### Hoisting
+the frist phase of the execution context is memory creation phase 
+so even before the execution then the memory is allocated, they are not 
+initialized but they are allocated. and stored the undefined in it. 
+the function declaration code is directly stored while the variables are 
+undefined. 
+
+
+
+### Temporal dead zone
+let and const declaration are hoisted but they are very differently hoisted. But 
+they are in temoporal dead zone for the time being. In the case of the let and 
+the const the hoisting is done, so the memory is allocated before the code runs 
+but for the let and the const they will not allocated the memory in the global 
+memory space, rather they are allocated the memory in different memory space. 
+
+the Temporal deadzoone is the time between the let and const is hosited to the 
+time at when they are initialized to some value. 
+
+
+## Block and shadowing 
+Block is just the compound statement or the space between the {}. let and 
+const are the block scoped while the var is function scoped. we can redeclare 
+the var variable with the same name;
+
+
+var a = 100;
+let c = 10;
+{
+    var a = 10; // here the a will overrride the valuee 10 so
+    let c = 100;
+    log(c) // this will be 100
+}
+log(a) // it will also print 10 because the var will be global scoped 
+this is called the shadowing
+
+
+
+### closures 
+closure is basically a function binded together with its lexical scope. Function 
+along with its lexical scope forms a closure. 
+
+
+function x(){
+    let a = 10;
+    function y(){
+        log(a)
+    }
+    return y;
+}
+
+let fc = x()
+fc() // 10 
+
+even if the scope of the x is gone and the execution context is gone 
+still the function y remembers its lexical scope 

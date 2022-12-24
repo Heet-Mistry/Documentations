@@ -6,8 +6,8 @@ set.clear()
 set.size
 
 for(let item of set) something computation 
-
+ 
 set.forEach((value,value,set)=> some computation )
 set.values() = arr of values 
-set.keys() = arr of valyes
-set.entries() = array of pair [value,value]
+set.keys() = arr of value
+set.entries() = iterator of pair [value,value]

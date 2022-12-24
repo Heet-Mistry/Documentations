@@ -68,6 +68,9 @@ let options = {
 
 let {width = 100, height = 200, title} = options;
 
+we can also assign the default values here 
+let {property:AnotherName=some defaultvalue} = obj;
+
 alert(title);  // Menu
 alert(width);  // 100
 alert(height); // 200
@@ -84,6 +87,15 @@ function showMenu({ title = "Menu", width = 100, height = 200 } = {}) {
 }
 
 showMenu(); // Menu 100 200
+Here if we do not give the default value of the function parameters
+such as {title,width,height}={}, if we do not initialize it with the 
+empty object then when we call the function with smart() then it will 
+give the error as can not read the properties of undefined. 
+
+so we have to define the default argument there. 
+
+Because in the normal arguments it would have worked but here we are 
+destructuring so we can not do destructuring of the undefined value. 
 
 
 If we define the function with only takes three arguments and even if we call 

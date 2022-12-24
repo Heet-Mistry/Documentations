@@ -19,7 +19,7 @@ element.removeAttribute(attr name)
 
 lastChild = it gives the last item inside the element whether it is the 
 element or the content 
-
+ 
 lastElementChild = this give the last element which is there
 innerText = this gives the text 
 innerHTML = we can append the HTML and we can have the HTML 
@@ -28,6 +28,8 @@ append = here we are able to append the node or the strings or the anything
 appendChild = here we are only able to append the nodes text will not work 
 
 document.createElement(element name) = we can create the certain element
-document.createTextNode(some content) = for creating the text node
 this will return the element node and we can set the innerText and innerHTML and 
 all. 
+
+document.createTextNode(some content) = for creating the text node
+

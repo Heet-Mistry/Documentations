@@ -1,9 +1,3 @@
-REMAINING MODULES 
-classes and the objects
-prototypical inheritance and all
-Hoisting and let and var
-closure 
-scope and lexical environment 
 --------------------------------------------------------------------------------
 HTML = The language for the structure of the web 
 CSS = The language for styling the webpages 

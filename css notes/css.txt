@@ -1,5 +1,5 @@
 > css = cascading stylesheet 
-
+ 
 1. Inline CSS
 -> written inside the html tag itself
 

@@ -1,0 +1,39 @@
+debouncing is the programming pattern or a technique to restrict 
+the calling of the time consuming functions frequently. by delaying 
+the execution of the function until a specified time to avoid 
+unnecessary CPU cycles and API calls to improve the performance. 
+
+A Debounce function is a higher-order function that returns 
+another function, to create closure around the function 
+parameters (func, timeout) and the timer variable.
+
+func: this is the function that we want to execute after the 
+debounce time. 
+
+timeout: the amount of time you want the debounce function to 
+wait after the last recieved action before executing func. 
+
+timer: the value used to indicate a running debounce.
+
+function debounce(func,timeout = 500){
+    let timer;
+    return (...args)=>{
+        clearTimeOut(timer);
+        timer = setTimeOut(()=>{
+            func.apply(this,args)
+        },timeout)
+    }
+}
+
+function func(){
+    fetching some data
+}
+
+const debouncedFunc = debounce(func)
+
+here we are clearing the timeout everytime so that when the user 
+again call the debounced one it will clear the previous timeout 
+and then again set the new timeout.
+
+
+// doubt in args and the apply and the call method this context we have to see

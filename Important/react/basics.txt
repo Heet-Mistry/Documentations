@@ -1,0 +1,90 @@
+At the starting it is recommended to use the toolchain or the framework 
+for developing the apps with the react. They provide better and comfortable 
+tools for development environment but require local node.js installation.
+
+it is recommended to use the create react app at start but it is not that much 
+good for the routing or the data fetching.
+
+> npx create-react-app appname 
+
+In the general react app we have a single HTML file with just the root container 
+div and then what we do in the index.js file is that 
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App/>);
+
+
+
+
+## Thinking the UI in terms of the react 
+1. Break the UI into component heirarchy
+Always follow the single resoponsibility principle, which states that 
+a component shoudl ideally do one thing, if it grows then it should be
+decomposed into further smaller components. 
+
+2. Build a static version of react 
+Do not first implement the interactivity in the app, first try to add 
+the design and then make the static app.
+
+3. Find the minimal but complete representation of the UI state 
+Describe the component or UI in the minimal state and define the 
+state variables.
+
+4. Identify where should the state live in 
+Ideally, each and every component state should lie inside its own 
+component, but if the state is also used by its sibling then we have 
+to life the state in its parent. 
+
+5. Add inverse data flow if required 
+
+
+
+## Components 
+Components are the core concept of the react. React components are basically 
+the javascript functions in which we can sprinkle the markup. React lets us 
+combine the markup, css and the javascript into the custom components reusable 
+UI components. components is the simple javascript function but the name of the 
+component should start with the capital letter itself.
+
+function Profile() {
+  return (
+    <img
+      src="https://i.imgur.com/MK3eW3As.jpg"
+      alt="Katherine Johnson"
+    />
+  );
+}
+
+when we use create-react-app the root component will be defined as the 
+src/app.js and in the Next.js it is defined as the pages/index.js
+
+export function comp(){}
+import {comp} from './srcfile' // named export and the import
+
+JSX is the syntax extension of the javascript it lets us write the HTML like 
+markup inside the javascript file.
+
+** NOTE DIFFERENCE BETWEEN JSX AND REACT 
+JSX is the syntax extension of the javascript and the react is javascirpt library 
+which uses the babel to transpiler to convert the JSX into the javascript. 
+
+Rules for the JSX 
+- return only single root element 
+- <></> it is called the react fragment it will not create the container so 
+  there will not be any trace of the <></> in the DOM tree
+- we have to close all the tags 
+- camelCase almost all the things 
+    for eg class is written as the className
+
+When we want to write the Javascript inside the markup then we have to make use
+of the curly braces. if the attribute is the string then it will work as it is 
+but if it is the dynamic value then we have to make use of the curly braces there.
+
+Inside the tag the dynamic behaviour will not work 
+for an example <{tag}> it will not work.
+
+In the markup if we want to pass the style inside the markup then we have to 
+pass the javascript object in there, for that we have to make use of the double 
+curly braces there.
+
+<li style={{backgroundColor:something}}

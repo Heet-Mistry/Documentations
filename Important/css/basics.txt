@@ -1,3 +1,309 @@
+CSS = Cascading style sheet 
+There are three types of css out there in teh web 
+
+1. Inline css 
+- Inline css is written inside the html tag itself
+
+2. Internal css 
+- it is written inside the head tag with the <style> tag it can also be written 
+inside the body tag
+
+3. External css 
+- it is written inside the file and then it is linked to the html document.
+
+styling the whole HTML element 
+html-element{
+    style code
+}
+
+
+No websites are completely unstyled, there is always default CSS 
+which is there in the websites.
+
+The good practice is that, do not specify the pixel (Absolute) values 
+in the website, as specify the percentage value in the website for making 
+it more general.
+
+--> CSS SYNTAX
+selector{property:value;}
+selector - who
+property - what
+value - How
+
+3 type of selectors in the CSS
+1. Tag selectors
+
+2. ID selectors - ID should be unique, also for id selector we have to make use 
+of the # and for the class selector we make use of the .
+
+3. Class selectors - class selector can not contain the name with the space 
+although it can contain the name with hyphens or the underscore. Also class 
+can be same for two elements.
+
+We can have only single instance of the one particular id name, 
+in the one HTML page. But there can be more classes. There are always default 
+CSS there in the website which is called the user agent style sheet, and when we 
+specify the class or the id selectors then it will override the user agent style 
+sheet there.
+
+An element can have multiple classes which are seperated by the space, 
+but it can not have the multiple IDs.
+
+
+The icon on the title of the site is called the favorite icon, which is favicon. 
+So after making the favicon, if we want to load it into the site we have to 
+create a link whose rel="icon".Also mostly keep the favicon in the 
+dir where the index is lying. ALso when we create the site without 
+the favicon the browser cache the site, so sometimes the favicon does not show 
+up, for that in the favicon 
+link href do like href="path?v=2" this will load the new version of the site.
+
+>> HTML Divs
+divs are for the dividing the section, divs does not affect the layout, 
+of the site, 
+if it does not contain the text or content there. 
+In order to do something for the div we have to use the css.
+
+margin-before = top
+margin-after = below
+margin-start = left
+margin-end = right
+
+viewport is the screen we are viewing the website.
+default border is 3px, and the border does not contained 
+in the size of the box it gets outside of the box. 
+But the padding will be introduced inside the box, 
+from the edge of the div or the box. 
+Also the margin will come after the border, 
+and the margin is just the bufferzone between the current box and 
+the other box in neighborhood.
+
+
+>> CSS Display property 
+There are four display properties in css 
+1. Block 
+2. Inline 
+3. Inline block 
+4. None 
+
+1. Block elements
+Block elements are the elements which take the whole width of the page 
+even if the content is short, so they do not allow other containers to sit 
+besides them. The default height of the block elements are decided by the 
+content. 
+
+Block elements
+1. paragraphs
+2. headers
+3. divisions
+4. lists and list items
+5. forms
+
+When we want to style some specific content inside the block element,
+then we can make use of the <span> element and then style the content inside it.
+
+** Span is the inline display element. 
+Inline display element only takes up as much space it needs 
+to cover the content of the span.
+Inline elements
+1. img - mostly taken as the inline block
+2. anchors
+3. span
+
+--> The main problem of the iline elements is that we can not change 
+the width of the element, it only takes as much width as the content 
+inside it. But in case of the block elements we can change the width of 
+the elements, but it still will not allow any other elements to sit next to it.
+
+Inine Block - in this case of the display we can change the width of the 
+block also it allows to sit next to it.
+
+None - this just removes the element from the webpage, 
+It will not be there in the layout.
+
+This is for question answer type of tasks, like we can also set the 
+display property to none, or else we can also do it like visibility to hidden. 
+It will not display there but there will be blank space at the element.
+
+In the case of the display none it will just remove the element from there 
+while in the case of the visibility hidden it will hide the element from there 
+but there will be traces of the elmeent int eh DOM. 
+
+
+
+>> CSS Positioning Rules (css has position property)
+1. Content is everything
+2. Order comes from the HTML code
+3. children sit on the parents, concept of the Z index
+
+1. Static position - All the HTML elements are by default the static 
+by the nature. Without changing the css position property.
+
+2. Relative position - This is the way of positioning as compared to the 
+elements would have been in the static form. And when we set the left:30px or 
+right or top or bottom, it will push the element from the left to the 30px with 
+relative to the static.
+e.g. when we do the left it will go to the right. 
+It is like the relative margin relative to the static position.
+
+Things to remember;
+1. when we position some element with the relative position, 
+it does not affect the any other element's position.
+ It overlaps with other in some cases.
+
+
+3. Absolute Positioning
+In the absolute position we position the elements with respect to the 
+parent of that element. when we give the right to 20px, 
+it will see its parent's right edge then it will give the padding of the 30px.
+ Also when we do the absolute positioning make sure to make the parent to
+  relative, if it is the body then it will worka s it is. 
+
+-> When we do the absolute positioning it does affect the flow of 
+the HTML elements., So when we have to take the element out of the flow 
+of the document we have to use the absolute positioning.
+
+
+4. Fixed Positioning 
+Fixed positioning is a sort of the absoulute positioning. In this case the 
+element is taken out of the flow from the document and the element is being 
+positioned with the viewport relative. and the position is defined by the 
+top left right and bottom. and it will stay as it is there. 
+
+there is also another positioning called sticky, let say we have a scrollable 
+website and it has a div, if we specify its position to sticky and then we define 
+let say top:20px then this div will stay as it there, but when we scroll and diiv 
+reaches the top:20px offset then it will be fixed there. and the sticky 
+position is relative to its nearest ancestor. 
+
+for centering a div horizontally we have to do it by like 
+margin:0 auto; // top-bottom, horizontal
+
+Horizonal centering - margin:0 auto 0 auto == margin:0 auto; 
+( first is top and bottom, second left,right) 
+for the verticle its the other way around.
+
+If we have the 3 value in the margin it will be top 
+left and right and the bottom. 
+Also when we use the % in the size or anything it will be relative 
+to the parent container, for taking the view port as the relative we 
+have to use the 100vh, something like this.
+
+
+>> Font family 
+there are major two types of fonts there in the pc, 
+serif and the sans serif. When we specify the font family such as the 
+with the comma the browser will first render the first one and then 
+if not available then the second one. There is a thing named web safe 
+fonts this means that the most browsers will be able to rendr that  correctly. 
+If we want to render the page with some font then we have to more 
+generally use the fall back, like copy the font fall back from the 
+cssfontstack and then paste it in the font family property value. 
+for the more specific experience we have to use the something called the 
+font embedding, headover to the font.google.com and then import the API url.
+
+
+>> Font sizes
+When we change the font size in the pixels, and if the user goes in the 
+site settings and then change the default font size to the large, 
+even though the font size in the website will not change because we have 
+set it in the pixel. So the pixel specification is not the dynamic size.
+
+In the font size ==> 100% -> 16px; So if we set the font size in 
+the percentage then the font size will dynamically change with the user 
+preferences.
+
+Also there is other way of doing this,
+as 1em => 16px
+
+16px = 100% = 1em
+
+But the main difference with the em is that, it will be inherited from the 
+parent containers, let say we have the body element with the some 
+font-size 2em and then in the body we have the h1 tag and in the h1 
+we specify the font size as the 5em then the h1 font size will be 
+inherited to the the parent size on the top, so in the percentage it is 
+also same.
+
+The solution is in the CSS3 for the above problem which is that, 
+make use of the rem term, which meanas that root em. 
+ignore all the parent font settings and just apply the rem given.
+
+
+When we specify the image height in percentage 
+then it will be the percentage of the box containing the image.
+
+
+we can directly target and element to style and also we can put the classes 
+and the id for the styling. id should be unique where the clases can be 
+many and duplicate. 
+
+.className{
+    some styles 
+}
+#id{
+    some styles
+}
+
+class1 class2 == by this we can also add multiple classes in the elements
+id will be the universion 
+
+External css = link of the css file 
+Internal css = at the head part when we write the style tag 
+Inline css = when we give the css inline in the HTML element itself
+
+
+> CSS Box Model 
+
+Everything in the css is the box.
+
+Extrinsic size = we explicitely give the size to the content or the box
+Intrinsic size = we let the browser to decide the size or the styles of the css boxes
+
+Box Model = Margin --> Border --> Padding --> Content 
+scrollbars will take the space of the padding box.
+
+All boxes have the box-sizing as the content box. which means when we apply the 
+width and height then it will be applied to the content box. the border-box 
+box-sizing is the prefered value of all the content. in the content box 
+whenw e give the border then it will cover the outer area after the width 
+but then when we give the box sizing as the border box then when we give the 
+border then the width will be fixed and then when we give the border then 
+the content box will be narrowed down. 
+
+
+*** max-width and min-width ***
+max-width and min-width are generally used for the making of 
+the websites responsive in nature.
+
+max-width == this means that the elemtn can increase its width 
+to this proportion.
+
+if the width of the element is less than the max-width then 
+the width will be the same as the defined with but if it 
+is greater than the max-width then it will not increasefurther.
+
+min-width is the opposite of the max-width.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Variables in css 
 Variables in css can have both local and the global scope, if the variable 
 is defined inside the :root selector it will have the global scope and it 

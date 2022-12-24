@@ -1,0 +1,31 @@
+the grid is maninly differ from the flexbox in a way that the flexbox is 
+designed to style the elements in only one dimension either row or column 
+while the grid is for the two dimension styling and aligning. 
+
+>> Grid terminology 
+
+1. Grid line 
+Gris is made up of lines, which runs horizontally and vertically
+e.g. for columns grid will have five column lines. the numbering will 
+start from the 1. 
+
+2. Grid tracks 
+A track is the space between the two grid lines. A rowtrack is bwn two row 
+lines and a column track is between two column lines. 
+
+3. Grid cell 
+a cell in the grid. 
+
+4. grid area 
+several grid cells bunched together. 
+
+5. Gaps 
+a gutter or alley between tracks, space between the cells. 
+
+
+>> Grid container 
+The html element which has the display:grid set, creates a grid formatting 
+context for the direct children. 
+
+>> Grid item 
+a direct child of the grid container.
