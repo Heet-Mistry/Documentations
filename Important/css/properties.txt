@@ -79,3 +79,6 @@ some requirements.
 
 word-break 
 word-wrap
+specificity blog
+grid if possible
+media querries
