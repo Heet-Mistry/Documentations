@@ -33,7 +33,7 @@ tsc --init ==> it will create the latest tsconfig.json file
 src dir = it is where the typescript will look for the ts files 
 outDir = it is where the compiled files will be generated 
 noEmitOnError = if this is set the ts code will not generate the dist files
-                means the output files
+                means the output files if the error comes
 noImplicitAny = when the feature is false the compile will ignore all the any error
 noUnusedPrams = when set it will give the error when there is unused params
 noImplicitReturns = when set it will give an error when the function does not 
@@ -79,7 +79,6 @@ If we declare the enums with the const keyword then the compile will generate th
 more optimized code
 
 const enum enumName{
-
 }
 
 
@@ -135,7 +134,9 @@ getPerson();
 // ✅ OK
 getPerson({});
 
-
+Here we can not make the destructured argument optional because it will throw 
+an error which is obvious because a binding pattern can not be optional, as 
+the undefined can not be destrutcured.
 
 for the objects we can define the type like 
 let emp:{
@@ -228,3 +229,53 @@ arr?.[0]
 
 for functions we can also do it by like 
 funcName?.(params)
+
+
+>> interface vs type in typescript 
+the main difference between the interfaces and the types is that 
+the types are close once we have declared the type it can not be redeclared where 
+in the case of the interface we can do that. it will automatically & both of the 
+types. 
+
+type a = {somethign}
+type a = {some other thing} // this wont work
+
+interface a{
+  something
+}
+
+interface a{
+  something
+}
+
+the final interface will be the intersection of both 
+
+also we can make use of the extends in the interface 
+interface peacock extends bird{
+
+}
+
+>> Type assertion 
+the type assertion is the technique through which we can override the inferred or 
+the analyzed type by the typescript compiler.
+
+var foo = {};
+foo.bar = 123; // Error: property 'bar' does not exist on `{}`
+foo.bas = 'hello'; // Error: property 'bas' does not exist on `{}`
+
+interface Foo {
+    bar: number;
+    bas: string;
+}
+var foo = {} as Foo;
+foo.bar = 123;
+foo.bas = 'hello';
+
+sometimes the type assertions can be error prone, but we have to do them in 
+many cases in the event handlings, we can make use of the double assertion 
+if we want in some cases such as like.
+
+let say we want the event as the htmlelement and the typescript is preventing it 
+then we can make use of the double assertion here. 
+
+let htmlevent = event as unknown as HTMLElement

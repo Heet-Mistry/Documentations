@@ -1,9 +1,16 @@
+Hooks are special functions that are only available while React is 
+rendering (which we’ll get into in more detail on the next page). 
+They let you “hook into” different React features.
+
+Hooks can only be called on the top of the components they can not be 
+called inside the nested blocks.
+
 1. useState(initialState) == returns the stateful value and 
    a function to update the state.
 
 - also the react ensures the setState function identity is stable 
 and won't change on the rerenders. so it is safe to omit from 
-the useEffect and useCallback.
+the useEffect and useCallback deps list. 
 
 - we can also pass the updater function inside the useState 
 
@@ -15,6 +22,14 @@ const [state, setState] = useState(() => {
   const initialState = someExpensiveComputation(props);
   return initialState;
 });
+
+
+when the state is not changed then the react will bail out from re rendering the 
+childrens, but it has to render that component once to check, but iw will not be 
+a problem because react will not go deeper in the tree. 
+
+clicking a button twice and these are the updates that are handled 
+seperately and do not get batched. 
 
 
 2. useCallback() == this returns the memoized callback.
@@ -36,13 +51,18 @@ and then send it to the children and children has some useEffect
 and it will only run when the function changes)\
 
 
+it is recommended to use the exhasutive-deps as the plugin in the eslint 
+react hooks to auto fill the deps. 
+
+
+
 3. useMemo(()=> some return value) == it is used for memoized 
 heavy computation, where the function given inside the useMemo 
 will only run again if the dependency changes and it will return 
 the memoized value.
 
 - the function passed inside the useMemo will run during the 
-rendering
+rendering so we should not include any side effects in useMemo 
 
 - mostly write the code which does not include the use of useMemo
 
@@ -53,6 +73,12 @@ the useEffect()
 4. useEffect() == for introducing the side effects, basically it 
 is mainly used for the data fetching when something changes.
 
+Mutations, subscriptions, timers, logging, and other side effects are not 
+allowed inside the main body of a function component (referred to as React’s 
+render phase). Doing so will lead to confusing bugs and inconsistencies in the 
+UI.
+
+
 useEffect(()=>{
   // this code will run when the component renders
   // everytime because we have not passed any dependency
@@ -62,6 +88,21 @@ even if we give the dependency list, at the initial mount the useEffect will
 run because mainly we give the state as the dependency list, so 
 at the first mount the state will go from nothing to something so still 
 the useEffect will be executed.
+
+Often in the useEffect we write some mutations, subscriptions and side effects 
+so when the component leaves the screen they need to be cleaned, so for cleaning 
+the effects it can return a cleanup function, that cleanup function will run 
+when the next useEffect will run and that cleanup function will be in the context 
+of the previous snapshot of the UI. 
+
+useEffect(() => {
+  const subscription = props.source.subscribe();
+  return () => {
+    // Clean up the subscription
+    subscription.unsubscribe();
+  };
+});
+
 
 // defining the states 
 const [resourceType, setResourceType] = useState('products');
@@ -169,11 +210,26 @@ useEffect(()=>{
   prev.current = state;
 },[state]); // because when the state changes the component will re render 
 and then browser will be painted. so the content of the browser paint 
-are generated and then the useEffect will run.
+are generated and then the useEffect will run. so when the rendered content 
+will be shown into the browser it will not paint the current value rather 
+it will show the prev value. 
 
 const inputRef = useRef();
 <input ref={inputRef}/>
 
+
+React.memo()
+it is a higher order component provided by react to optimize the renders.
+if the props does not change and the parent changes then the react will 
+re render all the child in the depth tree, but when the we wrap the 
+component in the memo then it will only renders if the UI changes, if the ref
+equality changes and if the state changes of that component. 
+
+
+NOTE 
+React components renders if the state changes 
+if the parent component renders then it will re render all of its childrens 
+if the props changes
 
 
 
@@ -182,7 +238,6 @@ const inputRef = useRef();
 
 
 === remaining things
-useLayoutEffect 
 react life cycles
 fetch API
 useQuery

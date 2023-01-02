@@ -29,4 +29,4 @@ return (
     </Layout>
 )
 
-NOTE = In _app the component is the page itself
+NOTE = In _app the component is the page itself 

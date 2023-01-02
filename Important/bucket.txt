@@ -29,3 +29,9 @@
     - layout = Done
     - _app = Done
     - _document
+
+
+hooks 
+react.memo 
+when the component renders and when not 
+react lifecycles

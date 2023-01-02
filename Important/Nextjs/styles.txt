@@ -10,4 +10,4 @@ name Component.module.css
 
 and importing it as
 import styles from "./something"
-and we can make use of the classname as styles.className
+and we can make use of the classname as styles.className 

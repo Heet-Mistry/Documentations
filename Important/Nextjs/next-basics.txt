@@ -54,6 +54,9 @@ when we create the file inside the pages folder that file will directly be
 available for the route. In the pages we have to export the component as 
 default export.
 
+loclahost:port === localjost:port/index
+localhost:port/blog is the blog component in the pages
+
 # Nested routes in next.js 
 we can create the nested routes in next.js something like 
 blog -> blog/1 -> blog/2 etc
@@ -81,6 +84,7 @@ hook from the next/router.
 
 import {useRouter} from 'next/router'
 consr router = useRouter()
+router.query will be an object
 router.query.blogId == it will give the ID and we can make the API call
 for fetching the particular blog
 Here the ID can be anything string or a number, also whenwe have the dynamic route 
@@ -98,10 +102,10 @@ routes  where we can do it same as making the dirs.
 blog 
     - index 
     - [blogId] // dir 
-        - index 
+        - index // this is just the blogId route 
         - review // dir 
-            - index 
-            - [reviewId]
+            - index // this is fetching all reviews 
+            - [reviewId] // for specific review
 
 Inside the nested folder the query will be dynamic and nested so 
 we can fetch the blogId as well as the reviewId inside the [blogId] route with the 
@@ -132,11 +136,13 @@ we have to wrap the button inside the Link component
 Click me
 </Link>
 
+Always specify the whole route with the slash in the Link component.
+
 we can add one another prop inside the Link component which is replace prop 
 when we have the replace prop set on, it will not add the traversed urls in the 
 history stack rather when we click the back button after going to the route 
 where the replace prop is given it will take us to the root page from where we 
-have come here.
+have come here. The replace prop work on the directory basis. 
 
 we can also navigate programmatically with the help of the useRouter hook 
 const router = useRouter()
@@ -147,3 +153,6 @@ router.push("/products)
 for defining the custom 404 page we just have to define a page named 
 404.js inside the pages directory and inside it we can create the custom 
 404 styling and all. 
+
+Onething to remember that whenever the root page changes then the page will be 
+parsed from the _app file. 

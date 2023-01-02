@@ -36,12 +36,12 @@ why pre-render?
 
 
 There are two forms of pre-rendering 
-1. Static site generation 
-2. server side rendering 
+1. Static site generation  (SSG)
+2. server side rendering  (SSR)
 
 
 # Static Site Generation (SSG)
-A method of pre-rendering, where the HTML pages are generated at the buil time.
+A method of pre-rendering, where the HTML pages are generated at the build time.
 
 The HTML with all the data that makes up the content of the web page are generated 
 in advance when you build your application. Is is the recommended method 
@@ -176,7 +176,7 @@ export async function getServerSideProps(context){
     props:{
       articles:data,
       category
-    }
+    } 
   }
 }
 

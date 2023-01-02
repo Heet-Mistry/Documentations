@@ -1,0 +1,80 @@
+React component renders when there is initial render or there is a state change 
+in one of its ancestor parents. 
+
+Rendering is basically react calling the component. 
+
+>>>> Render and commit 
+1. Trigger the render 
+2. Rendering 
+3. Commit the render 
+
+for the initial render the react uses appendChild() for the DOM API to 
+update the DOM. For the re renders react will apply minimal necessary operations.
+
+After the rendering the browser will paint the screen. Rendering basically 
+takes the snapshot in the time. State generally works as the snapshot of the UI 
+in the time. When we set state only changes when the next render. 
+
+<button onClick={() => {
+  setNumber(number + 1);
+  setNumber(number + 1);
+  setNumber(number + 1);
+}}>+3</button>
+
+this will update the state to 1 not 3.
+
+
+When we trigger a new render it will first execute the current lines 
+of code which is remaining and then it will try to trigger the re render. React keeps 
+the state values fixed within one render's event handlers. 
+
+
+When we set the state variable it will queue another render, but sometimes we might
+want to perform the multiple operations on the value before queuing the next render.
+React batches the state updates. 
+
+React does not batch across multiple events like clicks but each event handlers 
+are handled seperately. 
+
+updater function when passed will only consider the updated state value of that 
+UI snapshot, while the simple state change will not consider the updated value
+while it will take that render's state value. 
+
+number =0;
+setNumber(number=>number+1) // number = 1
+setNumber(number+1) // number =1 
+
+number =0;
+setNumber(number+1) // number =1 
+setNumber(number=>number+1) // number = 2
+
+and when we replace the state change with just a value everything will be 
+replaced and the state value will be that one single value. Here the updater 
+function should be pure as they are ran during the rendering. 
+
+
+
+>> Managing state
+Tips for removing duplicate state variables 
+1. Does this state cause paradox = any non determining UI state 
+2. remove redundant state variables 
+3. we can determine some state based on other states 
+
+It is not recommended to mirror the props into the states 
+like 
+
+function someComp({prop}){
+    let [var,setVar] = useState(prop);
+}
+
+if we want to share the states between two components then we have to 
+make use of the lift the state up into their common parent component. 
+
+
+
+
+React.memo 
+sideffects 
+context 
+react lifecycle 
+custom hooks
