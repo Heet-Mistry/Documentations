@@ -1,2 +1,65 @@
 >> Extracting state logic into reducer 
 
+Reducers are basically helpful for decrease the complexity of the state logic
+and its updates. when the complexity of the component features grow we have to 
+handle the state updates neatly, we can fetch this state logic into a reducer 
+function. 
+
+In the reducer function we will have a state logic variables and some dispatch 
+action to update the state in the UI. so dispatch basically means that we are not 
+directly setting the state rather we are just directing an action that what we 
+are doing and the setting logic will stay somewhere else.
+
+dispatch({some details about what action we have to pass})
+the object passed to the dispatch is called the action. 
+
+step 1 ==> First we will convert all the setting logics into the dispatch action 
+step 2 ==> we have to write the reducer function which takes the current state 
+           an action and it will return a next updated state. 
+
+Always make use of the switch statemenets in the reducer it is a recomended practice. 
+
+
+Because the reducer function takes state (tasks) as an argument,
+ you can declare it outside of your component. This decreases the 
+ indentation level and can make your code easier to read.
+
+function tasksReducer(tasks, action) {
+  switch (action.type) {
+    case 'added': {
+      return [
+        ...tasks,
+        {
+          id: action.id,
+          text: action.text,
+          done: false,
+        },
+      ];
+    }
+    case 'changed': {
+      return tasks.map((t) => {
+        if (t.id === action.task.id) {
+          return action.task;
+        } else {
+          return t;
+        }
+      });
+    }
+    case 'deleted': {
+      return tasks.filter((t) => t.id !== action.id);
+    }
+    default: {
+      throw Error('Unknown action: ' + action.type);
+    }
+  }
+}
+
+
+
+import {useReducer} from 'react';
+const [tasks, setTasks] = useState(initialTasks); // this can be replaced by 
+const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+
+useReducer takes two argument 
+reducer function 
+initial state value
