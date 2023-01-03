@@ -72,9 +72,24 @@ make use of the lift the state up into their common parent component.
 
 
 
+>> Preserving and reseting the state 
+React keeps track of which state belongs to which component based on their place
+in the UI tree. 
 
-React.memo 
-sideffects 
-context 
-react lifecycle 
-custom hooks
+State is tied to the position in the tree. React will keep the state around for 
+as long as you render the same component at the same position. When the component 
+unmounts then its state will be gone. 
+
+React preserves the component's state as long as it is being rendered at the same 
+position in the UI tree. If we render the same component at the same place then 
+it will preserve the state. It is not the position inside the JSX but in the 
+UI tree. 
+
+When the state resets it will be resetted into all the sub tree down. 
+ if you want to preserve the state between re-renders, the structure of 
+ your tree needs to “match up” from one render to another. If the structure 
+ is different, the state gets destroyed because React destroys state when it 
+ removes a component from the tree.
+
+we can reset the state of the compoent by giving unique keys to the components. 
+keys are not globally unique they only specify the position within the parent. 
