@@ -92,3 +92,13 @@ so if we write git rebase main in feature then git will first check the common
 commit then it will check if anything is evolved in the main branch if there 
 then it will first put that in the commit history and then it will put 
 the feature branch on top of the final history. 
+
+
+merge = time wise commit history 
+rebase = put on the top no matter of time 
+
+when conflicts arrive the merge will create a resolve 
+conflict message while in rebase it will be same as
+the last commit of the source (the branch we are putting 
+somewhere)
+
