@@ -1,0 +1,38 @@
+React is the library for the UI development, it does not care about the routing 
+or the data management. 
+
+with the minimal tool chain we can initialize the project with the following.
+> npx create-react-app appname
+
+package manager = it lets us install, update and manage the third party 
+packages (yarn, npm)
+
+bundler = a bundler lets you write the code in a modular way and bundle it 
+together into small packages to optimize the load time.
+
+minifier = it makes the code more compact so that it can load faster.
+
+linter = this checks the code for the common mistakes. 
+
+
+## React without the toolchain 
+root is the element where the react tree will begin. 
+
+In the html we have to add a script cdn files, for react development and 
+react-dom development.
+
+const root = ReactDOM.createRoot(element)
+root.render(React.createElement(component or element,props,children))
+
+so rect basically creates the root and then make use of the append child method 
+for adding the children components. 
+
+so basically when we implement the react without the toolchain then we have to 
+add this extra code manually, we have to install babel for runing the JSX and all.
+
+so rather we should make use of the react toolchain npx.
+
+
+NOTE ==
+ReactDOM.render(WHAT TO RENDER, WHERE TO RENDER)
+root.render(react node)
