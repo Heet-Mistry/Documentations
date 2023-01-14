@@ -45,3 +45,18 @@ structure of the UI tree should be the same in the re renders.
 if we want to explicitely reset the state then we have to 
 explicitely render them at the different position. or else we 
 have to give the key props in the component.
+
+Whenever the react will render the same component in the same position the 
+state will be preserved, for tieing the states to the components we can here 
+also give the key to tell the react that, it should consider the right state 
+tied with that perticular key.
+
+let's say we are rendering a list of component which shows the name of the 
+contact and it has the expand state tied to it, and when pressed it will 
+show the email details, so when we render this as a list, and press
+the email button, then every time 
+the react will render the same components so the state is preserved for the 
+first component. so if we 
+reverse the list of the components, then the first component will get the 
+state it was in the first order. so for differentiating the components we have to 
+pass the key props so that it can tie the state to the respective component. 
