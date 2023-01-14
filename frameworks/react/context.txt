@@ -1,0 +1,174 @@
+In general times we sometimes pass the props to the child components from the 
+parent component, but sometimes it can become too much verbose when we have to 
+pass the props too much deeply.
+
+We can make use of the context for this case as it is easy, the context creates 
+some information and makes it available to the child components no matter how 
+much deep they are. 
+
+Sometimes in the UI tree, it can be the situation where when we pass the props, 
+it becomes the situation where, we have to pass those props to the very independent 
+components, even if they do not need them, till we reach the desired component. 
+This is called the "prop drilling".
+
+Context basically lets the parent to create some information and it will be 
+available to its child no matter how deeply they are. 
+
+# Step 1
+we have to create the context file from where we will export the context, so that 
+our components can use them.
+
+// LevelContext.js
+import { createContext } from 'react';
+export const LevelContext = createContext(1);
+
+The argument to the createContext is the default value of the context. 
+
+Then we have to make use of the useContext hook for fetching the context. So
+basicaly the useContext hook tells the react that it wants to use some context. 
+
+import { useContext } from 'react';
+import { LevelContext } from './LevelContext.js';
+
+export default function Heading({ children }) {
+  const level = useContext(LevelContext);
+  // ...
+}
+
+
+So first we have to create the context with some default value, after that, let say 
+we have a component section which provides its components some props, then we have 
+to wrap the children of the section component with the context provider, and give the 
+value we want as the props of the context provider, and after that when we use the 
+usecontext hook in the children it will take its closest context provider, and 
+get that value. 
+
+
+// section.js 
+import { LevelContext } from './LevelContext.js';
+export default function Section({ level, children }) {
+  return (
+    <section className="section">
+      <LevelContext.Provider value={level}>
+        {children}
+      </LevelContext.Provider>
+    </section>
+  );
+}
+
+
+// Heading.js 
+export default function Heading({ children }) {
+  const level = useContext(LevelContext);
+  switch (level) {
+    case 1:
+      return <h1>{children}</h1>;
+    case 2:
+      return <h2>{children}</h2>;
+    case 3:
+      return <h3>{children}</h3>;
+    case 4:
+      return <h4>{children}</h4>;
+    case 5:
+      return <h5>{children}</h5>;
+    case 6:
+      return <h6>{children}</h6>;
+    default:
+      throw Error('Unknown level: ' + level);
+  }
+}
+
+
+
+Here we can also make use of the context as like we can use and provide the 
+context from the same component. 
+
+
+// App.js 
+import Heading from './Heading.js';
+import Section from './Section.js';
+export default function Page() {
+  return (
+    <Section>
+      <Heading>Title</Heading>
+      <Section>
+        <Heading>Heading</Heading>
+        <Heading>Heading</Heading>
+        <Heading>Heading</Heading>
+        <Section>
+          <Heading>Sub-heading</Heading>
+          <Heading>Sub-heading</Heading>
+          <Heading>Sub-heading</Heading>
+          <Section>
+            <Heading>Sub-sub-heading</Heading>
+            <Heading>Sub-sub-heading</Heading>
+            <Heading>Sub-sub-heading</Heading>
+          </Section>
+        </Section>
+      </Section>
+    </Section>
+  );
+}
+
+// Section.js 
+import { useContext } from 'react';
+import { LevelContext } from './LevelContext.js';
+export default function Section({ children }) {
+  const level = useContext(LevelContext);
+  return (
+    <section className="section">
+      <LevelContext.Provider value={level + 1}>
+        {children}
+      </LevelContext.Provider>
+    </section>
+  );
+}
+
+
+// Heading.js 
+import { useContext } from 'react';
+import { LevelContext } from './LevelContext.js';
+export default function Heading({ children }) {
+  const level = useContext(LevelContext);
+  switch (level) {
+    case 0:
+      throw Error('Heading must be inside a Section!');
+    case 1:
+      return <h1>{children}</h1>;
+    case 2:
+      return <h2>{children}</h2>;
+    case 3:
+      return <h3>{children}</h3>;
+    case 4:
+      return <h4>{children}</h4>;
+    case 5:
+      return <h5>{children}</h5>;
+    case 6:
+      return <h6>{children}</h6>;
+    default:
+      throw Error('Unknown level: ' + level);
+  }
+}
+
+import { createContext } from 'react';
+export const LevelContext = createContext(0);
+
+
+If there is no provider near in the UI tree then the useContext will take the 
+default value given to the context. In react the context will go down deep 
+as much as the children are, and if we want to change the context value then 
+we have to wrap them into new context provider. 
+
+
+We should first think when we use the context, we should not directly use them. 
+There is nothing wrong in passin the props, it can be less error prone and more 
+intuitive, also we should think what we are passing down in props, let say we 
+pass the posts to the layout component, but it does not make any sense, rather we 
+shoudl pass them as a children props. <Layout>{children}</Layout>, we should 
+extract the components when needed. 
+
+
+Context is not limited to the static values. If you pass a different value on the 
+next render in the context provider, then the react will update all the components 
+reading it below, so the context can be used with the state easily. 
+
