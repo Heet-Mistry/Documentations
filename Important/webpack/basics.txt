@@ -10,12 +10,16 @@ in computers and servers to run the scripts outside the browsers.
 webpack is the module bundler and it is a helper tool which we can configure 
 as per our needs. 
 
+nextjs and the reactjs by default make use of the webpack for bundling the 
+files and maintaining the script files. 
+
 
 
 ## the main difference between dynamic import and static import 
 The main difference between the static import and the dynamic import is that 
 when we use the static import in a file, when the file is get loaded, the 
-code for the imported module will also be downloaded immediately, but in the 
+code for the imported module will also be downloaded immediately and all 
+of its dependecies will be traversed accordingly and code is dwnloaded, but in the 
 dynamic imports it will only be doownloaded when we do some action. 
 
 import(filename).then({default,namedExport}=>{
@@ -25,4 +29,7 @@ import(filename).then({default,namedExport}=>{
 
 The dynamic imports are converted into chunks and the dependencies are resolved.
 we can also give the name to the chunks if we do not give it then we have to 
-give the name using the magic comments. 
+give the name using the magic comments. If we do not give the names to the chunks 
+then there will be some hash key given to them as the name of that chunk. 
+
+In the next js, all the pages will be converted into the chunks by default. 

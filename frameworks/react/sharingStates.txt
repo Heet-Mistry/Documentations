@@ -23,7 +23,9 @@ ReactDOM api is for updating the DOM from the UI tree.
   when we render some other component at the place of that component 
   then the satets will be lost.
 
-> same component at the same position preserves the state 
+> same component at the same position preserves the state, here the catch is even 
+if we have same components with different props, and we change the order of them 
+then also the state will be tied to the position in UI tree.  
 
 e.g. 
 

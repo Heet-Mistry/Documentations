@@ -172,3 +172,4 @@ Context is not limited to the static values. If you pass a different value on th
 next render in the context provider, then the react will update all the components 
 reading it below, so the context can be used with the state easily. 
 
+ 

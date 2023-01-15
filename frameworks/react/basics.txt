@@ -36,3 +36,5 @@ so rather we should make use of the react toolchain npx.
 NOTE ==
 ReactDOM.render(WHAT TO RENDER, WHERE TO RENDER)
 root.render(react node)
+
+ReactDOM is the api to manipulate with the DOM and updating it. 

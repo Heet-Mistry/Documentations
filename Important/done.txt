@@ -1,29 +1,11 @@
 >> Important 
+
 info.txt
-rendering patterns.txt
-html 
-webpack 
-
-Javascript 
-base.txt 
-corejs.txt
-var.txt
-datatypes.txt
-dom.txt
-strings.txt
-modules.txt
-functions.txt
-destructuring.txt
-array.txt
-set.txt
-map.txt
-objects.txt
-oops.txt
+webpack.txt 
+react 
 
 
-adv.js 
-closures and scope chain 
-debouncing 
-currying
-function binding
-git
+remaining  
+> choosing the state structure 
+> exercises from choosing the state structure
+> hooks 

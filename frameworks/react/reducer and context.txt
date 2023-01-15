@@ -147,3 +147,22 @@ const initialTasks = [
   { id: 2, text: 'Drink matcha', done: false }
 ];
 
+
+
+## Quick note
+function reducer(state,action){
+  switch(action.type){
+    return the new state based on the state
+  }
+}
+
+function useReducer(reducer,initialState){
+
+  const [state,useState] = useState(initialState)
+  function dispatch(action){
+    const nextState = reducer(state,action)
+    setState(nextState);
+  }
+  return [state,dispatch]
+}
+

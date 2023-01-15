@@ -174,7 +174,8 @@ we can generate the random unique keys by random uuid package.
 > keys must be unique in the sibilings 
 > we can have two same keys inside the different arrays
 
-It is recommended that we do not put the key as the index of teh array element.
+The fragement tag written explicitely will let us to put the key props, we can 
+not put the key prop in the <></> tag. 
 
 
 Keep the react component pure >>

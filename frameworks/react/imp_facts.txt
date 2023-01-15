@@ -61,7 +61,8 @@ Tips for removing duplicate state variables
 3. we can determine some state based on other states 
 
 It is not recommended to mirror the props into the states 
-like 
+like because what if the parent will pass some different prop, 
+then the UI will not change here. 
 
 function someComp({prop}){
     let [var,setVar] = useState(prop);
@@ -93,3 +94,11 @@ When the state resets it will be resetted into all the sub tree down.
 
 we can reset the state of the compoent by giving unique keys to the components. 
 keys are not globally unique they only specify the position within the parent. 
+
+
+## Principles for chosing the state structure 
+1. Grouping the related state = when two things change together 
+2. Avoiding the contradicting state = when the UI becomes inconsistent in state 
+3. Avoid redundant states = if we can calculate something from other thing 
+4. Avoid duplication = we should not store the same or the partial state 
+5. Avoid too much nesting of states = objects are not really that nested
