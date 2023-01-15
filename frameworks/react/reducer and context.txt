@@ -63,3 +63,32 @@ const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
 useReducer takes two argument 
 reducer function 
 initial state value
+
+and it returns 
+a nest stateful value 
+and a dispatch function which will change the state accordingly
+
+some downsides of useReducer
+> CODE SIZE GETS HIGH 
+> READABILITY ISSUE, AS THE USESTATE IS  MORE READABLE 
+> DEBUGGING IS EASY IN REDUCER 
+> TESTING IS EASY IN REDUCER AS THE REDUCER FUNCTION IS THE PURE FUNCTION 
+
+NOTE 
+REDUCERS MUST BE PURE FUNCTION SAME AS THE STATE UPDATER FUNCTIONS THEY SHOULD NOT 
+PERFORM ANY SIDE EFFECTS
+
+
+## scaling up with the reducer and the context 
+reducer is used to keep the event handler logic to concise and the context helps to 
+pass the data down deeply. 
+
+generally we put the reducer at the top of the components and then we send them as 
+the props to the child components, but it can be cumbersome when there is situations 
+like prop drilling. 
+
+so we can create two context stateContext and the dispatchContext and it will 
+be passed down in the tree with the context provider and we can access them in the tree.
+
+A function is called custom hook if its name starts with the use and the custom 
+hooks let us to use other hooks inside it. 
