@@ -153,7 +153,7 @@ export default function Heading({ children }) {
 import { createContext } from 'react';
 export const LevelContext = createContext(0);
 
-
+ 
 If there is no provider near in the UI tree then the useContext will take the 
 default value given to the context. In react the context will go down deep 
 as much as the children are, and if we want to change the context value then 
