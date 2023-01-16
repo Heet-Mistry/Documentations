@@ -9,6 +9,7 @@ called inside the nested blocks.
    a function to update the state.
 
 - also the react ensures the setState function identity is stable 
+here by the indentity we mean its reference value
 and won't change on the rerenders. so it is safe to omit from 
 the useEffect and useCallback deps list. 
 
@@ -31,6 +32,12 @@ a problem because react will not go deeper in the tree.
 clicking a button twice and these are the updates that are handled 
 seperately and do not get batched. 
 
+When we update the state with the same previous value then the react will bail out 
+the renders and do not go deeper into firing the events or childrens, it uses the 
+Object.is comparison algorthm. 
+
+React automatically batches te state updates and it also make sure that the logical 
+behaviour of the app reamains the same.
 
 2. useCallback() == this returns the memoized callback.
 const memoizedcallback = useCallback(
@@ -51,6 +58,7 @@ and then send it to the children and children has some useEffect
 and it will only run when the function changes)\
 
 
+NOTE
 it is recommended to use the exhasutive-deps as the plugin in the eslint 
 react hooks to auto fill the deps. 
 
@@ -69,20 +77,30 @@ rendering so we should not include any side effects in useMemo
 NOTE = Side effects does not belong to the useMemo they should be in 
 the useEffect()
 
+if no array is provided into the useMemo then it will run on every render. 
+
 
 4. useEffect() == for introducing the side effects, basically it 
-is mainly used for the data fetching when something changes.
+is mainly used for the data fetching when something changes, or introducing the 
+side effects.
 
 Mutations, subscriptions, timers, logging, and other side effects are not 
 allowed inside the main body of a function component (referred to as React’s 
 render phase). Doing so will lead to confusing bugs and inconsistencies in the 
 UI.
 
+the useEffect will run after the render is commited to the screen, so basically after
+the browser paint first the cleanup effects will run and then the useEffect will run. 
+in case of the layoutEffect it will run before the browser paint. 
 
 useEffect(()=>{
   // this code will run when the component renders
   // everytime because we have not passed any dependency
 },[]); // SO THIS IS FOR THE ONMOUNT EXECUTION
+
+when we give the empty array as the deps list, then the effect will run on the 
+mounting phase only. if we do not specify the array then it will run on every render 
+which is not generally a usecase. 
 
 even if we give the dependency list, at the initial mount the useEffect will 
 run because mainly we give the state as the dependency list, so 
@@ -171,12 +189,12 @@ const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 components are unmounted when the parent component is no longer rendered or 
 the parent component performs the update that does not render this instance.
 
-useEffects run before the browser paint.
+useEffects run after the browser paint.
 [] == means it will run only once 
 nothing as the second argument == it will run everytime when the component 
 renders
 
-
+In the useEffect always specify the respective props property
 
 5. useRef() === 
 let say we want to show how many times the component rendered. useRef when 
@@ -230,14 +248,3 @@ NOTE
 React components renders if the state changes 
 if the parent component renders then it will re render all of its childrens 
 if the props changes
-
-
-
-
-
-
-
-=== remaining things
-react life cycles
-fetch API
-useQuery
