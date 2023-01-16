@@ -1,0 +1,146 @@
+HTML = Hyper text markup language 
+it decides the content of the web or the structure of the web page
+
+CSS = Cascading style sheets 
+it decides the styles and layout of the webpage 
+
+Javascript
+Javascript is for the interactivity 
+
+Webpages should be forward compatible, it has to be resilient in changes in the 
+technology, as all the browsers run the web. 
+
+After we write the HTML, the browser will create the document object tree, or the 
+document object model for working and manipulating with the html markup tree. Based 
+on the DOM tree the browser will also create and accessibility tree. 
+
+## HTML Tags 
+<p></p> == Paragraph tags
+
+<h1></h1> == Headlines when we go to h1 to h6 the font size will decrease
+
+<i></i> == this is for only the visual italics 
+<em></em> == for the semantic or human emphasize (provided by the designers)
+
+<b></b> == this is for the visual bolding
+<strong></strong> == it is like semantic or human strong meaning
+
+
+## Lists in the HTML 
+1. ordered lists 
+2. unordered lists 
+3. definition lists 
+
+<li> stands for the list items
+
+<ul> = for the unordered lists
+<ol> = for the ordered lists
+
+By default the ordered lists will list the items with the numbered items, but we can 
+here give the type attribute so that we can give the different types. 
+
+- a for lowercase letters 
+- A for uppercase 
+- i for lower romman letters 
+- I for upper roman letters 
+- 1 for the numbered lists
+
+Here we can also put the key value term list where we want to pair the key and 
+its description so that design terms it can get grouped. 
+
+<dl> = for the definition list 
+<dt> = for the definition term 
+<dd> = for the description of the key term
+
+<dl>
+    <dt>
+        <dd></dd>
+    </dt>
+</dl>
+
+<q> tag for quoting the tags inline 
+<blockquote> for the blocks context and quoting
+
+<time datetime="some dating format">put here date in any format</time>
+The machine readable format for the date and the 
+time is YYYY-MM-DD. (Look more into docs)
+
+
+HTML Entities 
+&lt == <
+&gt == > 
+&amp == &
+&nbsp == non breaking space
+
+Non breaking spaces are useful when we want some words separated by the spaces to 
+be displayed together always. 
+
+<code> tag for writing something code 
+<br> this is the break line
+<pre> this is element is for respecting the spaces in the content, as the HTML wraps 
+the white spaces and the content, we can make use of the pre element and it will 
+respect the whitespaces. 
+
+<sub> for the subscript 
+<sup> for the superscript
+<small> for putting the text as lower importance
+
+
+aria roles provides the accessibe information about the specific element. this is 
+useful to make sure that the functionality of the web aplication is fuly accessible to 
+everyone. 
+
+sometimes in the accessibility purposes, the accessibility tree does not result in 
+something we want.
+
+<h1>
+    <div>
+        <span>H</span>
+        <span>i</span>
+        <span>i</span>
+    <div>
+</h1> 
+
+In normal accessibility tree it will be read as the H, I, I but we have to read it 
+as Hii for that we can make use of the aria properties. 
+
+we can give the aria-label to the parent element, and we can group all the child 
+and then give them aria-hidden = true, this will remove that element and all of 
+its children from the acessibility tree. 
+
+give <h1 aria-label="Hii">
+<div aria-hidden=true>
+
+<a href="some hyper link">some text</a> = anchor tag
+absolute URL has https in the href
+HTTP = Hyper text transfer protocol
+
+SVG = Scalable vector graphics
+
+In the image tag when we give the srcset attribute and we will have to list their 
+many different wide pixel images, then the browser will automatically decide which 
+is the best picture that needs to be displayed in the screen. 
+
+we can wrap the image element in the figure tag and we can give the caption with the 
+figcaption element to the image tag. 
+
+we can also make use of the subtitles for the video, for doing that we have to put the 
+track element inside the video tag and point to the subtitles file, it will have the 
+subtitle option in the video, we can also give the labels and default parameter for 
+making the subtitle default and all. 
+
+But it is not recommended to use the video and the audio elements like this rather 
+we should use the iframe or make use of the embedding of the other video or audio 
+elements, it is more recommended.The reason behind this is html elements does 
+not support adaptive bit rate streaming. 
+
+we can also tell the computer what is the content written in the language, we can 
+specify it by using the lang attribute, and we can make use of the charset UTF-8 which 
+is the modern charset which has almost each and every character. we can also 
+tell the computer how the langage should be read like left to right or right to left.
+
+the title in the head tag is the text which will be get displayed when someone bookmarks 
+the website. 
+
+
+
