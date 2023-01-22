@@ -227,3 +227,290 @@ then.
 let a = (args)=>{function body}
 let a = ()=>something we want to return
 
+the forEach runs the function with the this = undefined by default
+
+arrow functions do not have this, so they can not be used as the construtors, they 
+can not be used with the new syntax. 
+
+Arrow functions do not create the binding, as the normal functions, in the arrow function 
+there is no this so, the lookup for the this will be same way as the search of the 
+regular variables, from the outer lexical environment. 
+
+arrow function does not have aruguments variable. 
+
+
+** Decorators and forwarding call/apply **
+
+
+1. Transparent caching
+let say we have a function which is called slow(x) and it is is very CPU heavy, 
+we can make use of the caching to reduce the time and computations, but rather then 
+altering the slow function we should create a wrapper around the target function for 
+the caching behaviour.
+
+function cachingDecorator(func){
+  let cache = new Map();
+
+  // the wrapper
+  return function(x){
+    if(cache.has(x)) return cache.get(x);
+    let result = func(x)
+    cache.set(x,result)
+    return result;
+  }
+}
+
+slow = cachingDecorator(slow)
+so the decorator returns the cached wrapper around the main function. 
+
+
+
+2. Using func.call for the context 
+we can not use the direct caching wthout the context in the object methods 
+
+// we'll make worker.slow caching
+let worker = {
+  someMethod() {
+    return 1;
+  },
+
+  slow(x) {
+    // scary CPU-heavy task here
+    alert("Called with " + x);
+    return x * this.someMethod(); // (*)
+  }
+};
+
+// same code as before
+function cachingDecorator(func) {
+  let cache = new Map();
+  return function(x) {
+    if (cache.has(x)) {
+      return cache.get(x);
+    }
+    let result = func(x); // (**)
+    cache.set(x, result);
+    return result;
+  };
+}
+
+alert( worker.slow(1) ); // the original method works
+worker.slow = cachingDecorator(worker.slow); // now make it caching
+alert( worker.slow(2) ); // Whoops! Error: Cannot read property 'someMethod' of undefined
+
+for solving this problem we can make use of the function.call method which helps 
+to specify the context, while running the function.
+
+func.call(context,arg1,arg2,arg3..)
+
+
+function sayHi() {
+  alert(this.name);
+}
+let user = { name: "John" };
+let admin = { name: "Admin" };
+// use call to pass different objects as "this"
+sayHi.call( user ); // John
+sayHi.call( admin ); // Admin
+
+
+function say(phrase) {
+  alert(this.name + ': ' + phrase);
+}
+let user = { name: "John" };
+// user becomes this, and "Hello" becomes the first argument
+say.call( user, "Hello" ); // John: Hello
+
+
+
+let worker = {
+  someMethod() {
+    return 1;
+  },
+
+  slow(x) {
+    alert("Called with " + x);
+    return x * this.someMethod(); // (*)
+  }
+};
+
+function cachingDecorator(func) {
+  let cache = new Map();
+  return function(x) {
+    if (cache.has(x)) {
+      return cache.get(x);
+    }
+    let result = func.call(this, x); // "this" is passed correctly now
+    cache.set(x, result);
+    return result;
+  };
+}
+
+here the this will be the worker because the this of the wrapper function 
+is evaluated to be the worker and we are passing that. 
+
+worker.slow = cachingDecorator(worker.slow); // now make it caching
+
+alert( worker.slow(2) ); // works
+alert( worker.slow(2) ); // works, doesn't call the original (cached)
+
+
+
+3. Going multi argument
+we can make the decorator more universal with any number of aguments
+
+there can be many ways to remember the permutations of the arguments to cache 
+into the map, like we can make use of the nested map, but it will take more memory and 
+there will be too much nesting, or we can create our own map like data structure.
+
+or we can join two values into one. basically our own hash function. 
+
+let worker = {
+  slow(min, max) {
+    alert(`Called with ${min},${max}`);
+    return min + max;
+  }
+};
+
+function cachingDecorator(func, hash) {
+  let cache = new Map();
+  return function() {
+    let key = hash(arguments); // (*)
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+
+    let result = func.call(this, ...arguments); // (**)
+    cache.set(key, result);
+    return result;
+  };
+}
+
+function hash(args) {
+  return args[0] + ',' + args[1];
+}
+
+worker.slow = cachingDecorator(worker.slow, hash);
+alert( worker.slow(3, 5) ); // works
+alert( "Again " + worker.slow(3, 5) ); // same (cached)
+
+
+there is also an another method for the func.apply which does the same thing but 
+the main difference here is that the func.apply expects the args as the 
+array of the arguments while the call will expect the destructured arguments. 
+
+passing all arguments along with the context to another function is called 
+the call forwarding. 
+
+here the arguments parameter can be both array or aray like. so for the hash function 
+let say we have too many keys then we have to join them but join method is only there 
+in teh array so we have to make use of the method borrowing.
+
+[].join.call(arguments)
+
+here we have given the context as the arguments, this is because of the specification 
+of the join method, if no glue is there then it will put , by default. 
+
+So, technically it takes this and joins this[0], this[1] …etc together. 
+It’s intentionally written in a way that allows any array-like this 
+(not a coincidence, many methods follow this practice). That’s why it also works 
+with this=arguments.
+
+
+** function binding **
+When we pass some function to some other function, then there is always a problem 
+lies of loosing the this. for an example when the method is passed somewhere else 
+from the object then the this will be lost. 
+
+in the setTimeout the this becomes the window object. in the browser.
+
+simplest solution 
+
+1. wrap the function 
+let user = {
+  firstName: "John",
+  sayHi() {
+    alert(`Hello, ${this.firstName}!`);
+  }
+};
+
+setTimeout(function() {
+  user.sayHi(); // Hello, John!
+}, 1000);
+
+
+here we want that the settimeout runs in the non updated context, when updated 
+it should still run in the previous context, but if before the 1000ms the object 
+changes then the user.sayHi will run on the latest updated object.
+
+
+2. bind 
+functions have there own inbuilt methods for providing the this to bind it with the 
+function context. 
+
+let boundedfunc = func.bind(context)
+the boundedfunc is the function like exotic object which is callable and 
+it has the this as the context. 
+
+let user = {
+  firstName: "John"
+};
+function func() {
+  alert(this.firstName);
+}
+let funcUser = func.bind(user);
+funcUser(); // John
+
+
+
+let user = {
+  firstName: "John",
+  sayHi() {
+    alert(`Hello, ${this.firstName}!`);
+  }
+};
+
+here the context is the same as the non updated object
+let sayHi = user.sayHi.bind(user); // (*)
+
+// can run it without an object
+sayHi(); // Hello, John!
+
+setTimeout(sayHi, 1000); // Hello, John!
+
+// even if the value of user changes within 1 second
+// sayHi uses the pre-bound value which is reference to the old user object
+user = {
+  sayHi() { alert("Another user in setTimeout!"); }
+};
+
+
+
+** partial functions **
+we can not only bind the this but we can also bind the arguments 
+
+let bound = func.bind(context, [arg1], [arg2], ...);
+if the func takes three arguments and in the bind we give only two then 
+the first two will be initialized to them. 
+
+function mul(a, b) {
+  return a * b;
+}
+
+let double = mul.bind(null, 2);
+
+alert( double(3) ); // = mul(2, 3) = 6
+alert( double(4) ); // = mul(2, 4) = 8
+alert( double(5) ); // = mul(2, 5) = 10
+
+the use of the partial function is that when we have an universal function 
+and when we want to make some more common less universal partial function,
+here we have the mul from that we can create the double tripple etc from that. 
+
+For instance, we have a function send(from, to, text). Then, inside a user object 
+we may want to use a partial variant of it: sendTo(to, text) that sends from the 
+current user.
+
+
+
+** going partial without context **

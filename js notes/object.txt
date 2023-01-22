@@ -571,7 +571,116 @@ allows to query the full information about the property.
 obj = the object for get the information from 
 propertyName = the name of the property 
 
-returned value is the property descriptor, it contains the value and all the flags.
+returned value is the property descriptor, it contains the value and all the flags
+information.
+
+
+let user = {
+  name: "John"
+};
+
+let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
+alert( JSON.stringify(descriptor, null, 2 ) );
+/* property descriptor:
+{
+  "value": "John",
+  "writable": true,
+  "enumerable": true,
+  "configurable": true
+}
+*/
+
+
+for changing the flags we have to use the method Object.defineProperty()
+
+Object.defineProperty(obj,propertyName,descriptor)
+property descriptor object to apply 
+
+if the property already exists then the define property will updates the flag 
+otherwise it creates the property with the given value and flags, if the 
+flag is not specified then it will be assumed false. 
+
+let user = {};
+Object.defineProperty(user, "name", {
+  value: "John"
+});
+let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
+alert( JSON.stringify(descriptor, null, 2 ) );
+/*
+{
+  "value": "John",
+  "writable": false,
+  "enumerable": false,
+  "configurable": false
+}
+ */
+
+if writable false = the property will not be changed.
+
+errors will only be shown in the strict mode. 
+
+Normally, a built-in toString for objects is non-enumerable, it does not 
+show up in for..in. But if we add a toString of our own, then by default it 
+shows up in for..in, like this:
+
+et user = {
+  name: "John",
+  toString() {
+    return this.name;
+  }
+};
+// By default, both our properties are listed:
+for (let key in user) alert(key); // name, toString
+
+let user = {
+  name: "John",
+  toString() {
+    return this.name;
+  }
+};
+Object.defineProperty(user, "toString", {
+  enumerable: false
+});
+// Now our toString disappears:
+for (let key in user) alert(key); // name
+
+NOTE : Non enumerable properties are also excluded from the Object.keys()
+
+the non configurable property can not be modified or deleted.
+
+NOTE :
+configurable false prevents the changes of property flags and its deletion,
+while allowing to change its value. 
+
+THE ONLY ALLOWED CHANGE OF THE PROPERTY FLAG IS WRITABLE 
+we can change the writable property flag from true to false and all.
+
+
+we can make use of the Object.defineProperties(obj,{
+  prop1:descriptor1,
+  prop2:descriptor2,
+})
+
+Object.defineProperties(user, {
+  name: { value: "John", writable: false },
+  surname: { value: "Smith", writable: false },
+  // ...
+});
+
+together with the object.defineProperties() it can be used to flag aware clonning 
+
+let clone = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj));
+
+when we clone the object normaly then we do not clone the flags
+for (let key in user) {
+  clone[key] = user[key]
+} in this case
+
+also the for in traversal does not include the symbolic and non enumerable 
+properties but the oBJECT.getOwnPropertyDescriptors returns all the property 
+descriptors symbolic and all non enumerable ones also. 
+
+
 
 
 ** Object getters and setter **
@@ -609,3 +718,83 @@ user.fullName = "Alice Cooper";
 
 alert(user.name); // Alice
 alert(user.surname); // Cooper
+
+descriptros for the accessor properties are different from those of the data 
+properties. for the accessor properties there is no value or writable but there 
+will be get and set functions. 
+
+get – a function without arguments, that works when a property is read,
+set – a function with one argument, that is called when the property is set,
+enumerable – same as for data properties,
+configurable – same as for data properties.
+
+so for the instance for the creation of the accessor property fullName with the 
+define property method we have to pass the descriptor object with the get and the 
+set method. 
+
+let user = {
+  name: "John",
+  surname: "Smith"
+};
+Object.defineProperty(user, 'fullName', {
+  get() {
+    return `${this.name} ${this.surname}`;
+  },
+
+  set(value) {
+    [this.name, this.surname] = value.split(" ");
+  }
+});
+
+alert(user.fullName); // John Smith
+for(let key in user) alert(key); // name, surname
+
+
+There is the smarter convention that the properties which has the name starting with 
+the _ should not be touched from the outside world. 
+
+we can declare smart getters and setters for having more control over the properties.
+
+let user = {
+  get name() {
+    return this._name;
+  },
+
+  set name(value) {
+    if (value.length < 4) {
+      alert("Name is too short, need at least 4 characters");
+      return;
+    }
+    this._name = value;
+  }
+};
+
+user.name = "Pete";
+alert(user.name); // Pete
+user.name = ""; // Name is too short...
+
+>> Better usecase 
+
+let say we have the user object and we are storing the name and the bdate what 
+if we want the age we can create the smart getter and we can have the age property 
+as the getter, not the setter it is not the smart way.
+
+function User(name, birthday) {
+  // this = {}
+  this.name = name;
+  this.birthday = birthday;
+
+  // age is calculated from the current date and birthday
+  Object.defineProperty(this, "age", {
+    get() {
+      let todayYear = new Date().getFullYear();
+      return todayYear - this.birthday.getFullYear();
+    }
+  });
+
+  // return this;
+}
+
+let john = new User("John", new Date(1992, 6, 1));
+alert( john.birthday ); // birthday is available
+alert( john.age );      // ...as well as the age

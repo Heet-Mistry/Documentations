@@ -1,0 +1,49 @@
+debouncing is like do not call the function until some ms from the last call,
+so if there are frequent call then also the debouncer will be called from the 
+latest argument and then after the ms seconds.
+
+function debounce(f,ms){
+    let timer;
+    return function(){
+        clearTimeout(timer);
+        timer = setTimeout(()=>f.apply(this,arguments),ms)
+    }
+}
+
+so basically the debounce runs the function once after the cooldown period. while 
+the throttle runs the function not more often than given ms time. 
+
+in the case of throttling will run after the ms seconds no matter what, so it will 
+run in basically ms intervals.
+
+function throttle(func,ms){
+    let isThrottled = false;
+    let savedArgs = null,savedThis = null;
+
+    function wrapper(){
+        if(isThrottled){
+            savedArgs = arguments;
+            savedThis = this;
+            return;
+        }
+
+        isThrottled = true;
+        func.apply(this,arguments)
+
+        setTimeout(function(){
+            isThrottled = false;
+            if(savedArgs){
+                wrapper.apply(savedThis,savedArgs);
+                savedArgs = null;
+                savedThis = null;
+            }
+        },ms)
+    }
+
+    return wrapper;
+}
+
+so the throttling runs not more than once in ms time, so it is good for 
+updating screen in some time of interval, like accomodating with the mouse events and 
+all. in the duration of the ms miliseconds, all the calls are ignored. after the ms 
+it will put the latest call. 
