@@ -27,11 +27,37 @@ for(let key in array){
   arr[key]
 }
 
+NOTE 
+we should not make use of the for in method for the array traversal the for in is 
+developed specifically for the objects, and it will also list the keys which 
+are other then the indexed values. so we have to always make use of the for of. 
+
+
+The length property in the array is writable, and it can be changed, actually 
+the length is the largest index plus 1 in the array. When we declare the empty array 
+and then write f[length] = something then the length will be higher.
+
+If we truncate the length of the aray manually then we lost all the other data.
+
+let arr = [1, 2, 3, 4, 5];
+arr.length = 2; // truncate to 2 elements
+alert( arr ); // [1, 2]
+arr.length = 5; // return length back
+alert( arr[3] ); // undefined: the values do not return
+
 if we change the array.length property explicitely then the values in there will 
-also be changed.
+also be changed. The simplest way to clear the array is to write arr.length=0
 
 let arr = new Array("a",1,2)
-let arr = new Array(num) ==> it will create the new array of length num 
+let arr = new Array(num) ==> it will create the new array of length num and the 
+values will be undefined 
+
+arrays have their own implementation of the tostring() method, which returns the 
+comma separated values of the array. 
+
+let arr = [1, 2, 3];
+alert( arr ); // 1,2,3
+alert( String(arr) === '1,2,3' ); // true
 
 when we do something on the array then first it will be converted into the string 
 [] ==> ""
@@ -39,6 +65,9 @@ when we do something on the array then first it will be converted into the strin
 [1,2] ==> "1,2"
 
 [] +1 ==> "1"
+
+NOTE = WE SHOULD NOT COMPARE THE ARRAYS WITH THE EQUALS SIGN, AS THEY ARE LIKE 
+OBJECTS
 
 when we compare the premitives then they will automatically typecasted to the type 
 until they are not equal typed.
@@ -48,6 +77,9 @@ until they are not equal typed.
 
 we should not compare the arrays with the direct == operation we have to 
 check the values elementwise.
+
+The arrays while comparing first they will be converted to the string then the 
+comparison happens. 
 
 
 *** Array methods ***
@@ -80,9 +112,11 @@ arr.forEach((item,index,array)=>{
 
 // here the indexof follows the strict equality === comparisons 
 // also the includes method handles the NaN where the indexOf can not
-arr.indexOf(item,from) = returns the index if not found then -1
+arr.indexOf(item,from) = returns the index if not found then -1 (can not 
+handle the case of NaN)
+
 arr.lastIndexOf(item,from) = search from the right to left
-arr.includes(item,from) = return true or false
+arr.includes(item,from) = return true or false (this handles the NaN properly)
 
 let a = arr.find((item,index,arr)=> some bool condition) = the iterations is stopped 
 when the truth condition happends the the value is returned if not 
@@ -109,10 +143,11 @@ function compare(a,b){
     if(a<b) return -1; // negative means does not change
 }
 
-arr.reverse() = reverse the array 
+arr.reverse() = reverse the array in place
 
 let arr = string.split(separator,maxsplitcnt);
-when the seperator is '' it will split into the characters.
+when the seperator is '' it will split into the characters, and it will only 
+split to the maxsplicnt. 
 
 let str = arr.join('join operaotr')
 
@@ -122,6 +157,9 @@ computation.
 
 let value = arr.reduce((accumulator,item,index,arr)=>{
 },[initial])
+
+reduce in the case of the empty array and the no initial value provided will give 
+an error. 
 
 
 // example
@@ -143,3 +181,47 @@ alert(typeof []); // object (same)
 
 alert(Array.isArray({})); // false
 alert(Array.isArray([])); // true
+
+** Most methods support thisarg as the second argument **
+arr.find(func, thisArg);
+arr.filter(func, thisArg);
+arr.map(func, thisArg);
+
+here the value of the thisArg parameter becomes the this value for the function 
+executed. 
+
+let army = {
+  minAge: 18,
+  maxAge: 27,
+  canJoin(user) {
+    return user.age >= this.minAge && user.age < this.maxAge;
+  }
+};
+
+let users = [
+  {age: 16},
+  {age: 20},
+  {age: 23},
+  {age: 30}
+];
+
+// find users, for who army.canJoin returns true
+let soldiers = users.filter(army.canJoin, army);
+
+alert(soldiers.length); // 2
+alert(soldiers[0].age); // 20
+alert(soldiers[1].age); // 23
+
+A call to users.filter(army.canJoin, army) can be replaced with 
+users.filter(user => army.canJoin(user)), that does the same. 
+The latter is used more often, as it’s a bit easier to understand for most people.
+
+arr.some(fn) or arr.every(fn)
+these methods will return the true if some or every element will follow 
+specified condition in the function. 
+
+function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
+
+for shuffling the array

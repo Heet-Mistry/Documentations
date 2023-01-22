@@ -28,6 +28,7 @@ str.includes(substr,pos)
 str.startsWith(substr)
 str.endsWith(substr)
 str.slice(start,end)
+str.substring(start,end) = returns the substring with start and the end-1
 str.substr(start,length) = returns the substring from the start with given length
 str.trim() = for removing the spaces from the beginning and the end
 

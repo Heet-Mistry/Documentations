@@ -3,7 +3,7 @@ here is that it can allow any type of keys here. In the object the type will
 be converted into the string so.
 
 new Map() = creates the map 
-map.set(ley,value) = stores the key value
+map.set(key,value) = stores the key value
 map.get(key) = returns the value and if not exist then undefined 
 map.has(key) = returns true if key exis else false 
 map.delete(key) = removes the value by the key 
@@ -13,15 +13,29 @@ map.clear() = clear the whole map
 general object converts the key into the string, but map keeps the type so it is
 different in that way.
 
+we should not use the map[key] for assigning or reading the values.
+because there are some limitations, the key here is only allowed as the 
+string or the symbol. 
+
+map can also make use of the object as the keys. which we can not use in the 
+objects. if we use the object as the key in the onjects then what actully 
+gets as the key is "[object Object]"
+
+In the map NaN also can be the key, basically the map uses the === for comparison 
+but it also handles the case of the NaN.
+
+
 every map.set call returns the map itself so we can use the chaining 
 map.set(x,a).set(a,c)
 
-map.keys() = returns the keys of the map
+map.keys() = returns the iterables of the keys of the map
 map.values() = returns the iterable of values
 map.entries() = returns the iterable [key,value]
 
 for let [k,v] of map.entries() it is the same as the for let[k,v] of mp
 for let k of mp.keys()
+
+map preserves the order in which the keys are inserted. 
 
 map.forEach((value,key,mp)=> some computation)
 

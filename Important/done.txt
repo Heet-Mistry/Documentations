@@ -3,7 +3,25 @@
 info.txt
 webpack.txt 
 react 
+html 
 
+javascript 
+core
+base
+error handling
+alert and prompt 
+var
+datatype 
+string
+functions
+closures and lexical chain
+
+javascript.info 
+topics
+1,2, 
+
+5 = till array 
+10 = error handling
 
 
 

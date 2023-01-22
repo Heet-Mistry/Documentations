@@ -8,11 +8,55 @@ browser to treat the script as the module, by <script type="module">
 
 Modules are by default defered in javascript.
  
-- modules always work in the strict mode 
+- modules always work in the strict mode (assigning to undeclared variable gives error) 
 - The modules code will be evaluated only the first time it is imported
   after that no matter how many times we import it it will take the same 
   executed script
-- In a module this will be undefined 
+- In a module this will be undefined this is due to the strict mode
+
+we can tie a variable to the window object for making it global 
+by doing like window.varname = some var, then each and every script will be 
+able to see it. 
+
+import.meta contains the information about the module. 
+such as import.meta.url 
+
+if we import the scripts in the plain HTML then, we have to make sure that 
+we import it in the correct order. because, they are executed in the same order 
+they are put in the document. 
+
+for the non module scripts the async attribute works only in the external scripts,
+not on the inline scripts. In the module scripts, the async works also in the 
+inline scripts = the usecase here is when the script is not dependent on anything 
+like ads and all. 
+
+if we put two script with the same src in the html document, then it will run only once
+when the type is the module. 
+
+also the bare modules are not allowed, we have to put some path or url for the import 
+statement. 
+
+<script type="module">
+  alert("Runs in modern browsers");
+</script>
+
+<script nomodule>
+  alert("Modern browsers know both type=module and nomodule, so skip this")
+  alert("Old browsers ignore script with unknown type=module, but execute this.");
+</script>
+// usecase is when old browser does not understand the module scripts
+
+unused exports removed = tree shaking
+minification = spaces removed and all, variables replaced with the shorter names
+unreachanble code is removed
+converting the bleeding edge js to simple = babel transpiler 
+
+if we use the bundler then the import and the exports are converted into special 
+bundler function, and all the files are combined into one single blob which we 
+can then import in the website. 
+
+<script src="bundle.js"></script>
+
 
 if the app is working in the older browser then maybe we want to put some message 
 then we have to enclose it inside the <script nomodule> tag.
@@ -64,8 +108,62 @@ export {something} from './asd';
 export {default as user} from './asf' // it is just the another notation for 
 the importing and then exporting
 
+export * from './user.js'
+this will ignore the default export so we have to explicitely export them
+
 for reexporting the default export we have to do it like 
 export {default} from './asd';
 
 
 NOTE : import and the exports should be at the top, it should not be the nested.
+
+>> Dynamic imports 
+The export and import path in the static imports and exports can only be the strings. 
+the path also can not be the function call. also we can not import conditionally at 
+the run time. 
+
+import(module) // dynamic syntax 
+
+here this syntax loads the module and returns the promise which resolves into the 
+module, and we can use it. 
+
+export function hi() {
+  alert(`Hello`);
+}
+
+export function bye() {
+  alert(`Bye`);
+}
+
+let {hi, bye} = await import('./say.js');
+hi();
+bye();
+
+
+// for the default exports
+let obj = await import('./say.js');
+let say = obj.default;
+// or, in one line: let {default: say} = await import('./say.js');
+say();
+
+
+Dynamic exports work in the regular scripts, they do not require script type="module"
+import() it is not the function call, it is a special syntax
+
+
+<!doctype html>
+<script>
+  async function load() {
+    let say = await import('./say.js');
+    say.hi(); // Hello!
+    say.bye(); // Bye!
+    say.default(); // Module loaded (export default)!
+  }
+</script>
+<button onclick="load()">Click me</button>
+
+
+let modulePath = prompt("Which module to load?");
+import(modulePath)
+  .then(obj => <module object>)
+  .catch(err => <loading error, e.g. if no such module>)

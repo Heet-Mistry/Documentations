@@ -1,6 +1,6 @@
 new Set(iterable) = for creating the set 
-set.add(value)
-set.delete(value)
+set.add(value) =  ads the value and returns the set itself
+set.delete(value) = removes the value and returns true if existed else return false
 set.has(value)
 set.clear()
 set.size
@@ -11,3 +11,5 @@ set.forEach((value,value,set)=> some computation )
 set.values() = arr of values 
 set.keys() = arr of value
 set.entries() = iterator of pair [value,value]
+
+Array.from(some iterable) = for creating the array from the set 

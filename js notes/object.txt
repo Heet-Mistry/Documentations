@@ -44,6 +44,13 @@ let obj = {
 
 NOTE = In the objects if we give some key as the litral other then the string 
 then the given value will be converted to the string by default automatically.
+even if we use the number then it will be converted into the string. 
+
+we can not set the __proto__ property of any object to a non object type, it will not 
+work. 
+
+null = for unknown and empty values 
+undefined = for not defined
 
 For checking if some key exist in the object we can make use of the in operator 
 > "key" in obj => true/false ===> it is recommended to check it with this for 
@@ -54,6 +61,14 @@ for(let key in obj){
   log(obj[key]);
 }
 here it is same for the arrays because arrays are also one sort of objects.
+
+If we store the objects in the integer properties then the keys will be sorted 
+but if there are any non integer property then the keys will appear as they 
+are listed. And the number properties will be converted into the string. 
+
+One of the main difference between the object and the primitive types is that 
+objects are stored as the reference while the primitves are stored as the values.
+
 
 we can also iterate in the object by doing like 
 for(let [k,v] of Object.entries(obj)){
@@ -72,19 +87,140 @@ let a = {}
 let b = {}
 a==b ==> false because the reference is different
 
+when the objects are compared with the comparison operator, first the 
+objects are converted into the primitives. 
+
+for copying the objects we can iterate over the values and manually assign them. rather 
+we can make use of the Object.assign method
+
+Object.assign(dest,...sources)
+the dest is the object in which we want to copy the items 
+and the sources are the list of the objects from which we want to take the properties.
+
+let user = { name: "John" };
+let permissions1 = { canView: true };
+let permissions2 = { canEdit: true };
+
+// copies all properties from permissions1 and permissions2 into user
+Object.assign(user, permissions1, permissions2);
+
+// now user = { name: "John", canView: true, canEdit: true }
+alert(user.name); // John
+alert(user.canView); // true
+alert(user.canEdit); // true
+
+If the properties already exists, it will be overwritten. the Object.assign returns 
+the object also, which is of the same reference of the dest. 
+
+let clone = Object.assign({}, another Object);
+it can be used for the shallow copying, but for the deep copy we have to 
+iterate over the values and then make use of the clonning everywhere. 
+
+For the nested clonin we have to make use of the structured
+let cloned_obj = structuredClone(object)
+
+but this method fails when we have the function property inside the object. 
+
+
+** Garbage collection in javascript **
+The memory management in the javascript happens automatically, the main concept in 
+the javascript memory management is reachability. reachable values are those which 
+are accessible or usable somehow. they are guranteed to be stored in the memory.
+
+A base set of inherently reachanle values.
+- currently executing functions, its variables and parameters
+- other function on the current chain 
+- global variables 
+( these are called the roots )
+
+Any other value is considered reachable if it is rechanble from the root elements.
+by reference or the chain of reference. 
+
+For instance, if there’s an object in a global variable, and that object has a 
+property referencing another object, that object is considered reachable. And 
+those that it references are also reachable. Detailed examples to follow.
+
+There is a background process in the javascript engine which is called the grabage 
+collector, it monitores all the objects and removes that has become unreachable.
+
+let user = {
+  name:"some name"
+}
+
+here the user has the reference to the object, and the property name is inside the 
+user, so if we do user = null then, there is no way to access the name property 
+so the garbage collector will automatically junks the object. 
+
+the delete operator actually deletes the reference to the object, when the 
+object is not needed then it will be deleted by the grabage collector. in simpler 
+words we can say that when the object has not incoming links then it will be junked. 
+basically one reference point to the other object and the link has the name same 
+as the property. 
+
+if we directly override the main reference variable to null then all the 
+interlinked references will be lost and junked. 
+
+Garbage collection algorithm = mark and sweep, which is same as the DFS, first we 
+will try with the root nodes and mark them and then start to visit their references 
+and also mark them, untill every reachable node is marked. then the non rachable will 
+be deleted. 
+
+There are some optimizations that garbage collection perform.
+1. generational collection = here there are two sets, new ones and the old ones,
+in some code some objects have shorter time spans, they appear do their job and die 
+, so those who survive for long enough become old and are examined less often. 
+
+2. incremental collection = if there are many objects then the whole set is 
+splitted into multiple parts and and clear these parts one after another. 
+
+3. idle time collection = the garbage collection happens when the CPU is idle
 
 
 
 *** This pointer in the objects ***
+The function which is the property of the object is called the method. OBJECTS
+represents the real world entities. 
+
 The value of the this is the object before the dot. The value of the this pointer 
 is evaluated at the runtime depending on the context. Rathet then the other 
 programming languages the this pointer in the javascript is not bound, it does
 not depend on the method where it is created but it is dependent on the method 
-where it is called inside the code.s
+where it is called inside the code.
 
-Also the arrow function in the javascript have no this. Do not use the arrow 
-function in the object methods where we are using the this pointer.
+The main pros of the free this is that the function can be reused for the 
+different objects. 
 
+Also the arrow function in the javascript have no this. If we use the this inside 
+the arrow function then it will take the this from the outer normal function. 
+Do not use the arrow function in the object methods where we are using the 
+this pointer.
+
+let user = {
+  firstName: "Ilya",
+  sayHi() {
+    let arrow = () => alert(this.firstName);
+    arrow();
+  }
+};
+user.sayHi(); // Ilya
+
+
+
+function makeUser() {
+  return {
+    name: "John",
+    ref: this
+  };
+}
+let user = makeUser();
+alert( user.ref.name ); // Error: Cannot read property 'name' of undefined
+// Here the ref is created at the makeUser() call so the this, and the this will 
+be undefined for this case. 
+
+this == Object itself
+
+
+** Object construtor syntax **
 we can create the objects using the object literal syntax and also we can 
 make the object with the function constructor syntax.
 
@@ -97,17 +233,59 @@ function User(name){
 
 let obj = new User("dhairya")
 
+we can immediately call the function constructor when we have too many lines of code 
+and we will not use another time that constructor.
+
+let user = new function() {
+  this.name = "John";
+  this.isAdmin = false;
+  // ...other code for user creation
+  // maybe complex logic and statements
+  // local variables etc
+};
+
 when we execute the function in the new what happens is it will create the 
-new emty object and then it will assign it to this and then when the function 
+new empty object and then it will assign it to this and then when the function 
 body executes then it will then modifies the this.
+
+we can also check if the function is called with the new or in a simple way 
+by doing new.target in the function. if it is called with the new then it will 
+give the function itself otherwise it will give the undefined.
+
+function User() {
+  alert(new.target);
+}
+// without "new":
+User(); // undefined
+// with "new":
+new User(); // function User { ... }
+
+The construtor functions do not have the return type as they return the this, if they 
+have the return type then there are two rules. 
+
+- if the return type is the object then return the object ad ignore this 
+- if the return type is primitive then ignore the return statement
+
+not only the properties we can also make use of the, methods and add the methods 
+inside the constructor objects. 
+
 
 NOTE = Technically any functions can be used as the constructor except the 
 arrow function as they do not have the this pointers.
  
-Optional chaining ===> ?.
+** Optional chaining ** ===> ?.
+The DOM properties return the null when there is no specified DOM. 
+
 when we do it like obj?.prop?.otherProp ==> it will check each and every 
-property in the chain and it will stop when one is undefined or null and 
-it will return the undefined, it will not throw any error.
+property in the chain and it will stop when one is undefined or null before the 
+?. and it will return the undefined, it will not throw any error.
+
+the optional chaining works for the defined variables only, it will not work 
+if any of the variables is not defined. the optional chaining is not an operator 
+rather a syntax construct.
+
+we can also make use of this constructs with ?.() and ?.[], here the optional 
+chaining is used only for the fetching values, not for the writing values.
 
 
 for clonning the objects we can use the method assign 
@@ -224,8 +402,179 @@ the func.name gives the name of the function
 func.length gives the nmber of arguments. in the length the rest parameters 
 are not counted. 
 
+** Object to primitive conversion **
+When we operate over the objects then the objects are converted into the primtive types 
+and the operation occurs on that values. 
 
-Object getters and setter>>>
+All objects are true in the boolean context. there can only be the numeric and 
+the string conversion in the objects. 
+
+The numeric conversion happens in the case of the mathematical operations,
+while the string conversion happens in case of the printing values, such as 
+alert(obj) and all. e.g. mathematical operation is like subtracting two date 
+objects. 
+
+javascript has its own methods to automatically decide whch conversion to apply.
+// output
+alert(obj);
+// using object as a property key
+anotherObj[obj] = 123;
+In the above example the string conversion takes place.
+
+
+// explicit conversion
+let num = Number(obj);
+// maths (except binary plus)
+let n = +obj; // unary plus
+let delta = date1 - date2;
+// less/greater comparison
+let greater = user1 > user2;
+Here the numeric conversion takes place. 
+
+default conversion = this takes place when the engine does not know which type 
+to choose in the hints to make sure the code works, like binary + can work with both 
+the strings and the numbers so, there the default takes place.
+
+if the object is compared with the string number or symbol, it is also unclear 
+which conversion should be done, so the default hint is used. 
+
+The greater and less comparison operators, such as < >, can work with both 
+strings and numbers too. Still, they use the "number" hint, not "default". 
+That’s for historical reasons.
+
+// binary plus uses the "default" hint
+let total = obj1 + obj2;
+// obj == number uses the "default" hint
+if (user == 1) { ... };
+
+For the conversion, javascript tries to call and find the three object methods.
+- Call obj[Symbol.toPrimitive](hint) – the method with the symbolic key 
+  Symbol.toPrimitive (system symbol), if such method exists,
+- Otherwise if hint is "string" = try calling obj.toString() or obj.valueOf(), 
+  whatever exists.
+- Otherwise if hint is "number" or "default" = try calling obj.valueOf() or 
+  obj.toString(), whatever exists.
+
+There is a built in symbol named Symbol.toPrimitive that should be used for the 
+conversion. 
+
+obj[Symbol.toPrimitive] = function(hint) {
+  // here goes the code to convert this object to a primitive
+  // it must return a primitive value
+  // hint = one of "string", "number", "default"
+};
+
+
+let user = {
+  name: "John",
+  money: 1000,
+
+  [Symbol.toPrimitive](hint) {
+    alert(`hint: ${hint}`);
+    return hint == "string" ? `{name: "${this.name}"}` : this.money;
+  }
+};
+
+// conversions demo:
+alert(user); // hint: string -> {name: "John"}
+alert(+user); // hint: number -> 1000
+alert(user + 500); // hint: default -> 1500
+
+if there is not Symbol.toPrimitive then the js will try to find the tostring 
+or the valueOf method. 
+
+- for the string hint call the toString method, and if it does not exist or if it 
+  returns the object instead of the primitive value, then call the valueOf
+
+- for the other hints, call valueOf if it does not exist or returns the object 
+  instead of the primitive value then call the toString()
+
+If they both returns an object then they all will be ignored. 
+By default, a plain object has following toString and valueOf methods:
+The toString method returns a string "[object Object]".
+The valueOf method returns the object itself.
+
+let user = {name: "John"};
+alert(user); // [object Object]
+alert(user.valueOf() === user); // true
+
+Instead of the Symbol.toPrimitive we can also make use of the toString or 
+the valueOf method for the same. 
+let user = {
+  name: "John",
+  money: 1000,
+
+  // for hint="string"
+  toString() {
+    return `{name: "${this.name}"}`;
+  },
+
+  // for hint="number" or "default"
+  valueOf() {
+    return this.money;
+  }
+
+};
+
+alert(user); // toString -> {name: "John"}
+alert(+user); // valueOf -> 1000
+alert(user + 500); // valueOf -> 1500
+
+
+
+let user = {
+  name: "John",
+
+  toString() {
+    return this.name;
+  }
+};
+alert(user); // toString -> John
+alert(user + 500); // toString -> John500
+
+NOTE : 
+In the absence of Symbol.toPrimitive and valueOf, toString will handle all 
+primitive conversions.
+
+The important thing here is that this conversion method should not necessary return 
+the value according to the hint, hint number can also return string, but the thing 
+is they should return the primitve not the object. 
+
+let obj = {
+  // toString handles all conversions in the absence of other methods
+  toString() {
+    return "2";
+  }
+};
+
+alert(obj * 2); // 4, object converted to primitive "2", then multiplication 
+made it a number
+
+alert(2 + 2 + '1' ); // "41" and not "221"
+alert('1' + 2 + 2); // "122" and not "14"
+
+
+** Property flags and descriptors **
+Object properties besides the value have three special attributes, which 
+are called flags. 
+
+- writable - if true the value can be changed otherwise read only 
+- enumerable - if true then listed in loops 
+- configurable - of true the property can be deleted and the attributes can be 
+                 modified otherwise not
+
+By default for the property these flags are always true. 
+
+we have to make use of the property Object.getOwnPropertyDescriptor(obj,propertyname)
+allows to query the full information about the property. 
+
+obj = the object for get the information from 
+propertyName = the name of the property 
+
+returned value is the property descriptor, it contains the value and all the flags.
+
+
+** Object getters and setter **
 There are two types of properties in objects, one is data property and the 
 second is the accessor property. They are essentially the functions that executes 
 on getting or setting the value. 

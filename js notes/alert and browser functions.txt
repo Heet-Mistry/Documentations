@@ -1,0 +1,16 @@
+alert and prompt and confirm are the browser functions to work with the js. 
+
+alert(something) = this will create a modal, and prints the given message there, the 
+word modal means that the user will can not interact with rest of the pages. 
+
+prompt(title,[default]) = this will create the input winow for the user to take 
+some value, and the default value will be the one which will be field initially, 
+here the [] means that the argument is optional. 
+
+let age = propmpt("Enter age")
+if they give something then, we will have the value, if they press cancel 
+we will have the null value. 
+
+confirm(some question) = for asking some question
+let ans = confirm(question)
+if the use press yes it will be true else false.

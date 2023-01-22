@@ -1,0 +1,75 @@
+The object keys can be only two primitive types
+string or symbol type
+
+Symbol = it is the unique identifier
+
+let id = Symbol("some description")
+
+Even if we create the symbol with the same descriptions, the symbols will be unique.
+
+let id1 = Symbol("id");
+let id2 = Symbol("id");
+alert(id1 == id2); // false
+
+So, to summarize, a symbol is a “primitive unique value” with an optional 
+description. Let’s see where we can use them.
+
+
+Here the symbols are differnt from the string, as they do not auto convert 
+in the alert like functions. Let say, we do alert(some symbol) then it will 
+give an error.
+
+we have to explicitely convert it into the string with the toString method,
+which will work.
+
+alert(symbol.toString())
+
+or we can also fetch the description here by doing symbolVar.description.
+
+>> Hidden properties 
+Symbols allows us to create some hidden properties inside the objects, that no other 
+part of the code can directly access.
+
+let user = { // belongs to another code
+  name: "John"
+};
+let id = Symbol("id");
+user[id] = 1;
+alert( user[id] ); // we can access the data using the symbol as the key
+
+As user objects belong to another codebase, it’s unsafe to add fields to them, 
+since we might affect pre-defined behavior in that other codebase. However, 
+symbols cannot be accessed accidentally. The third-party code won’t be aware of 
+newly defined symbols, so it’s safe to add symbols to the user objects.
+
+Here if we export some object which has the symbol key to another script then 
+it will not have that symbol key displayed in another script, it will be hidden.
+
+So we can add our symbol keys and the raw script can use their own keys,
+both can not access that. 
+
+Symbols will be skipped in the keys or for in. 
+
+But in contrast the Object.assign() will copy all the normal and the symbol 
+properties. 
+
+
+Global symbols
+sometimes we have to store the global symbols inside the global registry, for 
+that we can make use of the for method. 
+
+let id = Symbol.for("id") // if the sybol with the id does not exist then 
+it will create it and if exist it will return it, if we access the same with the 
+for syntax then both will be the same. 
+
+we can also access the name of the global symbols, with the help of 
+the Symbol.keyFor(some symbol) = this will give the name or the description 
+
+NOTE 
+These above methods only run on the, global symbols, it will not work on the 
+local symbols. it will give undefined when we use them on that. 
+
+there are some by default system symbols that, helps to work with specific 
+cnditions. 
+
+Symbol.toPrimitive = for conversion

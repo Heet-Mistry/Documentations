@@ -49,12 +49,18 @@ alert(rest[0]); // Consul
 alert(rest[1]); // of the Roman Republic
 alert(rest.length); // 2
 
+if the left side of part is smaller than the array elements then they all 
+will be initialized to undefined. 
+
 we can also put the default value in the destructuring..
 // default values
 let [name = "Guest", surname = "Anonymous"] = ["Julius"];
 
 alert(name);    // Julius (from array)
 alert(surname); // Anonymous (default used)
+
+default values can be function calls or some advanced operations.
+they are only evaluated if the value is not provided. 
 
 
 In the object the name of the destructured and the name of the object key 
@@ -79,7 +85,47 @@ rest operator works the same in here.
 let {title, ...rest} = options;
 
 when we destructure something then we have to do it on the declaration 
-let {} or let [], we can not first define the variables and then assign them.
+let {} or let [], we can not first define the variables and then assign them. because 
+the js will treat the {} as the code block so, we should do it at the time of the 
+declaration. 
+
+let options = {
+  size: {
+    width: 100,
+    height: 200
+  },
+  items: ["Cake", "Donut"],
+  extra: true
+};
+
+// destructuring assignment split in multiple lines for clarity
+let {
+  size: { // put size here
+    width,
+    height
+  },
+  items: [item1, item2], // assign items here
+  title = "Menu" // not present in the object (default value is used)
+} = options;
+
+sometimes in some usecases there can be too many parameters and we have to remember 
+the order, here we can pass an object containing all the values and create a function 
+which has all the specification about the default values and all.
+
+function({
+  incomingProperty: varName = defaultValue
+  ...
+})
+
+here this destructuring assumes that the function will have an argument, if the 
+empty object is passed then it will take the default values. When we do not pass the 
+argument it will give an error as we can not destructure the undefined so, we have 
+to pass the argument, or else we have to put the default value of the params as the 
+empty object.
+
+function({destructuring}={}) // like this
+
+
 
 // smart function parameters
 function showMenu({ title = "Menu", width = 100, height = 200 } = {}) {
@@ -98,16 +144,32 @@ Because in the normal arguments it would have worked but here we are
 destructuring so we can not do destructuring of the undefined value. 
 
 
+>>>>
 If we define the function with only takes three arguments and even if we call 
 that function with passing 4 or 5 arguments then also it will not give the error 
 but it will in computation only consider the first three arguments.
+
+this is called the rest parameter, the rest parameter actually means catch 
+te arguments in the array 
 
 for catching all the arguments 
 function func(...args){
   for(let item of args) something computation...
 }
 
-this is calle the rest parameter, it should be at the end of the arguments.also 
+In functions there is a special object called arguments which is an array like
+which can be used for the arguments 
+
+function f(){
+  arguments.length
+  arguments[0] etc.
+}
+f(a,b,c)
+
+arrow function does not have the this as well as they do not have the arguments 
+parameter, they take the argument from the outer function. 
+
+this is called the rest parameter, it should be at the end of the arguments.also 
 sometimes we want to do something which is completely reverse of it like...
 
 function func(a,b,c){
@@ -116,7 +178,19 @@ function func(a,b,c){
 let arr = [1,2,3]
 func(...arr);
 
-NOTE : The spread syntax works only with the iterables.
+let arr = [3, 5, 1];
+let arr2 = [8, 9, 15];
+let merged = [0, ...arr, 2, ...arr2];
+alert(merged); // 0,3,5,1,2,8,9,15 (0, then arr, then 2, then arr2)
+
+NOTE 
+Array.from(iterable) = converts the iterable into the array
+it works both on the array like and iterables
+
+while the spread syntax only works in the iterables. 
+
+NOTE : The spread syntax works only with the iterables. and it can only do the shallow 
+copy. 
 for array [...arr]
 for objects {...obj}
 

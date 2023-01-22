@@ -1,0 +1,180 @@
+JSON objects are used for sending the information over the network.
+
+let user = {
+  name: "John",
+  age: 30,
+
+  toString() {
+    return `{name: "${this.name}", age: ${this.age}}`;
+  }
+};
+
+alert(user); // {name: "John", age: 30}
+
+we can make the JSON string by doin this, but what if the object is too complex, so 
+we will make use of the inbuilt methods. 
+
+>> JSON.stringify()
+JSOn is commonly used for transmitting the data, when the client is using the javascript 
+and the server is created in the java.ruby or whatever. 
+
+JSON.stringify() = for converting the object into json 
+JSON.parse() = for converting the json back into the objects
+
+The method JSON.stringify(object) takes the object and converts it into a string.
+The resulting string is called JSON encoded or serialized or stringified or the 
+marshalled objects. 
+
+JSON Encoded object
+- here the strings uses the double quotes not any other notation 
+- property names are double quoted also age:21 becomes "age":21.
+
+JSON.stringify() can be applied to primitive values also.
+- objects 
+- arrays 
+- strings 
+- boolean 
+- numbers 
+- null
+
+
+JSON is data only specification, so some of the properties of the objects are 
+skipped by the json.stringify
+- function properties 
+- symbolic keys and values 
+- properties that stores undefined. 
+
+NOTE 
+JSON.stringify can not handle the circular reference. 
+
+
+let json = JSON.stringify(value[,replacer,space])
+here the second argument 
+
+replacer = array of properties to encode or a mapping function(key,value).
+space = amount of space to use the formatting. 
+
+
+let room = {
+  number: 23
+};
+
+let meetup = {
+  title: "Conference",
+  participants: [{name: "John"}, {name: "Alice"}],
+  place: room // meetup references room
+};
+
+room.occupiedBy = meetup; // room references meetup
+
+alert( JSON.stringify(meetup, ['title', 'participants']) );
+// {"title":"Conference","participants":[{},{}]}
+
+here the name is not there because the replacer is strict we have to put all the 
+properties here.  here we can also specify the function replacer function, 
+which can return the replaced value and if we want o ski the property then 
+we have to return the undefined there. 
+
+let room = {
+  number: 23
+};
+
+let meetup = {
+  title: "Conference",
+  participants: [{name: "John"}, {name: "Alice"}],
+  place: room // meetup references room
+};
+
+room.occupiedBy = meetup; // room references meetup
+
+alert( JSON.stringify(meetup, function replacer(key, value) {
+  alert(`${key}: ${value}`);
+  return (key == 'occupiedBy') ? undefined : value;
+}));
+
+
+here the replacer function gets every key value pair including the nested array 
+and objects. 
+
+The first call is special. It is made using a special 
+“wrapper object”: {"": meetup}. In other words, the first (key, value) 
+pair has an empty key, and the value is the target object as a whole. 
+That’s why the first line is ":[object Object]" in the example above.
+
+
+>> space formatting 
+the third argument for the json is the space, which is for the pretty formatting 
+
+Previously, all stringified objects had no indents and extra spaces. 
+That’s fine if we want to send an object over a network. The space argument 
+is used exclusively for a nice output.
+
+Here space = 2 tells JavaScript to show nested objects on multiple lines, 
+with indentation of 2 spaces inside an object:
+
+JSON.stringify(user, null, 2)
+
+here the space argument is for the logging purpose and nice output only. 
+
+Same as the tostring method an object may provide the methods toJSON for converting 
+it into  custom JSON. so when the toJSON is there then, JSON.stringify() will call 
+it else the normal stringify.
+
+let room = {
+  number: 23,
+  toJSON() {
+    return this.number;
+  }
+};
+
+let meetup = {
+  title: "Conference",
+  room
+};
+
+alert( JSON.stringify(room) ); // 23
+alert( JSON.stringify(meetup) );
+/*
+  {
+    "title":"Conference",
+    "room": 23
+  }
+*/
+
+
+if there is nesting then for every object the toJSON is checked of there ot not. 
+
+>> JSON.parse 
+for decoding the jso string we have to make use of the JSON.parse method. 
+
+let val = JSON.parse(str,[reviver])
+here the reviver is the optional functional jey vlaue pair for the transformation. 
+
+
+Here the reviver function changes the value 
+this works for the nested objects as well.
+
+let meetup = JSON.parse(str, function(key, value) {
+  if (key == 'date') return new Date(value);
+  return value;
+});
+
+we have to use the reviver because when we convert the object into the 
+json it will call the toJSON for the data it will convert it into the 
+plain date but it should be an object so, we have to make use of the reviver function 
+for converting it to the date object. 
+
+
+let schedule = `{
+  "meetups": [
+    {"title":"Conference","date":"2017-11-30T12:00:00.000Z"},
+    {"title":"Birthday","date":"2017-04-18T12:00:00.000Z"}
+  ]
+}`;
+
+schedule = JSON.parse(schedule, function(key, value) {
+  if (key == 'date') return new Date(value);
+  return value;
+});
+
+alert( schedule.meetups[1].date.getDate() ); // works!

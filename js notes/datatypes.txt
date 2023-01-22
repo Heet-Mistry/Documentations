@@ -3,6 +3,7 @@ Javascript allows to work with the premitives as they are the objects ofc they
 are not the objects but we can still call the methods on them.
 
 there are 7 premitive types. string, number, bigint, symbol, boolean, null, undefined
+and one non premitive type which is object, so in total there are 8 data types. 
 
 Javascript creates a wrapper around the premitive types to work with them 
 as the object, they are called the Number, String, Boolean, Bigint like this 
@@ -25,6 +26,10 @@ NOTE : null and undefined has no methods.
   want to call the method directly on the premitive value then we have to call it 
   by wrapping them around the braces (1234).toString(2);
 
+- always make use of the num.toFixed(n) to compare or perform operations on the 
+  float numbers as the floats are stored in the binary format and may lead to the error
+  in computation, 0.1+0.2 == 0.3 is false (Also the toFixed returns the string)
+
 - there are two special values in javascript for the numbers 
   Infinity and -Infinity  and NaN
 
@@ -38,15 +43,41 @@ NOTE : null and undefined has no methods.
 
 - isFinite(some var) ==> it first converts the argument in the number and then 
   checks if the NaN ancountered it will return false
-  there are more strict version of the 
+  there are more strict version of this Number.isFinite and NUmber.isNaN which 
+  first check the type and then returns the output
+
+- Math.pow(x,n),Math.random() etc 
+
+- parseInt and parseFloat also takes one another argument specifying the 
+radix of the number as what this number is. 
 
 NOTE = For checking the edge cases and the same value of the two variables 
 make use of the method Object.is(a,b) it will also run for NaN and 0 and -0 are 
 technically different in the computer. It is the strict comparison.
 
+Any operation on the NaN will further be calculated as NaN. There is one 
+exception in NaN that (NaN**0 = 1)
+
+** BigInt **
+The number data type can not express the data more than 2^53-1 and less than 
+-(2^53-1), for that we have to make use of the bigint. 
+
+for representing the value in the bigint we have to put the n at the end of the 
+number it will consider it as the bigint. 
+
 *** parseInt and the parseFloat ***
 parseInt will return the number, it will check the data given and then it will 
 convert the read data into the number until it can not find the numbers.
+
+
+null in the javascript reresents the nothing, empty or the value unknown. where the 
+undefined means that the value is not assigned. 
+
+The symbol type is used to create the unique indentifier for the objects.
+
+typeof null == object
+
+here the typeof is the operator, not a function. 
 
 
 

@@ -56,3 +56,10 @@ internal means anywhere written js inside the <script> tag, where the inline
 is the js written in the html tag such as onclick and all. and the external js 
 is the separate file included in the document. 
 
+
+'use strict' directive tells the browser that the script should be run in the 
+modern way, it should be on the top of the script file, we can also make a separate 
+function strict, but it is not the useful usecase. 
+
+The modern javascript supports the uses of classes and the modules, which by default 
+enables the use strict, so we can omit the use strict on the top of the script file. 

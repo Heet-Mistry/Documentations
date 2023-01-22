@@ -1,0 +1,10 @@
+JS Engine only alows 10000 recursion calls. 
+
+The information about the process of execution of the runing function is 
+stored inside the execution context. It is like an internal data structure that 
+contains the details about the execution of the function. 
+
+If we have the nested calls, then what happens is that, the main execution context 
+will be remembered in the execution context stack, and another execution context 
+for the new function is created and then it will start executing, after that the 
+main ne will be retrieved and then it will execute. 

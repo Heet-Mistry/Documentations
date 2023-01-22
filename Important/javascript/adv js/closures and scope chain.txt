@@ -9,6 +9,34 @@ reference to the lexical environment of its parent. The scope chain is the
 chain of the lexical environment reference. Scope chain is basically the 
 chain of the references. 
 
+In javascript each and every function code block and script as a whole will have 
+an internal object known as lexical environment. 
+- two parts in the lexical environment 
+    - environment record - an object that stores all local variables as properties 
+                           ans information like this and all 
+    - a reference to the outer lexical environment, associated with the code
+
+In simple script there is only one lexical environment which is global lexical 
+environment, in which the outer reference is null. 
+
+Each and every lexical environment have property [[environment]] which keeps the 
+reference of the lexical environment where the function is created. 
+
+A closure is basically the function which remembers its  outer variables 
+and can access them, each and every function is closure in jvascript. 
+
+In case of the garbage collection, the js will not clean the memory, bcoz each and 
+every function closure will have the property [[environment]] which will reference to
+the outer scope. if there is no reference to the outer lexical scope then 
+the environment will die. 
+
+NOTE 
+Functions always take the latest and recent values, when in the same scope.
+
+Use of the global objects is discouraged, we can make use of them if for the 
+creation of the polyfills. like if window.someprop does not exist then we can 
+create them globally.
+
 
 ### Hoisting
 the frist phase of the execution context is memory creation phase 

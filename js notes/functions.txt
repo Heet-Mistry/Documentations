@@ -39,6 +39,178 @@ for the global declaration of the functions and then create it. so this
 functions will be available every time. Function declaration in the javascript 
 is block scoped.
 
+
+
+** Function NFE **
+functions in the js is the value, and every value has the type in the javacript 
+so the functions are the type of the objects 
+
+we can access some property of the functions in the javascript, such as every 
+function has the built in property name, we can access it by func.name. 
+
+let sayHi = function() {
+  alert("Hi");
+};
+alert(sayHi.name); // sayHi (there's a name!)
+
+the name property is the contextual name, if the function does not provide the 
+name then the name will be taken from the contextual name. 
+
+there are also some cases in which the name property can not be initialized 
+such as below.
+
+let arr = [function() {}];
+alert( arr[0].name ); // <empty string>
+// the engine has no way to set up the right name, so there is none
+
+the length property gives the length of the parameters.
+
+function f1(a) {}
+function f2(a, b) {}
+function many(a, b, ...more) {}
+alert(f1.length); // 1
+alert(f2.length); // 2
+alert(many.length); // 2
+
+NOTE : In the length property the rest parameter is not counted. 
+
+we can add some of our own properties inside the function objects. 
+
+we can also replace the closures with the function custom properties.
+
+function makeCounter() {
+  // instead of:
+  // let count = 0
+
+  function counter() {
+    return counter.count++;
+  };
+
+  counter.count = 0;
+
+  return counter;
+}
+let counter = makeCounter();
+alert( counter() ); // 0
+alert( counter() ); // 1
+
+here the counter is in the function scope and its property, it is not stored in the 
+lexical environment, so the outer code can access it, but in the case of the let 
+declaration it will not. 
+
+
+Named function expression 
+they are the functions which have the name.
+
+let sayHi = function(who) {
+  alert(`Hello, ${who}`);
+}; // name is sayHi
+
+let sayHi = function func(who) {
+  alert(`Hello, ${who}`);
+}; // this is the NFE
+
+TWO THINGS 
+- it allows the function to reference itself internally 
+- it is not visible outside the function
+
+
+let sayHi = function func(who) {
+  if (who) {
+    alert(`Hello, ${who}`);
+  } else {
+    func("Guest"); // use func to re-call itself
+  }
+};
+
+sayHi(); // Hello, Guest
+
+// But this won't work:
+func(); // Error, func is not defined (not visible outside of the function)
+
+
+why should not we use directly the function itself to call it immediately.
+actually in most of the cases we can. 
+
+the problem is that if the function may assigned to another variable then 
+it will give the error when the raw variable is destroyed. 
+
+let sayHi = function(who) {
+  if (who) {
+    alert(`Hello, ${who}`);
+  } else {
+    sayHi("Guest"); // Error: sayHi is not a function
+  }
+};
+
+let welcome = sayHi;
+sayHi = null;
+
+welcome(); // Error, the nested sayHi call doesn't work any more!
+
+the above thing happens because the function takes the sayHi from the 
+outer lexical scope, there is no local sayHi so the outer variable is used and when
+the outer variable is used then the sayHi at that time is the null so, we can not 
+call it. 
+
+let sayHi = function func(who) {
+  if (who) {
+    alert(`Hello, ${who}`);
+  } else {
+    func("Guest"); // Now all fine
+  }
+};
+
+let welcome = sayHi;
+sayHi = null;
+
+welcome(); // Hello, Guest (nested call works)
+
+here the func name is the local, and it is not taken from the outer lexical 
+environment, the specification is created in the way that it always reference the 
+current function. 
+
+this is only applicable for the function expression not for the 
+function declaration. 
+
+** new Function syntax **
+we can also create the function with the function declaration syntax 
+by doing like 
+
+let func = new Function([arg1,arg2...,argn],functionBody)
+here the arguments and the function body should be in the string format
+
+let sum = new Function('a', 'b', 'return a + b');
+alert( sum(1, 2) ); // 3
+
+let sayHi = new Function('alert("Hello")');
+sayHi(); // Hello
+
+here the main usecase is that, in the simple function declaration we have to 
+create the function before, and here we can create the function at the run time 
+from the string.
+
+USECASE = when the code is recieved from the server and then we have to dynamically 
+create the function for that. 
+
+here the main drawbac is that when the function is created with the new function
+syntax then, in the special variable [[Environment]] the reference will be to the 
+global lexical environment not to the outer one. so we can not 
+form the closures with the new function syntax. 
+
+Minifier = removes extra spaces, extra comments and renames the local variables into 
+smaller names 
+
+because the new function syntax uses the string to convert the function body, 
+it will not find the reference to the renamed variables if referenced, so it 
+is good thing that new function syntax is only allows the outer scope. 
+
+>>>>> TODO: DOUBT IN THE LEXICAL ENVIRONMENT REFERENCE
+
+
+
+
+
 3. IIFE = Immediately invoked function expression 
 (function(){
   some computations;

@@ -1,0 +1,14 @@
+There are some tools to make the modern code work on the older browsers and engines 
+that do not understand recent features.
+
+1. transpilers
+2. polyfills
+
+Transpiler is nothing but iw converts the bleeding edge js code into more simple 
+engine understandable code, for example of nullish coalescing 
+operator, it will convert it into the simpler format. Babel is the transpiler. 
+
+Some new language features not only includes just the operators, but they can 
+also include some functions, in older versions there may be the possblity that 
+the function may not exist so, so the polyfills adds and updates the functions 
+if needed. e.g. Math.trunc
