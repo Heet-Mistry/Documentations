@@ -24,11 +24,61 @@
 // d[0] = "ahsd"
 // console.log(arr);
 
-let obj = {
-    user:"dhairya"
+// let obj = {
+//     user:"dhairya"
+// }
+
+// let id = Symbol()
+// obj[id] = "secret"
+
+// export default obj;
+
+// let user = {
+//   name: "John",
+//   surname: "Smith",
+
+//     set fullName(value) {
+//     [this.name, this.surname] = value.split(" ");
+//   },
+
+//   get fullName() {
+//     return `${this.name} ${this.surname}`;
+//     //   return this;
+//   }
+// };
+
+// let admin = {
+//   __proto__: user,
+//   isAdmin: true
+// };
+
+
+// // setter triggers!
+// admin.fullName = "Alice Cooper"; // (**)
+// // user.name = "rupala"
+// for (let key in admin) {
+//     console.log(key);
+// }
+
+// console.log(Object.keys(admin));
+
+// function abcd() {
+//     return "something"
+// }
+
+// abcd.prototype = {
+//     name:"this is the function"
+// }
+
+// Object.get
+
+// setTimeout(()=>Object.func(),1000)
+
+const user = {
+    name: "dhaiya",
+    func() {
+        console.log(this.name);
+    }
 }
 
-let id = Symbol()
-obj[id] = "secret"
-
-export default obj;
+setTimeout(()=>user.func(),1000)

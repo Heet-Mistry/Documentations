@@ -798,3 +798,278 @@ function User(name, birthday) {
 let john = new User("John", new Date(1992, 6, 1));
 alert( john.birthday ); // birthday is available
 alert( john.age );      // ...as well as the age
+
+
+
+** Prototypical inheritance **
+
+[[Protoype]]
+In javascript objects have the special property named [[Protoype]] which is either 
+null or reference to the another object. 
+
+the [[Prototype]] is internal and hidden, but we can set in some ways. 
+one is to use the special name __proto__.
+
+
+let animal = {
+  eats: true
+};
+let rabbit = {
+  jumps: true
+};
+rabbit.__proto__ = animal; // sets rabbit.[[Prototype]] = animal
+
+so it creates a sort of hierarchy, where if the property is not in the rabbit then 
+it will be taken from the animal. here the rabit is inheriting from the animal. 
+
+
+let animal = {
+  eats: true,
+  walk() {
+    alert("Animal walk");
+  }
+};
+
+let rabbit = {
+  jumps: true,
+  __proto__: animal
+};
+
+// walk is taken from the prototype
+rabbit.walk(); // Animal walk
+
+
+Limitations in the __proto__
+1. The reference can not go in the circular fashion 
+2. the value of the __proto__ can either be null or it can be object, other values 
+   are ignored. 
+
+NOTE:
+Here the __proto__ is not the same as the [[Prototype]] property, the __proto__ is
+basically the getter and setter for the [[prototype]]
+
+Here the __proto__ is not recommended, we should make use of the 
+Object.getPrototypeOf() and Object.setPrototypeOf()
+
+
+>> the value of this in the prototypes 
+this is not affected by the prototypes at all.
+
+No matter where the method is found, in an object or the prototype the this will 
+always be the object before the dot. 
+
+NOTE
+Even if we have the setter and getter function which uses the this, they will 
+always take the current child as the this, if the reading is happening then 
+first it will check the current and then the proto, for writing also the same. 
+
+Object.keys() = this only returns the own keys 
+for in loop first returns own keys then the prototype
+
+obj.hasOwnProperty(key) = returns true if it is own else false
+
+any object has the by default prototype Object.prototype, in which the items are 
+always not enumerable.
+
+
+**** F.prototype ****
+we can create the function object with the help of the new F syntax, and 
+F.prototype is an object the new operator uses it to set the [[Prototype]]
+for the new object. 
+
+here the F.prototype is the regular property named prototype. but when we set 
+this to some object the new operator will initialize the [[prototype]] of the 
+object literal to the given set one. 
+
+
+let animal = {
+  eats: true
+};
+
+function Rabbit(name) {
+  this.name = name;
+}
+Rabbit.prototype = animal;
+let rabbit = new Rabbit("White Rabbit"); //  rabbit.__proto__ == animal
+alert( rabbit.eats ); // true
+
+F.prototype is used at the new F only. 
+
+if after the creation, F.prototype property changes to another object,
+then new objects created by new F will have another object as [[Prototype]]
+but already existing one keep the old one. 
+
+if we do not supply the prototype property to the function, the default prototype 
+is an object which only has the constructor property that point back to the 
+function itself. 
+
+function Rabbit() {}
+/* default prototype
+Rabbit.prototype = { constructor: Rabbit };
+*/
+
+
+function Rabbit() {}
+// by default:
+// Rabbit.prototype = { constructor: Rabbit }
+alert( Rabbit.prototype.constructor == Rabbit ); // true
+
+
+function Rabbit() {}
+// by default:
+// Rabbit.prototype = { constructor: Rabbit }
+let rabbit = new Rabbit(); // inherits from {constructor: Rabbit}
+alert(rabbit.constructor == Rabbit); // true (from prototype)
+
+
+
+function Rabbit(name) {
+  this.name = name;
+  alert(name);
+}
+let rabbit = new Rabbit("White Rabbit");
+let rabbit2 = new rabbit.constructor("Black Rabbit");
+
+
+if we give the custom prototype then the default prototype object 
+will get overwritten.
+
+function Rabbit() {}
+Rabbit.prototype = {
+  jumps: true
+};
+let rabbit = new Rabbit();
+alert(rabbit.constructor === Rabbit); // false
+
+
+If we want to keep the right constructor what we can do is, we can just update the 
+default prototype.
+
+Rabbit.prototype = {
+  jumps: true,
+  constructor: Rabbit
+};
+// now constructor is also correct, because we added it
+
+
+all the writing operations are done in the object itself, not in the prototype 
+so if we delete property from the prototype using the object then it will 
+not delete it. 
+
+
+the function syntax has the Prototype, while the object literal has the 
+__proto__.
+
+Object ---------Prototype-----> Object.prototype an object 
+                                which consists of toString and 
+                                other methods 
+
+
+
+                                Object literal (whose __proto__ is 
+                                Object.prototype)
+
+    
+let obj = {};
+alert(obj.__proto__ === Object.prototype); // true
+alert(obj.toString === obj.__proto__.toString); //true
+alert(obj.toString === Object.prototype.toString); //true
+
+alert(Object.prototype.__proto__); // null
+
+
+when we create some array objects or some other objects then by default the 
+new Array() is used internally, and the Array.prototype is put as the __proto__
+of the array literal.  The main root proto is the Object.prototype. 
+
+for printing the inheritance we have to make use of the 
+console.dir(object) it will list all the protos and all. 
+
+f.__proto__ is same as Function.prototype 
+
+when we call the properties on the primitives, they will be accessible from their 
+wrappers, so each primitive has the prototype as the Array.prototype
+
+NOTE:
+null and undefined has no wrappers. 
+
+we can also add some properties to String.prototype then it will be available to 
+all the string literals. it is not recommended though, it is only allowed in the 
+case of the pillyfilling. 
+
+we can also do the method borrowing, so we take the method from the 
+other prototype and then we can put it inot the object and we can call it directly. 
+
+
+let obj = {
+  0: "Hello",
+  1: "world!",
+  length: 2,
+};
+obj.join = Array.prototype.join;
+alert( obj.join(',') ); // Hello,world!
+
+
+Function.prototype.defer = function(ms) {
+  setTimeout(this, ms);
+};
+function f() {
+  alert("Hello!");
+}
+f.defer(1000); // shows "Hello!" after 1 sec
+
+
+we can also create the wrapper funtction.
+Function.prototype.defer = function(ms) {
+  let f = this;
+  return function(...args) {
+    setTimeout(() => f.apply(this, args), ms);
+  }
+};
+
+// check it
+function f(a, b) {
+  alert( a + b );
+}
+
+f.defer(1000)(1, 2); // shows 3 after 1 sec
+
+
+Object.getPrototypeOf(obj) = return [[Prototype]]
+Object.setPrototypeOf(obj,proto) = return [[Prototype]]
+
+
+there is some special methods for creating the object which is.
+
+Object.create(proto,[descriptors]) = it creates an empty object with the
+given proto as [[Prototype]] and optional property descriptors. 
+
+
+let animal = {
+  eats: true
+};
+// create a new object with animal as a prototype
+let rabbit = Object.create(animal); // same as {__proto__: animal}
+
+
+let animal = {
+  eats: true
+};
+let rabbit = Object.create(animal, {
+  jumps: {
+    value: true
+  }
+});
+alert(rabbit.jumps); // true
+
+
+this is the more powerful way of cloning the objects then the other for in.
+let clone = Object.create(
+  Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj)
+);
+
+
+
+NOTE:
+We can set the plain object __proto__, directly but we can not set it 
+with the user given value. 

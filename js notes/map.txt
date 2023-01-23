@@ -55,3 +55,45 @@ when we have the map and then we want to convert it into the object then
 we can do it by doing like 
 
 let obj = Object.fromEntries(map.entries());
+
+
+** weakmap and weakset **
+In javascript the value remains in the memory as long as it is reachable from the engine.
+
+In the data structures like array, if we put an object into it, then the object will 
+stay alive as long as it the array is alive. same case for the maps, where as long 
+as the object is in the map, it will be there till the map is alive.
+
+Weakmap 
+- the keys must be objects not the primitives
+
+let weakMap = new WeakMap();
+let obj = {};
+weakMap.set(obj, "ok"); // works fine (object key)
+// can't use a string as the key
+weakMap.set("test", "Whoops"); // Error, because "test" is not an object
+
+
+let john = { name: "John" };
+let weakMap = new WeakMap();
+weakMap.set(john, "...");
+john = null; // overwrite the reference
+// john is removed from memory!
+
+weakmap does not support the teration methods
+keys(),values(), entries()
+
+only alowed methods 
+- weakmap.set(key,value)
+- weakmap.get(key)
+- weakmap.delete(key)
+- weakmap.has(key)
+
+
+usecases 
+- when we store the third prty data 
+- when using caching
+
+
+In weakset also it only supports the add, has, delete methods. 
+
