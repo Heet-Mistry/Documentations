@@ -1,0 +1,315 @@
+classes basic syntax 
+
+class Myclass{
+    constructor(){}
+    methods1(){}
+}
+
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  sayHi() {
+    alert(this.name);
+  }
+}
+
+// Usage:
+let user = new User("John");
+user.sayHi();
+
+In javascipt class is basically a function. typeof className will give the type function.
+
+what class className{} really does is that, it creates a function named classnAME AND 
+then the body of the function will be the constructor code. and stores all the 
+methods of the class in the className.prototype.
+
+
+
+class User {
+  constructor(name) { this.name = name; }
+  sayHi() { alert(this.name); }
+}
+
+// class is a function
+alert(typeof User); // function
+
+// ...or, more precisely, the constructor method
+alert(User === User.prototype.constructor); // true
+
+// The methods are in User.prototype, e.g:
+alert(User.prototype.sayHi); // the code of the sayHi method
+
+// there are exactly two methods in the prototype
+alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
+
+
+NOTE: 
+We can not call the class directly , we have to call the class using the new Syntax.
+All code inside the classes is automatically in the strict mode. 
+
+
+Dynamic class creation
+function makeClass(phrase) {
+  // declare a class and return it
+  return class {
+    sayHi() {
+      alert(phrase);
+    }
+  };
+}
+
+// Create a new class
+let User = makeClass("Hello");
+
+new User().sayHi(); // Hello
+
+
+we can also put the getter and the setters inside the class definition. we can also 
+put some class fields inside the classes, the main difference here is that, the 
+fields are not stored inside the prototype it will be created inside the individual 
+objects. 
+
+
+class User {
+  name = "John";
+}
+
+let user = new User();
+alert(user.name); // John
+alert(User.prototype.name); // undefined
+
+
+this are dynamic in the javascript, so if the object methods is passed around and 
+called in the different context then, it will not point to that object anymore.
+
+we can bind the this inside the calsses by first function binding,or we can make the 
+method as the class fields, in the methods which are the class fields, the this 
+pointer always remain bound. 
+
+class Button {
+  constructor(value) {
+    this.value = value;
+  }
+  click = () => {
+    alert(this.value);
+  }
+}
+let button = new Button("hello");
+setTimeout(button.click, 1000); // hello
+
+
+NOTE 
+Even if the default methods pass their this inside the callbacks, the arrow 
+function will not accept that this.
+
+
+*** class Inheritance ***
+class Child extends Parent
+when we write the extends keyword then what happens is js manipulates the [[prototype]]
+hidden property. 
+
+we can also override the methods inside the child, so that it can take the overriden 
+method, we can also call the parent methods from the child method by doing like 
+
+super.method() for calling the parent methods 
+super() for calling the super constructor
+
+ARROW FUNCTION DOES NOT HAVE THE SUPER 
+
+class Rabbit extends Animal {
+  stop() {
+    setTimeout(() => super.stop(), 1000); // call parent stop after 1sec
+  }
+}
+here the arrow takes the super of the parent function stop()
+
+
+if the class does not have the constructor, then the empty constructor is automatically 
+created like 
+
+constructor(...args){
+    super(...args)
+}
+
+NOTE:
+Before using the this the child class has to call the super(). 
+
+
+whenwe have the constructor in the child class what happens is when we call it 
+with the new then it will, create the this with an empty object. but in the case of 
+when the child does not have the constructor, it does not do that. so we have to 
+call the super method. 
+
+the parent constructor always uses the parent class's field. the reason behind 
+this is, the child class fields are initialized before the constructor for the base 
+class and after super() for the derived class. 
+
+
+
+Super internals [[Home object]]
+sometimes in the chain when we access the property of the super classes then 
+it can someime end up in the endless loop because of the this pointer. so for working 
+with this the js provides one more special internal property for functions 
+which is [[Homeobject]].
+
+When a function is specified as a class or object method, its 
+[[HomeObject]] property becomes that object. so basically the [[HomeObject]]
+Provides the mechanism for handling the this.
+
+
+let animal = {
+  name: "Animal",
+  eat() {         // animal.eat.[[HomeObject]] == animal
+    alert(`${this.name} eats.`);
+  }
+};
+
+let rabbit = {
+  __proto__: animal,
+  name: "Rabbit",
+  eat() {         // rabbit.eat.[[HomeObject]] == rabbit
+    super.eat();
+  }
+};
+
+let longEar = {
+  __proto__: rabbit,
+  name: "Long Ear",
+  eat() {         // longEar.eat.[[HomeObject]] == longEar
+    super.eat();
+  }
+};
+
+// works correctly
+longEar.eat();  // Long Ear eats.
+
+we can not change the [[HomeObject]].
+
+Here the [[HomeObject]] is the property of the function object method. and the 
+method inside the js is not free. each and every methods has its own [[HomeObject]]
+, we can copy the method inside another object if that methods does not uses the 
+super(), if it uses the super() then it will give wrong results. 
+
+
+the [[HomeObject]] is only set for the methods written as method(){} not like 
+method:(){} it will not work in that case, if we use super. 
+
+
+we can also create the static methods inside the classes, those methods are 
+defined for the whole class, it is same as defining the property. we can create the 
+static method by just putting the static keyword at the start of the method. 
+
+the static methods are generally used for making the constructors.
+
+class Article {
+  constructor(title, date) {
+    this.title = title;
+    this.date = date;
+  }
+
+  static createTodays() {
+    // remember, this = Article
+    return new this("Today's digest", new Date());
+  }
+}
+let article = Article.createTodays();
+alert( article.title ); // Today's digest
+
+In the static method the this is the same as the className.
+
+we have to call the static methods with teh classname, the static methods are not 
+available for the individual objects. we can also create the static properties.     
+
+
+class Article {
+  static publisher = "Ilya Kantor";
+}
+alert( Article.publisher ); // Ilya Kantor
+
+the static methods are inheritable, 
+
+
+when we create the satic methods and properties then, what happens is it creates 
+two prototypical behaviour in which there is a link between the constructor functions 
+itself and also a link between the prototype of the constructor function. 
+
+
+internal properties = properties and methods that are accessible from the inside 
+only 
+
+external properties = properties and methods that are accessible also from the 
+outside
+
+protected values are those which have the underscore at the front. it is just the 
+common convention in the programming. when we want the control over setting the 
+properties of the classes, we can make use of the getter and the setter, and 
+in the getter and the setter always set the values with the underscore variable.
+
+
+class CoffeeMachine {
+  _waterAmount = 0;
+  set waterAmount(value) {
+    if (value < 0) {
+      value = 0;
+    }
+    this._waterAmount = value;
+  }
+  get waterAmount() {
+    return this._waterAmount;
+  }
+  constructor(power) {
+    this._power = power;
+  }
+
+}
+
+// create the coffee machine
+let coffeeMachine = new CoffeeMachine(100);
+
+// add water
+coffeeMachine.waterAmount = -10; // _waterAmount will become 0, not -10
+
+
+we can also make the property readonly
+class CoffeeMachine {
+  // ...
+
+  constructor(power) {
+    this._power = power;
+  }
+
+  get power() {
+    return this._power;
+  }
+
+}
+
+// create the coffee machine
+let coffeeMachine = new CoffeeMachine(100);
+alert(`Power is: ${coffeeMachine.power}W`); // Power is: 100W
+coffeeMachine.power = 25; // Error (no setter)
+
+
+## NOTE ##
+protected fields are inheritated, unlike the private ones
+
+
+if we want to make the variable or the property private then, we have to create the 
+variable with appending the # before it. the private property will not any conflict 
+with the public one. we can have both public and private property of the same name;
+
+
+
+
+*** class checking instance of ***
+obj instanceOf class = returns true if the obj is the object of the class
+
+normally the nstanceOf checks the whole inheritance chain for the checking of the 
+relationship, but we can alter the definition by creting the static method 
+
+static [Symbol.hasInstance](obj){
+    custom logic
+}
+
+instanceOf just cheks the prototype of the functions. 

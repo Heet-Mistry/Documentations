@@ -1,0 +1,99 @@
+*** Browser and environment specs ***
+
+Host environment = the device or the platform where the javascript is running
+
+There are three parts of the window object when the javascript runs in the 
+browser. Window is the root or the global object. 
+
+
+DOM = Document object model
+BOM = Browser object model (navigator,screen,location,frames,hitory,alert,confirm,prompt)
+Javascript 
+
+
+DOM = it is basically represent all the page contents as objects that can be modified.
+document object is the main entry point to the webpage. 
+
+There is also a CSSOM = css object model for the styling, it is used when 
+we change the styling of the page, with the help of the javascript. 
+
+BOM = it represent the specific additional objects provided by the browser for 
+working with the everything except the DOM .
+
+navigator.userAgent = for finding which browser is running 
+navigator.platform = for finding which platform is the host, linux, mac
+
+we cand redirect the page with the help of the location.href = some another site
+
+*** DOM ***
+DOM is the backbone of the HTML document. Every node is an object, tags are the
+element nodes. text forms the text nodes. text node contains only string. 
+
+- Spaces and newlines before <head> are ignored for historical reasons.
+- If we put something after </body>, then that is automatically moved inside 
+the body, at the end, as the HTML spec requires that all content must be inside 
+<body>. So there can’t be any spaces after </body>.
+
+if the browser finds encounters malformed HTML,then it automatically corrects 
+while making the DOM 
+
+Everything in HTML, even comments, becomes a part of the DOM.
+!DOCTYPE is also included in the DOM tree. 
+
+there are total 12 dom nodes, even the comments also converted into the dom nodes. 
+
+document = gives the whole document 
+document.documentElement = gives the HTML tag
+
+In the DOM when we access the node which does not exist then it will give null.
+
+document.[node].childNodes gives the immediate children nodes.
+firstChild and the lastChild for the fast access to first and the last children.
+
+childNodes is not the array, but the collection of the objects, which is not 
+the iterable, but it is an array like object ,we can make use of the for of loop 
+for the traversal. 
+
+DOM Collections are readonly.
+
+NOTE 
+Do not ever use for in for looping over the DOM Collections. 
+
+we can fetch the nextSibiling and the previousSibiling with the same attr.here this 
+attrs will give all the nodes, even if they are the text or te comment and all.
+
+but when we want only the element node then we have to make use of 
+
+children - only those who are nodes elements 
+fiestElementchild, lastElementChild 
+previousElementSibiling, nextElementSibiling
+parentElement
+
+
+parentElement = returns the element parent 
+parentNode = it returns the node parent
+
+there is one exception here
+alert( document.documentElement.parentNode ); // document
+alert( document.documentElement.parentElement ); // null
+
+
+table element supports some its own methods
+table.rows 
+table.caption 
+table.tBodies 
+
+document.querySelector
+document.querySelectorAll
+element.matches("some css") = it returns true or false
+element.closest("some css") = it finds the closest ancestor which matches the 
+curent specified css
+
+getElementsByClassName
+getElementsByTagName 
+
+
+getElementsBy return a live collection, where when the tags updated it will 
+also be updated
+
+querySelectorAll = returns a static collection, it will not automatically updated.
