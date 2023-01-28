@@ -10,7 +10,7 @@ try {
 
 If we have the error in the scrpt then the script generally dies, but try catch
 block helps us to have the functionalty to handle the errors. For the try catch to run 
-the code and script must be runnable, i means it should be a valid javascript, 
+the code and script must be runnable, it means it should be a valid javascript, 
 if there is syntax error it won't work. 
 
 try {
@@ -51,21 +51,3 @@ error.message = message
 we can also add one finally clause, which will execute always.  even if we 
 have a return statement inside the try block the finally clause will always run. 
 
-we can also give our script a global error handler, let say we have the error outside 
-the try and catch block like fatal error, then we have to make use of the global 
-error handler,
-
-window.onerror = ome error handler function which will handle the error
-
-window.onerror = function(message,url,line,col,error){
-    do something with the error
-}
-
-message = message of the error 
-url = url of the script where the error occured
-error = error object
-
-
-The role of the global handler window.onerror is usually not to recover the 
-script execution – that’s probably impossible in case of programming errors, 
-but to send the error message to developers.

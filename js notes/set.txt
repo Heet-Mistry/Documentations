@@ -12,4 +12,4 @@ set.values() = arr of values
 set.keys() = arr of value
 set.entries() = iterator of pair [value,value]
 
-Array.from(some iterable) = for creating the array from the set 
+Array.from(some iterable) = for creating the array from the set  

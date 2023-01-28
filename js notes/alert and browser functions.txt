@@ -14,3 +14,5 @@ we will have the null value.
 confirm(some question) = for asking some question
 let ans = confirm(question)
 if the use press yes it will be true else false.
+
+In any browser functionalities there will be null for the empty values.

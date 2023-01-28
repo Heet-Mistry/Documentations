@@ -1,5 +1,5 @@
 *** Datatypes in javascript ***
-Javascript allows to work with the premitives as they are the objects ofc they 
+Javascript allows to work with the primitives as they are the objects ofc they 
 are not the objects but we can still call the methods on them.
 
 there are 7 premitive types. string, number, bigint, symbol, boolean, null, undefined
@@ -54,6 +54,9 @@ radix of the number as what this number is.
 NOTE = For checking the edge cases and the same value of the two variables 
 make use of the method Object.is(a,b) it will also run for NaN and 0 and -0 are 
 technically different in the computer. It is the strict comparison.
+
+0 == -0 // true 
+Object.is(0,-0) = false
 
 Any operation on the NaN will further be calculated as NaN. There is one 
 exception in NaN that (NaN**0 = 1)

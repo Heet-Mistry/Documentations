@@ -42,7 +42,7 @@ function throttle(func,ms){
 
     return wrapper;
 }
-
+ 
 so the throttling runs not more than once in ms time, so it is good for 
 updating screen in some time of interval, like accomodating with the mouse events and 
 all. in the duration of the ms miliseconds, all the calls are ignored. after the ms 

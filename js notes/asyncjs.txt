@@ -3,7 +3,7 @@ programming language. Here when we say the word asynchronous then it does
 not mean that we are running the task parallely it is just we are switching the 
 requests of the execution order.
 
-Async = which means the actions are initiated but we finish them later
+Async = which means the actions are initiated but we finish them later.
 
 First the window methods have the precedance over the browser rendering
 so. when we append dynamically some scripts in the document what happens 
@@ -85,19 +85,6 @@ callbacks = it is just the function which is passed to the another function, and
 will run on appropriate time. 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 *** Promises ***
 promises are the foundation of async programming. A promise is the object 
 returned by the async function which represents the current state of the 
@@ -119,7 +106,7 @@ eventually. when the executor obtains the result no matter soon or later, it
 will call the callbacks resolve or reject. 
 
 promise object has these properties.
-- state = pending, fullfilled or rejected.
+- state = pending, fullfilled or rejected. (settled)
 - result = initially undefined, but eventually resolve(value) or reject(error)
 
 generally the code inside the promise executor is blocking in nature or 
@@ -248,6 +235,8 @@ two aguments error and the result, for the case of the error handling and all.
 promisification is the approach in which we call the callback only once, 
 not many times.
 
+
+
 ** Promise API **
 1. Promise.all(iterable)
 it takes an iterable and returns a new promise. the new promise will resolve 
@@ -369,6 +358,8 @@ let promise = Promise.reject(new Error("Promise Failed!"));
 setTimeout(() => promise.catch(err => alert('caught')), 1000);
 // Error: Promise Failed!
 window.addEventListener('unhandledrejection', event => alert(event.reason));
+Here both of them runs, because when the setTimeout is set it will be set 
+in the macro task so. microtask is empty and the unhandledrejection runs. 
 
 
 But now we understand that unhandledrejection is generated when the microtask 
@@ -448,7 +439,6 @@ and catch block.
 
 
 *** await ***
-
 [rv] = await expression;
 // here the expression can be the promise or any value to be wait for 
 

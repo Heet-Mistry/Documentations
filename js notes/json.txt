@@ -145,10 +145,10 @@ alert( JSON.stringify(meetup) );
 if there is nesting then for every object the toJSON is checked of there ot not. 
 
 >> JSON.parse 
-for decoding the jso string we have to make use of the JSON.parse method. 
+for decoding the json string we have to make use of the JSON.parse method. 
 
 let val = JSON.parse(str,[reviver])
-here the reviver is the optional functional jey vlaue pair for the transformation. 
+here the reviver is the optional functional key vlaue pair for the transformation. 
 
 
 Here the reviver function changes the value 

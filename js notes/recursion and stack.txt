@@ -1,4 +1,4 @@
-JS Engine only alows 10000 recursion calls. 
+JS Engine only alows 10,000 recursion calls. 
 
 The information about the process of execution of the runing function is 
 stored inside the execution context. It is like an internal data structure that 

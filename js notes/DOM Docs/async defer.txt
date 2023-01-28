@@ -1,0 +1,230 @@
+The lifecycle of the html pgase has three important parts. 
+DOMContentLoaded = the browser fully loaded and the HTML tree is fully built
+but external resources like img and media may not have been loaded
+
+load = not only the html but also the content in it like img and all are 
+also loaded
+
+beforeunload/unload = when the user is leaving the page 
+
+
+
+DOMContentLoaded event – DOM is ready, so the handler can lookup DOM nodes, 
+initialize the interface.
+
+load event – external resources are loaded, so styles are applied, image 
+sizes are known etc.
+
+beforeunload event – the user is leaving: we can check if the user saved the 
+changes and ask them whether they really want to leave.
+
+unload – the user almost left, but we still can initiate some operations, 
+such as sending out statistics.
+
+
+1. DOMContentLoaded
+this event happens on the document object. we can attach the event listener to it.
+
+<script>
+  function ready() {
+    alert('DOM is ready');
+    // image is not yet loaded (unless it was cached), so the size is 0x0
+    alert(`Image size: ${img.offsetWidth}x${img.offsetHeight}`);
+  }
+  document.addEventListener("DOMContentLoaded", ready);
+</script>
+<img id="img" src="https://en.js.cx/clipart/train.gif?speed=1&cache=0">
+
+
+Scripts that do not block the DOMContentLoaded
+- the async scripts do not block the DOMContentLoaded
+- scripts that are dynamically added the DOMContentLoaded does not wait for it
+
+
+<link type="text/css" rel="stylesheet" href="style.css">
+<script>
+  // the script doesn't execute until the stylesheet is loaded
+  alert(getComputedStyle(document.body).marginTop);
+</script>
+
+but te DOMContentLoaded does not wait for the styles, but in this case because the 
+script is waiting for the css, the DOMContentLoaded will wait for it. 
+
+NOTE:
+In some browsers there is functionlity of the autofill the page, which happens 
+due to the DOMContentLoaded, due to some long runing scripts this can delay. 
+
+
+> window.onload 
+The load event on the window object triggers when the whole page is loaded 
+including styles, images and other resources. This event is available via the 
+onload property.
+
+> window.unload 
+When a visitor leaves the page, the unload event triggers on window. 
+We can do something there that doesn’t involve a delay, like closing related 
+popup windows.
+
+usecase 
+it can be helpful when we want to give the analytics data to the server after the 
+user leaves the page. 
+
+> window.onbeforeunload 
+If a visitor initiated navigation away from the page or tries to close the window, 
+the beforeunload handler asks for additional confirmation.
+
+
+document.readyState 
+this property tells about the current loading state
+loading = document is loading 
+interactive = document was fully read 
+complete = the document is fully read and the resources are loaded too
+
+there is also one readyStatechange event that tells about the change in the state.
+document.addEventListener('readystatechange', () => console.log(document.readyState));
+
+
+window.load = runs after all the other load handlers
+interactve and DOMContentLoaded is the same thing 
+complete and window.onload is the same thing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+** async and defer **
+What browser does is, when the browser finds the script tag then it will stop 
+rendering the DOM, and start to execute the script. This also happens 
+with the external scripts, the browser must have to script to download and then 
+it has to execute it. 
+
+This is called the content blocking, in which the html content loading is 
+blocked for executing the script. 
+
+one solution is that we can put the script tag at the end of the html document 
+but it has its own downsides, such as for the large html documents, the browser 
+will take more time to execute the script, so it can be a delay. 
+
+
+defer = the defer tag tells the browser that the script will be loaded parallely 
+in the background, and after the DOM is fully built then and only then the 
+script will be executed. \
+
+NOTE:
+DOMContentLoaded event fires when the html document has been fully parsed and 
+all defered scripts are downloaded and executed, it doesn't wait for other things 
+like images and subframes and async scripts. 
+
+<p>...content before scripts...</p>
+<script>
+  document.addEventListener('DOMContentLoaded', () => alert("DOM ready after defer!"));
+</script>
+<script defer src="https://javascript.info/article/script-async-defer/long.js?speed=1"></script>
+<p>...content after scripts...</p>
+
+- first the content will be displayed 
+- then the long script will execute 
+- and then the DOMContentLoaded event will fire
+
+NOTE:
+defer attribute is only for the external scripts.
+
+
+
+async = load the script in the background and run when its ready
+- the browser does not block on async scripts 
+- other scripts do not wait for async and async do not wait for them 
+- DOMContentLoaded does not wait for the async to complete
+
+
+NOTE:
+In the case of the defer the, relatve order of the scripts are maintained 
+and even if they are loaded they do not directly executed, but in the case of the 
+async it does not matter, whichever loads first it will be executed. 
+
+In the async it will be downloaded parallely and when it is ready it will block the 
+page parsing. 
+
+
+We can also add the scripts to the page with one another mthod which s called the 
+dynamic scripts.
+
+let script = document.createElement('script');
+script.src = "/article/script-async-defer/long.js";
+document.body.append(script); // (*)
+
+The script starts loading as soon as it’s appended to the document (*).
+
+NOTE: Dynamic scripts behave as the async by default.
+we can change this by doing like script.async = false; then the scripts will be 
+executed in the document order. 
+
+
+** Resource loading onload onerror **
+There are some events for us to track the loading of the resources.
+
+onload - successfuly load 
+onerror - error occurred
+
+
+usecase 
+let say we are dynamically appending one script in the document, and we want to 
+execute the function when the script is loaded, then we have to make use of the 
+onload and such events. 
+
+onload = fires when the script is loaded and executed
+
+let script = document.createElement('script');
+// can load any script, from any domain
+script.src = "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"
+document.head.append(script);
+
+script.onload = function() {
+  // the script creates a variable "_"
+  alert( _.VERSION ); // shows library version
+};
+
+
+onerror = errors that occur during the loading of the script can be tracked with in 
+an error event. 
+
+let script = document.createElement('script');
+script.src = "https://example.com/404.js"; // no such script
+document.head.append(script);
+script.onerror = function() {
+  alert("Error loading " + this.src); // Error loading https://example.com/404.js
+};
+
+NOTE:
+The execution errors can not be handled with the onload and onerror, onerror just 
+check for the loading error and onload checks for the loading and execution even if 
+there are errors. 
+
+All the variables will be accessible in the onload. 
+
+the load and the error events also works in the case of the img elements and the 
+other resources, the img element is an exception because, in the case of the images 
+it will start loading when we provide the src attribute. iframe.onload event 
+trigers when the loading is finished, both for the successful loading and the in case
+of the error. 
+
+
+cross origin policy 
+The site from the one domain can not access the resources from the another domain. 

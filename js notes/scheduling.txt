@@ -57,6 +57,7 @@ setInterval(function() {
 Here the delay is less than the setTimeout, as the function running time and 
 the timer of the next call are running on the same time.
 
+Because the setInterval does not take into account the function running time. 
 
 
 let i = 1;

@@ -1,0 +1,59 @@
+Currying is basically the transformation of the functions into f(a,b,c) to the 
+f(a)(b)(c)
+
+function curry(f) { // curry(f) does the currying transform
+  return function(a) {
+    return function(b) {
+      return f(a, b);
+    };
+  };
+}
+
+// usage
+function sum(a, b) {
+  return a + b;
+}
+
+let curriedSum = curry(sum);
+
+alert( curriedSum(1)(2) ); // 3
+
+there is by default function there in the lodash library, which is _.curry() for the 
+functions. so basically the curry function returns a wrapper so that the 
+arguments can be called separately. 
+
+when we want to fix the argument or, let say create some child functions for the 
+current one then it will be helpful. 
+
+
+// func is the function to transform
+function curried(...args) {
+  if (args.length >= func.length) { // (1)
+    return func.apply(this, args);
+  } else {
+    return function(...args2) { // (2)
+      return curried.apply(this, args.concat(args2));
+    }
+  }
+};
+
+this way the functions which have the fixed number of arguments are only curried 
+we can not curry the functions which have the ...args as the argument catching. 
+
+
+eval(code) = eval function allows to run the string of code
+the result of the eval function is the value of the last statement. 
+The eval runs in the current execution context, so it can see the outr variables. 
+
+let a = 1;
+function f() {
+  let a = 2;
+  eval('alert(a)'); // 2
+}
+f();
+
+when the eval is run under the use strict then, the variables declared under the 
+eval will not be accessible from the outside. 
+
+eval("let x = 5; function f() {}");
+alert(typeof x); // undefined (no such variable)

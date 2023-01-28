@@ -205,9 +205,6 @@ because the new function syntax uses the string to convert the function body,
 it will not find the reference to the renamed variables if referenced, so it 
 is good thing that new function syntax is only allows the outer scope. 
 
->>>>> TODO: DOUBT IN THE LEXICAL ENVIRONMENT REFERENCE
-
-
 
 
 
@@ -236,7 +233,7 @@ Arrow functions do not create the binding, as the normal functions, in the arrow
 there is no this so, the lookup for the this will be same way as the search of the 
 regular variables, from the outer lexical environment. 
 
-arrow function does not have aruguments variable. 
+arrow function does not have arguments variable. 
 
 
 ** Decorators and forwarding call/apply **
@@ -402,7 +399,7 @@ array of the arguments while the call will expect the destructured arguments.
 passing all arguments along with the context to another function is called 
 the call forwarding. 
 
-here the arguments parameter can be both array or aray like. so for the hash function 
+here the arguments parameter can be both array or array like. so for the hash function 
 let say we have too many keys then we have to join them but join method is only there 
 in teh array so we have to make use of the method borrowing.
 
@@ -514,3 +511,7 @@ current user.
 
 
 ** going partial without context **
+
+
+
+

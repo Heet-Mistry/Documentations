@@ -29,3 +29,31 @@ topics
 remaining  
 > choosing the state structure 
 > exercises from choosing the state structure
+
+
+
+Javascript Notes 
+base.txt
+corejs.txt
+pollyfills.txt
+var.txt 
+datatypes.txt
+strings.txt 
+arrays.txt 
+set.txt 
+recursion and stack.txt 
+alert and browser functions.txt 
+map.txt 
+error handling.txt 
+Destructuring.txt 
+dom.txt 
+symbol.txt 
+scheduling 
+modules
+json.txt 
+functions
+debouncing and throttling
+asyncjs.txt 
+
+
+window.onerror = remaining 

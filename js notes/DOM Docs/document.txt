@@ -97,3 +97,6 @@ getElementsBy return a live collection, where when the tags updated it will
 also be updated
 
 querySelectorAll = returns a static collection, it will not automatically updated.
+
+
+** Node properties types and contents **

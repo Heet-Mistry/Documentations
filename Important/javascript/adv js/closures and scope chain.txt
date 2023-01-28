@@ -8,7 +8,7 @@ Basically the memory section of the execution context will also have the
 reference to the lexical environment of its parent. The scope chain is the 
 chain of the lexical environment reference. Scope chain is basically the 
 chain of the references. 
-
+ 
 In javascript each and every function code block and script as a whole will have 
 an internal object known as lexical environment. 
 - two parts in the lexical environment 

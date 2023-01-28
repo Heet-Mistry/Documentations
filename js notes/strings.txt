@@ -10,7 +10,7 @@ new break
 \' \" = for quotes
 
 \ is called the escape character.
-
+ 
 str.length = for the length of the string
 str[0] = works for fetching the character at the specific index returns undefined for unbound
 str.charAt(index) = for fetching the character at the index == returns '' for unbound

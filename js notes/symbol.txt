@@ -14,7 +14,8 @@ alert(id1 == id2); // false
 So, to summarize, a symbol is a “primitive unique value” with an optional 
 description. Let’s see where we can use them.
 
-
+ 
+NOTE :: 
 Here the symbols are differnt from the string, as they do not auto convert 
 in the alert like functions. Let say, we do alert(some symbol) then it will 
 give an error.
@@ -58,7 +59,7 @@ Global symbols
 sometimes we have to store the global symbols inside the global registry, for 
 that we can make use of the for method. 
 
-let id = Symbol.for("id") // if the sybol with the id does not exist then 
+let id = Symbol.for("id") // if the symbol with the id does not exist then 
 it will create it and if exist it will return it, if we access the same with the 
 for syntax then both will be the same. 
 
@@ -73,3 +74,6 @@ there are some by default system symbols that, helps to work with specific
 cnditions. 
 
 Symbol.toPrimitive = for conversion
+
+
+we can see the data of the object symbols with the help of the Object.getOwnSymbols(obj)

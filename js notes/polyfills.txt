@@ -4,7 +4,7 @@ that do not understand recent features.
 1. transpilers
 2. polyfills
 
-Transpiler is nothing but iw converts the bleeding edge js code into more simple 
+Transpiler is nothing but it converts the bleeding edge js code into more simple 
 engine understandable code, for example of nullish coalescing 
 operator, it will convert it into the simpler format. Babel is the transpiler. 
 

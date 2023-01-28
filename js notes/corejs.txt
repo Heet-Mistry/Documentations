@@ -5,7 +5,7 @@ the variables are stored as the key:value pair. also the functions.
 The second component is called the code component ( thread of execution ) where 
 the whole code will be executed one line at a time.
 
-Javascript is the synchronou single threaded language. it means that javascript 
+Javascript is the synchronous single threaded language. it means that javascript 
 can only execute one command at a time and it can only execute them in the order.
 
 *** How the js program runs ***

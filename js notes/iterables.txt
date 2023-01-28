@@ -1,0 +1,74 @@
+iterable objects are the generlization of the array. it is the concept 
+that allows us to make any object usable in the for of loop. 
+
+for making any objects iterable we have to create a special methods with the 
+symbol Symbol.iterator
+
+1. when the for of starts, it calls that methods once. the methods returns an 
+iterator - an object with the methods next
+
+2. onward for of works only with that object
+
+3. when the for of needs the next value for the iteration, it calls next() 
+   on that object 
+
+4. the result of the next() must have the form {done:boolean,value:any} when the 
+    done is true that means that the loop is finished. 
+
+
+// implementation of the iterables
+let range = {
+    from: 1,
+    to: 5,
+    [Symbol.iterator](){
+        return {
+            current: this.from,
+            last: this.to,
+            next() {
+                if (this.current <= this.last) return { done: false, value: this.current++ }
+                else return {done:true}
+            }
+        }
+    }
+}
+for (let item of range) {
+    console.log(item);
+}
+
+
+arrays and strings are most widely used iterables. 
+
+NOTE:
+The for of correctly works for the surrogate pairs also. 
+
+so basically when we declare the method Symbol.iterator then it will 
+return an iterator, which has the current and the last range, and it has the 
+methods next which which also returns an object which has the done field and the 
+value field which will be used for checking the end of the iteration. 
+
+iterables are the objects that implements the Symbol.iterator, while the 
+array like are the objects that have indexes and length so they look like 
+arrays. 
+
+strings are both iterable because they implements the [Symbol.iterator] property. 
+ and array like because they have the length property. 
+
+
+an array like may not be iterable
+let arrayLike = { // has indexes and length => array-like
+  0: "Hello",
+  1: "World",
+  length: 2
+};
+
+// Error (no Symbol.iterator)
+for (let item of arrayLike) {}
+
+Array.from(array like or the iterable) = the array from methods works on both the 
+objects. 
+
+the array.from method allows one another function which is mapping function. which 
+run on every value and the value is changed. 
+
+let arr = Array.from(range, num => num * num);
+alert(arr); // 1,4,9,16,25

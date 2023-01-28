@@ -30,6 +30,6 @@ appendChild = here we are only able to append the nodes text will not work
 document.createElement(element name) = we can create the certain element
 this will return the element node and we can set the innerText and innerHTML and 
 all. 
-
+ 
 document.createTextNode(some content) = for creating the text node
 

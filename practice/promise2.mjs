@@ -58,3 +58,6 @@
 //     })
 // }
 // solver();
+import obj from "./index.mjs";
+let id = Object.getOwnPropertySymbols(obj);
+console.log(obj[id[0]]);

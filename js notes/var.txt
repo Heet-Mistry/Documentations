@@ -5,7 +5,8 @@ using var will be globally scoped (function scoped). and const also is locally s
 
 In the case of the var we can reference the variable before the declaration 
 because the var variables are hoisted where the let and the const are not 
-so for good practice always make use of the let and const.
+so for good practice always make use of the let and const. actually the let 
+and const also are hoisted but, they are in separate different scope. 
 
 
 **** Datatypes in js ***
@@ -30,6 +31,8 @@ but the thing here is that when we use it for the function it will give the
 function type there is no separate function type in the javascript functions 
 are included in the object type. also the null behvaiour is wrong for the type
 of operator. (e.g typeof varname)
+
+typeof null will give object
 
 fun fact = % operator works for the float nmbers in the javascript 
 
@@ -90,6 +93,7 @@ null == undefined // true sweet couple
 null === undefined // false
 
 null == undefined always, but when we do null >= 0, it will be true
+null == 0 will be false
 
 "", null, undefined, NaN becomes false 
 
