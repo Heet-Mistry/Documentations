@@ -20,9 +20,9 @@ user.sayHi();
 
 In javascipt class is basically a function. typeof className will give the type function.
 
-what class className{} really does is that, it creates a function named classnAME AND 
+what class className{} really does is that, it creates a function named classname and 
 then the body of the function will be the constructor code. and stores all the 
-methods of the class in the className.prototype.
+methods of the class in the className.prototype. 
 
 
 
@@ -234,6 +234,13 @@ when we create the satic methods and properties then, what happens is it creates
 two prototypical behaviour in which there is a link between the constructor functions 
 itself and also a link between the prototype of the constructor function. 
 
+class Animal {}
+class Rabbit extends Animal {}
+// for statics
+alert(Rabbit.__proto__ === Animal); // true
+// for regular methods
+alert(Rabbit.prototype.__proto__ === Animal.prototype); // true 
+
 
 internal properties = properties and methods that are accessible from the inside 
 only 
@@ -313,3 +320,92 @@ static [Symbol.hasInstance](obj){
 }
 
 instanceOf just cheks the prototype of the functions. 
+
+** Extending the built in classes **
+The built in classes are extendable also, like array and all and when we extend them they always 
+return the new extended class always. 
+
+
+// add one more method to it (can do more)
+class PowerArray extends Array {
+  isEmpty() {
+    return this.length === 0;
+  }
+}
+
+let arr = new PowerArray(1, 2, 5, 10, 50);
+alert(arr.isEmpty()); // false
+
+let filteredArr = arr.filter(item => item >= 10);
+alert(filteredArr); // 10, 50
+alert(filteredArr.isEmpty()); // false
+
+here the methods filter and map and all always return the new derived class object. 
+
+
+When arr.filter() is called, it internally creates the new array of results using exactly 
+arr.constructor, not basic Array. That’s actually very cool, because we can keep using 
+PowerArray methods further on the result.
+
+We can add a special static getter Symbol.species to the class. If it exists, 
+it should return the constructor that JavaScript will use internally to create new entities 
+in map, filter and so on.
+
+
+class PowerArray extends Array {
+  isEmpty() {
+    return this.length === 0;
+  }
+
+  // built-in methods will use this as the constructor
+  static get [Symbol.species]() {
+    return Array;
+  }
+}
+
+let arr = new PowerArray(1, 2, 5, 10, 50);
+alert(arr.isEmpty()); // false
+
+// filter creates new array using arr.constructor[Symbol.species] as constructor
+let filteredArr = arr.filter(item => item >= 10);
+
+// filteredArr is not PowerArray, but Array
+alert(filteredArr.isEmpty()); // Error: filteredArr.isEmpty is not a function
+
+
+NOTE 
+Built in classes do not inherit the static methods just like the simple classes and all. 
+
+
+*** Mixins ***
+As defined in Wikipedia, a mixin is a class containing methods that can be used by 
+other classes without a need to inherit from it.
+
+In other words, a mixin provides methods that implement a certain behavior, but 
+we do not use it alone, we use it to add the behavior to other classes.
+
+
+let sayHiMixin = {
+  sayHi() {
+    alert(`Hello ${this.name}`);
+  },
+  sayBye() {
+    alert(`Bye ${this.name}`);
+  }
+};
+
+// usage:
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+// copy the methods
+Object.assign(User.prototype, sayHiMixin);
+
+// now User can say hi
+new User("Dude").sayHi(); // Hello Dude!
+
+So basically in the MIXINs what it does is, create an object with the wanted 
+functionalities and make then assign the properties in the class prototype. 

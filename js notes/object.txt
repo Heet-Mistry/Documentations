@@ -35,7 +35,8 @@ let obj = {
 }
 
 when we have the key and the value as the same then we can put it in the 
-shorthand notation such as 
+shorthand notation such as, even if we have the key as the object then the 
+name of the object will be key as the string. 
 
 let obj = {
   name,
@@ -54,7 +55,7 @@ undefined = for not defined
 
 For checking if some key exist in the object we can make use of the in operator 
 > "key" in obj => true/false ===> it is recommended to check it with this for 
-checking if the key exists inside the ibject or not.
+checking if the key exists inside the object or not.
 
 for iterating in the object we can iterate them like 
 for(let key in obj){
@@ -301,7 +302,7 @@ property of the other objects should go in.
 for the nested clonning we have to make use of the structuredClone() method 
 the assign will not work, as it will work only for the single level copies. 
 let clone = structuredClone(user), but it is not recommended to use it 
-when the object has the function properties, the method faisl so we have to make 
+when the object has the function properties, the method fails so we have to make 
 our own code snippet. 
 
 
@@ -373,7 +374,7 @@ let user = {
 };
 user.sayHi(); // Ilya
 
-if directly use it then the thsi will be the empty object 
+if directly use it then the this will be the empty object 
 let user= {
   name:"dhairya",
   sayHi:()=>{
@@ -553,6 +554,10 @@ made it a number
 alert(2 + 2 + '1' ); // "41" and not "221"
 alert('1' + 2 + 2); // "122" and not "14"
 
+NOTE:
+Just remember that the valueOf returns the object itself. so remember in case 
+of the error messages. 
+
 
 ** Property flags and descriptors **
 Object properties besides the value have three special attributes, which 
@@ -654,6 +659,8 @@ while allowing to change its value.
 
 THE ONLY ALLOWED CHANGE OF THE PROPERTY FLAG IS WRITABLE 
 we can change the writable property flag from true to false and all.
+Here when we pre define the property in the objects then it will be taken as the true 
+but if we define them by defineProperty then it will be taken as the false. 
 
 
 we can make use of the Object.defineProperties(obj,{
@@ -750,6 +757,7 @@ alert(user.fullName); // John Smith
 for(let key in user) alert(key); // name, surname
 
 
+CONVENTION NOTE:
 There is the smarter convention that the properties which has the name starting with 
 the _ should not be touched from the outside world. 
 
@@ -804,7 +812,7 @@ alert( john.age );      // ...as well as the age
 ** Prototypical inheritance **
 
 [[Protoype]]
-In javascript objects have the special property named [[Protoype]] which is either 
+In javascript OBJECTS have the special property named [[Protoype]] which is either 
 null or reference to the another object. 
 
 the [[Prototype]] is internal and hidden, but we can set in some ways. 
@@ -845,18 +853,22 @@ Limitations in the __proto__
    are ignored. 
 
 NOTE:
+there can be only one [[Prototype]]. An object may not inherit from two others.
+
 Here the __proto__ is not the same as the [[Prototype]] property, the __proto__ is
 basically the getter and setter for the [[prototype]]
 
 Here the __proto__ is not recommended, we should make use of the 
 Object.getPrototypeOf() and Object.setPrototypeOf()
 
+__proto__ is only for the reading, not for the writing. 
 
 >> the value of this in the prototypes 
 this is not affected by the prototypes at all.
-
 No matter where the method is found, in an object or the prototype the this will 
 always be the object before the dot. 
+
+All the object has the final prototype as the Object.prototype. 
 
 NOTE
 Even if we have the setter and getter function which uses the this, they will 
@@ -952,6 +964,7 @@ Rabbit.prototype = {
 // now constructor is also correct, because we added it
 
 
+NOTE:
 all the writing operations are done in the object itself, not in the prototype 
 so if we delete property from the prototype using the object then it will 
 not delete it. 
@@ -982,6 +995,15 @@ when we create some array objects or some other objects then by default the
 new Array() is used internally, and the Array.prototype is put as the __proto__
 of the array literal.  The main root proto is the Object.prototype. 
 
+Change in the native properties, is only allowed in the case of the pollyfilling. 
+function User(){
+    this.name = "user"
+}
+console.dir(User.__proto__ == Function.prototype) // true 
+
+The prototype property is just for the initializing the __proto__ of the objects. 
+
+
 for printing the inheritance we have to make use of the 
 console.dir(object) it will list all the protos and all. 
 
@@ -995,10 +1017,10 @@ null and undefined has no wrappers.
 
 we can also add some properties to String.prototype then it will be available to 
 all the string literals. it is not recommended though, it is only allowed in the 
-case of the pillyfilling. 
+case of the pollyfilling. 
 
 we can also do the method borrowing, so we take the method from the 
-other prototype and then we can put it inot the object and we can call it directly. 
+other prototype and then we can put it not the object and we can call it directly. 
 
 
 let obj = {
