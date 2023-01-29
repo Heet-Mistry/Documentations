@@ -5,33 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My website</title>
-    <script src="./another.mjs" defer></script>
+    <!-- <script src="./another.mjs" defer></script> -->
+    <style>
+        .orange {
+            color: orange;
+        }
+    </style>
 </head>
 <body>
-    <p>hello world</p>
+    <ol id="list">
+        <li>0</li>
+        <li>1</li>
+        <li>2</li>
+    </ol>
     
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <button>hello</button>
-    <h1>This is content</h1>
+    <script>
+        let newLi = document.createElement('li');
+        newLi.innerHTML = 'Hello, world!';
 
+        list.appendChild(newLi);
+
+        newLi = document.createElement('li');
+        newLi.innerHTML = 'Hello, world!';
+
+        list.insertBefore(newLi, list.children[1]);
+    </script>
 </body>
 </html>

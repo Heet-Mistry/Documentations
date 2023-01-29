@@ -1,0 +1,106 @@
+Some browser take the space of the scroll bar from the content width and the 
+content width decreases. 
+
+1. offsetParent, offsetLeft/offsetTop 
+The offsetParent is the nearest ancestor that the browser uses for calculating 
+coordinates during rendering. 
+
+That’s the nearest ancestor that is one of the following:
+CSS-positioned (position is absolute, relative, fixed or sticky), or
+<td>, <th>, or <table>, or
+<body>.
+
+The offsetLeft/offsetTop provide the x/y coordinates relative to offsetParent
+upper left corner. 
+
+
+<main style="position: relative" id="main">
+  <article>
+    <div id="example" style="position: absolute; left: 180px; top: 180px">...</div>
+  </article>
+</main>
+<script>
+  alert(example.offsetParent.id); // main
+  alert(example.offsetLeft); // 180 (note: a number, not a string "180px")
+  alert(example.offsetTop); // 180
+</script>
+--- Here the div is relative to the main so the offsetParent will be the main element.
+
+
+
+There are several occasions when offsetParent is null:
+For not shown elements (display:none or not in the document).
+For <body> and <html>.
+For elements with position:fixed.
+
+
+2. offsetWidth/ height 
+offsetWidth these provides the outer width/height of the element. It is the 
+full size including the borders. 
+
+NOTE:
+Geometry properties are zero/null for elements that are not displayed
+
+Geometry properties are calculated only for displayed elements.
+If an element (or any of its ancestors) has display:none or is not in the document, 
+then all geometry properties are zero (or null for offsetParent).
+For example, offsetParent is null, and offsetWidth, offsetHeight are 0 when we 
+created an element, but haven’t inserted it into the document yet, or it (or its ancestor) has display:none.
+We can use this to check if an element is hidden, like this:
+
+
+3. clientTop/clientLeft
+In the geometry we may have the boxes and it has the borders. clientLeft gives 
+the left border width. clientTop it is the border top height. 
+
+But to be precise – these properties are not border width/height, but rather 
+relative coordinates of the inner side from the outer side.
+
+
+What’s the difference?
+It becomes visible when the document is right-to-left (the operating system is in 
+Arabic or Hebrew languages). The scrollbar is then not on the right, but on the left, 
+and then clientLeft also includes the scrollbar width.
+
+
+4. clientWidth /clientHeight 
+These properties provide the size of the area inside the element borders. 
+They include the content width together with paddings, but without the scrollbar:
+
+So when there’s no padding we can use clientWidth/clientHeight to get the content 
+area size. the scroll size is excluded in this case. 
+
+
+5. scrollWidth and height 
+scrollHeight – is the full inner height of the content area including the 
+scrolled out parts.
+
+scrollWidth – is the full inner width, here we have no horizontal scroll, 
+so it equals clientWidth.
+
+here also the width of the scrollbar is excluded from the calculation. 
+
+
+6. scrollLeft/ scrollTop 
+Properties scrollLeft/scrollTop are the width/height of the hidden, 
+scrolled out part of the element.
+
+In other words, scrollTop is “how much is scrolled up”.
+Most of the geometry properties here are read-only, but scrollLeft/scrollTop 
+can be changed, and the browser will scroll the element.
+If you click the element below, the code elem.scrollTop += 10 executes. 
+That makes the element content scroll 10px down.
+
+
+Instead of using the CSS height and width from the getComputedStyle rather use the 
+geometric ones. coz... 
+
+First, CSS width/height depend on another property: box-sizing that defines 
+“what is” CSS width and height. A change in box-sizing for CSS purposes may break 
+such JavaScript.
+
+Second, CSS width/height may be auto, for instance for an inline element:
+
+
+NOTE:
+CSS width is the inner content area without the paddings. 
