@@ -1,0 +1,271 @@
+** Mouse events **
+
+mousedown/mouseup
+Mouse button is clicked/released over an element.
+
+mouseover/mouseout
+Mouse pointer comes over/out from an element.
+
+mousemove
+Every mouse move over an element triggers that event.
+
+click
+Triggers after mousedown and then mouseup over the same element if the 
+left mouse button was used.
+
+dblclick
+Triggers after two clicks on the same element within a short timeframe. Rarely 
+used nowadays.
+
+contextmenu
+Triggers when the right mouse button is pressed. There are other ways to open a context 
+menu, e.g. using a special keyboard key, it triggers in that case also, so it’s not 
+exactly the mouse event.
+
+
+Here the main thing here is that mouse events can trigger many events the order is in 
+the way.
+mousedown → mouseup → click.
+
+every mouse event has the button property , which shows us which event is fired. 
+
+>> Button state and the event.button
+Left button (primary)	0
+Middle button (auxiliary)	1
+Right button (secondary)	2
+X1 button (back)	3
+X2 button (forward)	4
+
+All the mouse events include the information about the pressed modifier keys
+Event properties. 
+
+shiftKey : Shift 
+altKey : alt or opt for the MAC 
+ctrlKey : Ctrl 
+metaKey : Cmd for the MAC
+They are true if the corresponding key was pressed during the event.
+
+All the mouse events provide coordinates in two flavours
+Window-relative: clientX and clientY.
+Document-relative: pageX and pageY.
+
+In short, document-relative coordinates pageX/Y are counted from the left-upper 
+corner of the document, and do not change when the page is scrolled, while clientX/Y 
+are counted from the current window left-upper corner. When the page is scrolled, they 
+change.
+
+event.clientX and event.clientY 
+event.pageX and event.pageY 
+
+Double click on the elements generally selects the text, we can change this behaviour.
+Before...
+<b ondblclick="alert('Click!')" onmousedown="return false">
+  Double-click me
+</b>
+...After
+
+Here the Double click me element is not selectable, it is still selectable just The
+selection should not start and end in the given element. 
+
+NOTE:
+return false removes the browser default behaviour
+
+The default browser action of mousedown is text selection, if it’s not good for 
+the interface, then it should be prevented.
+
+
+** Moving the mouse, mouseout and mousein events **
+The mouseover event occurs when a mouse pointer comes over an element, 
+and mouseout – when it leaves.
+
+These events are special, because they have property relatedTarget. This property 
+complements target. When a mouse leaves one element for another, one of them becomes 
+target, and the other one – relatedTarget.
+
+so basically the flow is relatedTarget --> target 
+
+this is for the mouseover 
+relatedTarget = the element from which the mouse came to the target 
+target = it is the element where the mouse came over
+
+for mouseout
+event.target – is the element that the mouse left.
+event.relatedTarget – is the new under-the-pointer element, that mouse left for 
+(target → relatedTarget).
+
+
+relatedTarget can be null, which means that the mouse came over from the out of the 
+window.
+
+>> skipping the elements 
+The mousemove event triggers when the mouse moves. But that doesn’t mean that 
+every pixel leads to an event.
+
+If the mouse moves very fast from #FROM to #TO elements as painted above, then 
+intermediate <div> elements (or some of them) may be skipped. The mouseout event 
+may trigger on #FROM and then immediately mouseover on #TO.
+
+mouseover runs when the mouse is over the element once, mouseout is the same in case 
+of the mouseout while the mousemove will happen each time when the mouse will move in the 
+specific element. 
+
+NOTE:
+In case of fast mouse movements, intermediate elements may be ignored, but one 
+thing we know for sure: if the pointer “officially” entered an element (mouseover event 
+generated), then upon leaving it we always get mouseout.
+
+** Mouseout when leaving for the child
+An important feature of mouseout – it triggers, when the pointer moves from an element 
+to its descendant, e.g. from #parent to #child in this HTML: 
+
+<div id="parent">
+  <div id="child">...</div>
+</div>
+
+NOTE:
+the mouseover event bubbles to the parent.
+
+** Events mouseenter and mouseleave **
+Events mouseenter/mouseleave are like mouseover/mouseout. They trigger when the mouse 
+pointer enters/leaves the element.
+
+The main difference here is that.
+Transitions inside the element, to/from descendants, are not counted.
+Events mouseenter/mouseleave do not bubble.
+
+
+*** Event deligation ***
+we can only use the event deligation in the case of the mouseover and mouseout.
+
+
+** Drag and Drop algorithm **
+On mousedown – prepare the element for moving, if needed (maybe create a clone of it, 
+add a class to it or whatever).
+
+Then on mousemove move it by changing left/top with position:absolute.
+
+On mouseup – perform all actions related to finishing the drag’n’drop.
+
+NOTE:
+When we implement our own drag and drop feature we should always prevent the 
+default drag and drop from, which is the property of the browser. 
+
+ball.ondragstart = function() {
+  return false;
+};
+
+Generally what we do is we take an draggable element and we put it onto the 
+droppable element. for doing this we can not put the event handlers on the droppables. 
+
+
+The problem is that, while we’re dragging, the draggable element is always above other 
+elements. And mouse events only happen on the top element, not on those below it.
+
+There’s a method called document.elementFromPoint(clientX, clientY). It returns the 
+most nested element on given window-relative coordinates (or null if given coordinates 
+are out of the window). If there are multiple overlapping elements on the same 
+coordinates, then the topmost one is returned.
+
+
+** Pointer events **
+To solve these issues, the new standard Pointer Events was introduced. It provides a 
+single set of events for all kinds of pointing devices.
+
+Pointer events are named similarly to mouse events:
+
+pointerId – the unique identifier of the pointer causing the event.
+
+Browser-generated. Allows us to handle multiple pointers, such as a touchscreen with stylus and multi-touch (examples will follow).
+
+pointerType – the pointing device type. Must be a string, one of: “mouse”, “pen” or “touch”.
+
+We can use this property to react differently on various pointer types.
+
+isPrimary – is true for the primary pointer (the first finger in multi-touch).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+** keyboard events **
+Keyboard events should be used when we want to handle keyboard actions (virtual 
+keyboard also counts). For instance, to react on arrow keys Up and Down or hotkeys 
+(including combinations of keys).
+
+
+The keydown events happens when a key is pressed down, and then keyup – when 
+it’s released.
+
+The key property of the event object allows to get the character, while the code 
+property of the event object allows to get the “physical key code”.
+
+For instance, the same key Z can be pressed with or without Shift. 
+That gives us two different characters: lowercase z and uppercase Z.
+
+The event.key is exactly the character, and it will be different. But event.code is 
+the same:
+
+So basically 
+event.key = it is the character pressed case sensitive of the keyboard 
+event.code = key code, in case of the uppercase and lowercase event.code is the same
+
+event.code is useful in the case of the different different languages. there the event.key 
+can change but the event.code remains the same. 
+
+event.code tells the js which key is exactly pressed, while the event.key tells the meaning 
+of the key pressed. In the case of the right and the left shift the event.code gives the 
+left and right shift differently, but in the case of the event.key it will give the shift. 
+
+// listener for the UNDO action 
+document.addEventListener('keydown', function(event) {
+  if (event.code == 'KeyZ' && (event.ctrlKey || event.metaKey)) {
+    alert('Undo!')
+  }
+});
+
+
+If a key is being pressed for a long enough time, it starts to “auto-repeat”: 
+the keydown triggers again and again, and then when it’s released we finally get keyup. 
+So it’s kind of normal to have many keydown and a single keyup.
+
+For events triggered by auto-repeat, the event object has event.repeat property 
+set to true.
+
+
+** SCROLLING **
+The scroll event allows us to react on the page or element scrolling. 
+The scroll event works both on the window and on scrollable elements.
+
+We can’t prevent scrolling by using event.preventDefault() in onscroll listener, 
+because it triggers after the scroll has already happened.
+
+But we can prevent scrolling by event.preventDefault() on an event that causes the 
+scroll, for instance keydown event for pageUp and pageDown.
+

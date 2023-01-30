@@ -1,0 +1,314 @@
+document forms are the members of the special collection document.forms, it is 
+the named collection, it is both the named and ordered we can make use of te 
+name or the number for accessing the same. 
+
+document.forms.my; // the form with name="my"
+document.forms[0]; // the first form in the document
+
+When we have a form, then any element is available in the named collection form.elements.
+
+<form name="my">
+  <input name="one" value="1">
+  <input name="two" value="2">
+</form>
+
+<script>
+  // get the form
+  let form = document.forms.my; // <form name="my"> element
+  // get the element
+  let elem = form.elements.one; // <input name="one"> element
+  alert(elem.value); // 1
+</script>
+
+
+There may be multiple elements with the same name. This is typical with radio buttons 
+and checkboxes.
+In that case, form.elements[name] is a collection. For instance:
+
+<form>
+  <input type="radio" name="age" value="10">
+  <input type="radio" name="age" value="20">
+</form>
+<script>
+let form = document.forms[0];
+let ageElems = form.elements.age;
+alert(ageElems[0]); // [object HTMLInputElement]
+</script>
+
+
+<body>
+  <form id="form">
+    <fieldset name="userFields">
+      <legend>info</legend>
+      <input name="login" type="text">
+    </fieldset>
+  </form>
+  <script>
+    alert(form.elements.login); // <input name="login">
+    let fieldset = form.elements.userFields;
+    alert(fieldset); // HTMLFieldSetElement
+
+    // we can get the input by name both from the form and from the fieldset
+    alert(fieldset.elements.login == form.elements.login); // true
+  </script>
+</body>
+
+we can also make the backreference to the form from the element itself.
+<form id="form">
+  <input type="text" name="login">
+</form>
+
+<script>
+  // form -> element
+  let login = form.login;
+  // element -> form
+  alert(login.form); // HTMLFormElement
+</script>
+
+
+>> Form elements 
+
+1. input and the textarea
+We can access their value as input.value (string) or input.checked (boolean) for 
+checkboxes and radio buttons.
+
+input.value = "New value";
+textarea.value = "New text";
+input.checked = true; // for a checkbox or radio button
+
+2. select and option 
+A <select> element has 3 important properties:
+select.options – the collection of <option> subelements,
+select.value – the value of the currently selected <option>,
+select.selectedIndex – the number of the currently selected <option>.
+
+
+<select id="select">
+  <option value="apple">Apple</option>
+  <option value="pear">Pear</option>
+  <option value="banana">Banana</option>
+</select>
+<script>
+  // all three lines do the same thing
+  select.options[2].selected = true;
+  select.selectedIndex = 2;
+  select.value = 'banana';
+  // please note: options start from zero, so index 2 means the 3rd option.
+</script>
+
+we can also create the multi options select from this way like 
+<select id="select" multiple>
+  <option value="blues" selected>Blues</option>
+  <option value="rock" selected>Rock</option>
+  <option value="classic">Classic</option>
+</select>
+<script>
+  // get all selected values from multi-select
+  let selected = Array.from(select.options)
+    .filter(option => option.selected)
+    .map(option => option.value);
+
+  alert(selected); // blues,rock
+</script>
+
+for adding and removing the option we have to make use of the add and remove method
+in the select.options, for creating the option element we have to make use of the 
+createElement or the new syntax.
+
+option = new Option(text, value, defaultSelected, selected);
+text – the text inside the option,
+value – the option value,
+defaultSelected – if true, then selected HTML-attribute is created,
+selected – if true, then the option is selected.
+
+The difference between defaultSelected and selected is that defaultSelected 
+sets the HTML-attribute (that we can get using option.getAttribute('selected'), 
+while selected sets whether the option is selected or not.
+
+In practice, one should usually set both values to true or false. 
+(Or, simply omit them; both default to false.)
+
+let option = new Option("Text", "value", true, true);
+
+
+** focusing focus and the blur event **
+An element receives the focus when the user either clicks on it or uses the Tab key on 
+the keyboard. There’s also an autofocus HTML attribute that puts the focus onto an 
+element by default when a page loads and other means of getting the focus.
+
+blur means the moment of losing the focus. 
+
+>> Events focus and blur
+The focus event is called on focusing, and blur – when the element loses the focus.
+
+<style>
+  .invalid { border-color: red; }
+  #error { color: red }
+</style>
+Your email please: <input type="email" id="input">
+<div id="error"></div>
+<script>
+input.onblur = function() {
+  if (!input.value.includes('@')) { // not email
+    input.classList.add('invalid');
+    error.innerHTML = 'Please enter a correct email.'
+  }
+};
+input.onfocus = function() {
+  if (this.classList.contains('invalid')) {
+    // remove the "error" indication, because the user wants to re-enter something
+    this.classList.remove('invalid');
+    error.innerHTML = "";
+  }
+};
+</script>
+
+
+we can dynamically put focus and put blur on the elements using the methods 
+elem.focus() and elem.blur()
+
+<style>
+  .error {
+    background: red;
+  }
+</style>
+Your email please: <input type="email" id="input">
+<input type="text" style="width:220px" placeholder="make email invalid and try to focus here">
+<script>
+  input.onblur = function() {
+    if (!this.value.includes('@')) { // not email
+      // show the error
+      this.classList.add("error");
+      // ...and put the focus back
+      input.focus();
+    } else {
+      this.classList.remove("error");
+    }
+  };
+</script>
+
+
+Reasons for the focus loose
+An alert moves focus to itself, so it causes the focus loss at the element (blur event), 
+and when the alert is dismissed, the focus comes back (focus event).
+
+If an element is removed from DOM, then it also causes the focus loss. If it is 
+reinserted later, then the focus doesn’t return.
+
+
+Byd efault there are many elements that do not allow the focus methods on them, but 
+we can make them focusable with the help of the attribute tabIndex. Any element which 
+has the tabIndex attribute can be focusable. 
+
+Any element becomes focusable if it has tabindex. The value of the attribute is 
+the order number of the element when Tab (or something like that) is used to switch 
+between them.
+
+Elements without matching tabindex are switched in the document source order 
+(the default order).
+
+
+tabindex="0" puts an element among those without tabindex. That is, when we switch 
+elements, elements with tabindex=0 go after elements with tabindex ≥ 1. so the 
+element with the tabIndex=0 will be focused after all the elems with the tabIndex>=1.
+
+Usually it’s used to make an element focusable, but keep the default switching order. 
+To make an element a part of the form on par with <input>.
+
+tabindex="-1" allows only programmatic focusing on an element. The Tab key ignores such 
+elements, but method elem.focus() works.
+
+
+NOTE:
+Event focus and the blur does not bubble. but the focus and the blur can be captured. 
+
+There is one another set of events which are focusin and focusout, they can bubble. 
+but they will not work with the onfocusin and all, we have to define the eventlistener 
+for it. 
+
+<form id="form">
+  <input type="text" name="name" value="Name">
+  <input type="text" name="surname" value="Surname">
+</form>
+<style> .focused { outline: 1px solid red; } </style>
+<script>
+  form.addEventListener("focusin", () => form.classList.add('focused'));
+  form.addEventListener("focusout", () => form.classList.remove('focused'));
+</script>
+
+
+>> Some data events 
+
+1. change 
+The change event triggers when the element has finished changing. for the text 
+inputs it means that the event triggers when the element losses the focus. 
+
+For other elements: select, input type=checkbox/radio it triggers right after the 
+selection changes:
+
+2. input 
+The input event triggers every time after a value is modified by the user.
+
+3. cut copy paste 
+These events occur on cutting/copying/pasting a value.
+We also can use event.preventDefault() to abort the action, then nothing gets 
+copied/pasted.
+
+<input type="text" id="input">
+<script>
+  input.onpaste = function(event) {
+    alert("paste: " + event.clipboardData.getData('text/plain'));
+    event.preventDefault(); // will prevent the paste operation
+  };
+
+  input.oncut = input.oncopy = function(event) {
+    alert(event.type + '-' + document.getSelection());
+    event.preventDefault(); // will prevent the cut operation 
+  };
+</script>
+
+NOTE:
+Please note: inside cut and copy event handlers a call to 
+event.clipboardData.getData(...) returns an empty string. That’s because technically 
+the data isn’t in the clipboard yet. If we use event.preventDefault() it won’t be 
+copied at all.
+
+
+
+** Forms event methods submit **
+The submit event triggers when the form is submitted, it is usually used to validate 
+the form before sending it to the server or to abort the submission and process it in 
+JavaScript.
+
+The method form.submit() allows to initiate form sending from JavaScript. We can use 
+it to dynamically create and send our own forms to server.
+
+Event submit:
+there are two main ways to submit the form.
+1. The first – to click <input type="submit"> or <input type="image">.
+2. The second – press Enter on an input field.
+
+Both actions lead to submit event on the form. The handler can check the data, 
+and if there are errors, show them and call event.preventDefault() or return false
+, then the form 
+won’t be sent to the server.
+
+NOTE:
+In the forms when we press the enter then the click event automatically fired 
+in the submit button. 
+
+let form = document.createElement('form');
+form.action = 'https://google.com/search';
+form.method = 'GET';
+form.innerHTML = '<input name="q" value="test">';
+// the form must be in the document to submit it
+document.body.append(form);
+form.submit();
+
+In the below case even if we press the submit button then also 
+the alert("sbmit") will be printed. 
+<form onsubmit="alert('submit!');return false">
+  First: Enter in the input field <input type="text" value="text"><br>
+  Second: Click "submit": <input type="submit" value="Submit">
+</form>
+

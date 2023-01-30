@@ -507,4 +507,71 @@ it is rarely used, but the main drawback here is that this only works when the
 page is loading, if after the load we run this then the page content will be erased. 
 
 
+** styles and classes **
+We can style the elements with two ways one is classes and one another is the style 
+attribute. But it is preferrable to use the classes, and we should use the styles 
+when we are dynamically setting something position related coordinates. 
+
+1. className and classList 
+elem.className = gives the classname string as the whole
+<body class="main page">
+  <script>
+    alert(document.body.className); // main page
+  </script>
+</body>
+
+
+The elem.classList is a special object with methods to add/remove/toggle a single class.
+
+Methods of classList:
+elem.classList.add/remove("class") – adds/removes the class.
+elem.classList.toggle("class") – adds the class if it doesn’t exist, otherwise removes it.
+elem.classList.contains("class") – checks for the given class, returns true/false.
+
+classList is iterable we can make use of the for of here.
+
+The property elem.style is an object that corresponds to what’s written 
+in the "style" attribute. Setting elem.style.width="100px" works the same as 
+if we had in the attribute style a string width:100px.
+
+For multi-word property the camelCase is used:
+
+Browser-prefixed properties like -moz-border-radius, -webkit-border-radius 
+also follow the same rule: a dash means upper case.
+button.style.MozBorderRadius = '5px';
+button.style.WebkitBorderRadius = '5px';
+
+If we set style.display to an empty string, then the browser applies CSS classes 
+and its built-in styles normally, as if there were no such style.display property at all.
+
+Also there is a special method for that, elem.style.removeProperty('style property'). 
+So, We can remove a property like this.
+
+Generally we make use of the elem.style.cssProp = value, but we can not write 
+the full style set like div.style = "color:red,width:100px" because the elem.style 
+is the object and it is read only. for putting the whole style we have to make use 
+of the elem.style.cssText = some string
+
+div.style.cssText=`color: red !important;
+    background-color: yellow;
+    width: 100px;
+    text-align: center;
+  `;
+
+
+elem.style just gives the syle attribute of the current element, it will not give the 
+css cascade coming from the classes and all. 
+
+getComputedStyle(element, [pseudo])
+it will return a value object of the styles from the css cascade and the final properties. 
+
+let computedStyle = getComputedStyle(document.body);
+// now we can read the margin and the color from it
+alert( computedStyle.marginTop ); // 5px
+alert( computedStyle.color ); // rgb(255, 0, 0)
+
+The computedStyle returns the resolved values of the styles, and all values will be fixed.
+
+
+
 
