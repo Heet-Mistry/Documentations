@@ -1,0 +1,92 @@
+** Selection API  **
+We can get the selection from the document using the document.getSelection()
+
+anchorNode – the node where the selection starts,
+anchorOffset – the offset in anchorNode where the selection starts,
+focusNode – the node where the selection ends,
+focusOffset – the offset in focusNode where the selection ends,
+isCollapsed – true if selection selects nothing (empty range), or doesn’t exist.
+rangeCount – count of ranges in the selection, maximum 1 in all browsers except Firefox.
+
+In the selection API, we can select the content from the left to right and also 
+from the left to right, but here the anchorNode and the focusNode can be altered. 
+
+There are some selection events which can be handled.
+
+1. elem.onselectstart 
+when the selection starts specifically on the element, when the user presses the 
+element and move the mouse. 
+
+Preventing the default action cancels the selection start. So starting a selection from 
+this element becomes impossible, but the element is still selectable. The visitor just 
+needs to start the selection from elsewhere.
+
+2. document.onselectionchange 
+whebevr the selection changes or starts. 
+Please note: this handler can be set only on document, it tracks all selections in it.
+
+
+for converting the selection into the string we have to make use of the toString() method.
+let content = document.getSelection().toString();
+
+or we can get the as it is content with the html node, with the help of the clonedContents
+
+<p id="p">Select me: <i>italic</i> and <b>bold</b></p>
+
+Cloned: <span id="cloned"></span>
+<br>
+As text: <span id="astext"></span>
+
+<script>
+  document.onselectionchange = function() {
+    let selection = document.getSelection();
+
+    cloned.innerHTML = astext.innerHTML = "";
+
+    // Clone DOM nodes from ranges (we support multiselect here)
+    // here the contents will be copied as it is as the HTML styling and all 
+    for (let i = 0; i < selection.rangeCount; i++) {
+      cloned.append(selection.getRangeAt(i).cloneContents());
+    }
+    // Get as text
+    astext.innerHTML += selection;
+  };
+</script>
+
+removeAllranges() = for removing the ranges
+empty() = for removing the ranges
+
+
+
+** Selections in form controls **
+Form elements such as input and textarea and all provide the special methods for the 
+selection. 
+
+input.selectionStart – position of selection start (writeable),
+input.selectionEnd – position of selection end (writeable),
+input.selectionDirection – selection direction, one of: “forward”, “backward” or 
+“none” (if e.g. selected with a double mouse click),
+input.onselect – triggers when something is selected.
+input.select() – selects everything in the text control 
+(can be textarea instead of input),
+
+onselect triggers when something is selected, but not when the selection is removed.
+
+when nothing is selected then the selectionStart and selectionend collapses and becomes 
+cursor, we can change the selectionstart and the end can change the position of the cursor.
+
+
+** Making the unselectable **
+1. we can make the element unselectable with using the user-select property to setting 
+it to none. This doesn’t allow the selection to start at elem. But the user may start 
+the selection elsewhere and include elem into it.
+
+Then elem will become a part of document.getSelection(), so the selection actually 
+happens, but its content is usually ignored in copy-paste.
+
+2. we can prevent the default browser actions in the mousedown or the onselectionstart 
+method. 
+<div>Selectable <div id="elem">Unselectable</div> Selectable</div>
+<script>
+  elem.onselectstart = () => false;
+</script>

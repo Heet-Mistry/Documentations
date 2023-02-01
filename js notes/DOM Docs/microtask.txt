@@ -1,0 +1,15 @@
+Rendering never happens while the engine is executing the task, it does not matter 
+if the task takes long time. Changes in the DOM only painted after the task is 
+complete. 
+
+If a task takes too long, the browser can’t do other tasks, such as processing user 
+events. So after a time, it raises an alert like “Page Unresponsive”, suggesting 
+killing the task with the whole page. That happens when there are a lot of complex 
+calculations or a programming error leading to an infinite loop.
+
+
+Immediately after every macrotask, the engine executes all tasks from microtask 
+queue, prior to running any other macrotasks or rendering or anything else.
+
+Here, when there are any task in the micro task then the rendering will not 
+happen here. 

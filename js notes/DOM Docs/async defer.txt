@@ -85,7 +85,7 @@ document.addEventListener('readystatechange', () => console.log(document.readySt
 
 
 window.load = runs after all the other load handlers
-interactve and DOMContentLoaded is the same thing 
+interactive and DOMContentLoaded is the same thing 
 complete and window.onload is the same thing
 
 

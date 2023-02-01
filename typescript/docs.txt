@@ -1,0 +1,5 @@
+JS is the dynamically typed language so it will give the error on the run time,
+but we can make the error visible at the compile time by making use of the typescript 
+which is the static typing. 
+
+ts suggests the different different properties for us. 

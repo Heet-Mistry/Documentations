@@ -52,6 +52,622 @@ typescript types
 > undefined 
 > any == wild card
 
+---------------- TS ---------------
+let obj: any = { x: 0 };
+// None of the following lines of code will throw compiler errors.
+// Using `any` disables all further type checking, and it is assumed 
+// you know the environment better than TypeScript.
+obj.foo();
+obj();
+obj.bar = 100;
+obj = "hello";
+const n: number = obj;
+
+Type annotation on a variable:
+let myName: string = "Alice";
+
+In most cases, though, this isn’t needed. Wherever possible, TypeScript tries to 
+automatically infer the types in your code. For example, the type of a variable is 
+inferred based on the type of its initializer:
+
+In functions we can give the types as well to the parameter and to the return type 
+as well.
+
+// Parameter type annotation
+function greet(name: string) {
+  console.log("Hello, " + name.toUpperCase() + "!!");
+}
+
+function getFavoriteNumber(): number {
+  return 26;
+}
+
+Generally the return type annotation is not needed as the ts will automatically 
+infer from this. Sometimes the ts also does the contextual typing where 
+it will infer the type of the argument based on the context where it is used.
+
+// No type annotations here, but TypeScript can spot the bug
+const names = ["Alice", "Bob", "Eve"];
+ 
+// Contextual typing for function
+names.forEach(function (s) {
+  console.log(s.toUppercase());
+Property 'toUppercase' does not exist on type 'string'. Did you mean 'toUpperCase'?
+});
+
+we can also give the object type in the ts.
+// The parameter's type annotation is an object type
+function printCoord(pt: { x: number; y: number }) {
+  console.log("The coordinate's x value is " + pt.x);
+  console.log("The coordinate's y value is " + pt.y);
+}
+printCoord({ x: 3, y: 7 });
+
+If we do not specify the type then it will be assumed to be any. 
+
+we can also have the optional properties in the objects in ts. we can achive this 
+by puttin the ? at the property.
+function printName(obj: { first: string; last?: string }) {
+  // ...
+}
+// Both OK
+printName({ first: "Bob" });
+printName({ first: "Alice", last: "Alisson" });
+
+In the ts when we do not pass the value then it will be undefined. 
+
+Union types >>
+we can also create the union type with the help of the | operator.
+function printId(id: number | string) {
+  console.log("Your ID is: " + id);
+}
+
+if we pass some number in the function and then call the method of the string 
+then ts will throw the error, we can make use of the narrowing here, with which 
+we can check on which type we are curently operating on. 
+
+function printId(id: number | string) {
+  if (typeof id === "string") {
+    // In this branch, id is of type 'string'
+    console.log(id.toUpperCase());
+  } else {
+    // Here, id is of type 'number'
+    console.log(id);
+  }
+}
+
+function welcomePeople(x: string[] | string) {
+  if (Array.isArray(x)) {
+    // Here: 'x' is 'string[]'
+    console.log("Hello, " + x.join(" and "));
+  } else {
+    // Here: 'x' is 'string'
+    console.log("Welcome lone traveler " + x);
+  }
+}
+
+
+with the help of the type aleases we can define the reusable types, with which we 
+can make the custom types. 
+
+type Point = {
+  x: number;
+  y: number;
+};
+ 
+// Exactly the same as the earlier example
+function printCoord(pt: Point) {
+  console.log("The coordinate's x value is " + pt.x);
+  console.log("The coordinate's y value is " + pt.y);
+}
+ 
+printCoord({ x: 100, y: 100 });
+
+we can also make the custo type with the union by doing like,
+type ID = number | string;
+
+
+The same thing can be handled with the interfaces. 
+interface Point {
+  x: number;
+  y: number;
+}
+ 
+function printCoord(pt: Point) {
+  console.log("The coordinate's x value is " + pt.x);
+  console.log("The coordinate's y value is " + pt.y);
+}
+ 
+printCoord({ x: 100, y: 100 });
+
+NOTE:
+Here the main difference between the types and the interfaces is that, the interfaces 
+are extendable and can be reopened, so we can also extend the types but we have to 
+make use of the & operation , also if the interface is defined we can redeclare and 
+add sometypes to it, but in the case of the types it can not be possible. 
+
+interface Animal {
+  name: string
+}
+
+interface Bear extends Animal {
+  honey: boolean
+}
+
+const bear = getBear() 
+bear.name
+bear.honey // here the bear will contain both the properties
+
+In the case of the types we have to do the same with the help of the & opertor.
+type Animal = {
+  name: string
+}
+
+type Bear = Animal & { 
+  honey: boolean 
+}
+
+const bear = getBear();
+bear.name;
+bear.honey;
+
+
+we can also add the new fields in the same interface.
+interface Window {
+  title: string
+}
+interface Window {
+  ts: TypeScriptAPI
+}
+
+this will add the new fields in the interface.
+
+type Window = {
+  title: string
+}
+type Window = {
+  ts: TypeScriptAPI
+} // Error: Duplicate identifier 'Window'.
+
+
+
+** Type assertions ***
+Sometimes we have the information about the type of some value that ts do not have.
+for an example when we use the document.getElementById ts just knows that it will 
+give the HTMLElement, but we can be more precise that this is the HTMLDiv element,
+for that we have to make use of the type assertion. 
+
+const myCanvas = document.getElementById("main_canvas") as HTMLCanvasElement;
+
+someties we want to impose some sort of the order on the type then we have to 
+make use of the doble type assertion here. we can do it by 
+const a = (expr as any) as T;
+
+NOTE:
+WE can also directly give the value which can be in the variable.
+let x: "hello" = "hello";
+// OK
+x = "hello";
+// ...
+x = "howdy";
+Type '"howdy"' is not assignable to type '"hello"'.
+
+Generally it is used in the case of the union types.  we can make use of this 
+with the literal types.
+
+interface Options {
+  width: number;
+}
+function configure(x: Options | "auto") {
+  // ...
+}
+configure({ width: 100 });
+configure("auto");
+configure("automatic"); // this will generate the error
+
+
+when we define the object then the type inference will not be as the literals but 
+rather it will be generic, but for converting it into the literal we can make  use 
+of the as const type inference. 
+const req = { url: "https://example.com", method: "GET" as "GET" } as const;
+
+here the req's value can not be changed.
+req.url = "asdasd" = this will give the error
+
+TS has the same null and undefined types as the javascript. we have one option 
+in the tsconfig file, if the strictNullCheck option is set then, we can not 
+assign the null or undefined to any other type, otherwise we are able to do it. 
+
+it is for better chcecks. 
+
+function func(name:"string" | null){
+    console.log(name.toLocaleLowerCase())
+}
+func("somethig")
+
+when the option is set we have to check the null narrowing, else it wll 
+not give the error. 
+
+>> non-null assertion operator
+function liveDangerously(x?: number | null) {
+  // No error
+  console.log(x!.toFixed());
+}
+
+here it says that we have the gurantee that the value of the x is not null or 
+undefined here. 
+
+
+Enums in ts >>>
+we can declare the enums in ts with the help of the enum keyword. 
+
+enum Direction {
+  Up = 1,
+  Down,
+  Left,
+  Right,
+}
+
+Above, we have a numeric enum where Up is initialized with 1. All of the following 
+members are auto-incremented from that point on. In other words, Direction.Up has 
+the value 1, Down has 2, Left has 3, and Right has 4. By default it starts with the 
+value 0 and then goes on. 
+
+enum Direction {
+  Up = "UP",
+  Down = "DOWN",
+  Left = "LEFT",
+  Right = "RIGHT",
+}
+
+
+when narrowing we can check for the typeof operator and also we can make 
+use of the truthiness narrowing such as.
+0,NaN,"",0n,null,undefined = these becomes false
+or we can check the truthiness with the help of the Boolean(val) or !!val.
+
+The truthiness checks are helpful in the cases of the null and the undefined. 
+function printAll(strs: string | string[] | null) {
+  if (strs && typeof strs === "object") {
+    for (const s of strs) {
+      console.log(s);
+    }
+  } else if (typeof strs === "string") {
+    console.log(strs);
+  }
+}
+
+** Equality narrowing **
+we can also make use of the equality narrowing for the typeguards. we can check 
+with the types or we can directly check with the null values or literal values. 
+
+** The in operator narrowing **
+type Fish = { swim: () => void };
+type Bird = { fly: () => void };
+function move(animal: Fish | Bird) {
+  if ("swim" in animal) {
+    return animal.swim();
+  }
+ 
+  return animal.fly();
+}
+
+
+** instance of narrowing **
+instanceof narrowing = we can check the instance of for the narrowing.
+function logValue(x: Date | string) {
+  if (x instanceof Date) {
+    console.log(x.toUTCString());
+(parameter) x: Date
+  } else {
+    console.log(x.toUpperCase());
+(parameter) x: string
+  }
+}
+
+
+NOTE:
+When the first we assign the variable such as number | string then if we assign 
+the variable into the number and then assign it into the string then still it 
+will work. This is because of the the declared types in typescript. 
+
+
+NOTE:
+The void type can have the null or undefined as the value while the never 
+can not have any value.
+
+** The never type **
+we can use the narrow value for the exhaustive checking for the narowing. 
+For example, suppose you construct a function that never returns or always throws 
+an exception then we can use the never type on that function. Never is a new type 
+in TypeScript that denotes values that will never be encountered.
+
+interface Triangle {
+  kind: "triangle";
+  sideLength: number;
+}
+ 
+type Shape = Circle | Square | Triangle;
+ 
+function getArea(shape: Shape) {
+  switch (shape.kind) {
+    case "circle":
+      return Math.PI * shape.radius ** 2;
+    case "square":
+      return shape.sideLength ** 2;
+    default:
+      const _exhaustiveCheck: never = shape;
+Type 'Triangle' is not assignable to type 'never'.
+      return _exhaustiveCheck;
+  }
+}
+
+we can not assign any value to the variable that has the never type. so we can 
+make use of the never type for checking the case which are not handled by us. 
+
+
+>> unknown 
+unknown can not be assigned to anything without type assertion, but we can 
+assign anything to the unknown.
+
+let val: unknown;
+console.log(val);
+val = true;
+console.log(val);
+
+results...
+undefined
+true
+
+let unknown: unknown;
+let num: number = unknown; // Error
+console.log(num);
+
+>> never type 
+the never type represents the type of values that never occur.
+It might be return type of function that never returns.
+const reportError = function () {
+    throw Error('my error');
+}
+
+const loop = function () {
+    while(true) {}
+}
+
+Variables can also acquire the never type when you narrow its type by a type 
+guard that can never be true. For example, without the never type, the following 
+function causes an error because not all code paths return a value.
+
+function fn(a: string | number): boolean {
+  if (typeof a === "string") {
+    return true;
+  } else if (typeof a === "number") {
+    return false;
+  }   
+}
+
+** Index signatures **
+we can make the type of the dictionaries with the help of like. It is called the
+index signature. 
+const phones:{
+  [k:string]:{
+    country:string,
+    phone:string
+  }
+}
+
+NOTE:
+We will only have the error in the code, when ts will find that something 
+is pointless to pass or in the case of the types else we will not have the 
+error. 
+
+we can declare the array with the help of the 
+const arr:number[] = [1,2,3]
+
+In the case of the tuples in the plain js, we can declare the flexible array 
+such that like. 
+
+const arr = [2020,"dhairya","rupala"]
+but when we infer the type in the typescript what it will do is it 
+will make the array of the (string | number)[]. so here we can also 
+add some elements to it, but if we want to impose some sort of order 
+that the tuple should contain only the specific values and the size is 
+also the constraint then we can do it by like.
+
+let arr:[number,string,string] = some array. 
+
+but if we put directly 4 element it will give the error, while if we put 
+push and pop method then it will work correctly. 
+
+NOTE:
+we can also give the arrow function type in the type by doing like
+type something = {
+  onAction:(params)=>void;
+}
+
+Interfaces are only for the object types. Interfaces can extend from another 
+interfaces. we can implement the class with the help of the interface or the 
+types. 
+
+interface Animal{
+    eat(food:string):void
+}
+interface EnhancedAnimal extends Animal{
+    name:string;
+}
+class Dog implements Animal{
+    bark(sound:string):void{
+        return;
+    }
+    
+    eat(food:string):void{
+        return;
+    }
+
+}
+
+Here we can add extra methods here. we ca here implement from the multiple 
+interfaces. by adding the interfaces with the comma separated values. 
+
+when we want to add union and all we should make use of the types not interfaces. 
+
+type | any = any 
+
+
+we can assign anything into the any type. we can also assign any values to the 
+unknown. but in the case of the unknown we can opearate on the value, without 
+narrowing. Bottom types describe the things that can not have any possible value. 
+
+we can not assign anything to the never type, the usecase of the never is let 
+say we have wrote the narrowing and handled the all case, then when some other 
+contributes to the type and then when he put or add some another type and forgot 
+to handle the case for that type then it will give error. 
+
+class Car{}
+class Bike{}
+
+type x = Car | Bike;
+child = new Car()
+
+if(child instanceOf Car){
+  car handling 
+}
+else if(child instanceOf Bike){
+  bike handling
+}
+else{
+  const unhandledCase:never = child;
+}
+
+if someone add something and forgot to handle the case it will give the error. 
+
+
+there is the operator named definite assignment operator, which tells the typescript that 
+I will assure you that you will get the value here. 
+
+class Things{
+  setUp:Promise<any>
+  isSetup!:boolean
+
+  constructor(){
+    // here the ts requires that in the constructor you will have to give the value 
+    // like this.isSetup = true or false, but we can get rid of the error by doing like
+    // use of the definite assignment operation !:, this tells that it will have the value 
+    // do not worry 
+    this.setUp = new Promise((resolve)=>{
+      this.isSetup = false;
+    }).then(()=>{
+      this.isSetup = true;
+    })
+  }
+}
+
+void means that the return type of the functionshould be ignored and itreturns nothing. 
+we can also assign the constructor types using the typescript with the syntax. 
+
+interface DateConstructor{
+  new (value:number):Date
+}
+
+let myc:DateConstructor = Date;
+const d = new myc();
+
+
+function overloads;
+type FormsubmitHandler = (data:FormData)=>void 
+type MessageHandler = (data:MessageEvent) => void
+
+function handleMainEvent(
+  elem:HTMLFormElement | HTMLFrameElement,
+  handler:FormsubmitHandler | MessageHandler
+){}
+
+const myframe = some dom element 
+handleMainEvent(myframe,(val)=>{
+
+})
+
+here when we do this then what will happen is, the val will give the type hint as 
+the any. here we can make use of the function overloads. 
+
+// these are called the heads of the functions
+function handleMainEvent(
+  elem:HTMLFormElement,
+  handler:FormsubmitHandler
+)
+function handleMainEvent(
+  elem:HTMLFrameElement,
+  handler:MessageHandler
+)
+function handleMainEvent(
+  elem:HTMLFormElement | HTMLFrameElement,
+  handler:FormsubmitHandler | MessageHandler
+){
+}
+
+Now the above will worl correctly.
+
+>> classes for the typescript 
+
+class Car{
+  make:string
+  name:string
+
+  constructor(make:string,name:string){
+    this.make = make;
+    this.name = name;
+  }
+}
+
+let sedan = new Car("some make","some name to the car")
+
+
+In typescript we can also make use of the public private and protected keyword 
+for making some methods private public or protected. 
+
+
+** Generics **
+we cna make use of the type parameter for the generics. 
+function func<T>(list:T[]):T[]{
+    return list;
+}
+
+const arr = ["dhairya","rupala"]
+console.log(func(arr)) // it will automatically infer the types here
+
+
+interface Dict<T>{
+    [k:string]:T
+}
+
+const data:Dict<string> = {}
+
+we can also have the multiple generic types in the functions 
+function func()<T,U>{} like this
+
+
+let say sometimes we do not know that if the current type has some value let say 
+id on it then, we can make use of the extends keyword there for making it work.
+
+function func<T extends HashId>() then the T here is required to have the 
+HashId 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 there are other types in typescript also such as 
 any, unknown, never, enum, tuple
 
@@ -237,7 +853,7 @@ the types are close once we have declared the type it can not be redeclared wher
 in the case of the interface we can do that. it will automatically & both of the 
 types. 
 
-type a = {somethign}
+type a = {something}
 type a = {some other thing} // this wont work
 
 interface a{

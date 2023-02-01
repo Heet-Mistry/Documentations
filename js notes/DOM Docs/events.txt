@@ -164,7 +164,7 @@ handleEvent will be called, this object notation is for the generalization purpo
 
 
 
-** Bubling and capturing ***
+** Bublbing and capturing ***
 
 Bubbling 
 When an event happens on the element, then it first runs on it, then on its 
