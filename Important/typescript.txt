@@ -515,7 +515,7 @@ type | any = any
 
 
 we can assign anything into the any type. we can also assign any values to the 
-unknown. but in the case of the unknown we can opearate on the value, without 
+unknown. but in the case of the unknown we can not opearate on the value, without 
 narrowing. Bottom types describe the things that can not have any possible value. 
 
 we can not assign anything to the never type, the usecase of the never is let 

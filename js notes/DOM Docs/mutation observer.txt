@@ -1,0 +1,29 @@
+Mutation observer is the built in DOM object that monitors the changes in certain DOM 
+element and then, fires the event when changes. 
+
+here the callback is the callback which will fire on the change 
+let observer = new MutationObserver(callback);
+
+for attaching it to the dom node 
+observer.observe(node, config);
+
+config is an object with boolean options “what kind of changes to react on”:
+
+childList – changes in the direct children of node,
+subtree – in all descendants of node,
+attributes – attributes of node,
+attributeFilter – an array of attribute names, to observe only selected ones.
+characterData – whether to observe node.data (text content),
+
+Then after any changes, the callback is executed: changes are passed in the first 
+argument as a list of MutationRecord objects, and the observer itself as the second 
+argument.
+
+here the callback will recieve only one argument which is the mutation record object. 
+
+Usecase 
+let say we are using the third party library, and it shows the adds 
+unwatntedly, then we can put the mutation observer on the document and then 
+remove them when the unwanted add appears. 
+
+observer.disconnect() – stops the observation.

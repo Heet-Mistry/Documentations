@@ -1,0 +1,38 @@
+Generators allows us to return multiple values. 
+
+function* generateSequence() {
+  yield 1;
+  yield 2;
+  return 3;
+}
+
+when the function is called then it will not return the value, or run the code 
+rather it will return the special generator object. 
+
+if we want to run the code then we have to make use of the next method, here what 
+the next method will do is, it will return an object which has the value which 
+is yield and the done flag if true the function code is finished. 
+
+the generators are the iterables. 
+function* generateSequence() {
+  yield 1;
+  yield 2;
+  return 3;
+}
+
+let generator = generateSequence();
+
+for(let value of generator) {
+  alert(value); // 1, then 2
+}
+
+as the generators are the iterables we can make use of the spread operator here. 
+function* generateSequence() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+let sequence = [0, ...generateSequence()];
+
+alert(sequence); // 0, 1, 2, 3

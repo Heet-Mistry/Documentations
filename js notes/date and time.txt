@@ -1,0 +1,23 @@
+let date = Date.now() // create the data for the current time 
+
+new Date(miliseconds) = creates the date object from the miliseconds passed 
+from the JAN 01 1970 
+
+timestamp = an integer representing the number of miliseconds that has passed away 
+from the JAN 01 1970 
+
+let date = new Date(datastring) // converts the date time string from the given date 
+new Date(year, month, date, hours, minutes, seconds, ms)
+
+new Date(2011, 0, 1, 0, 0, 0, 0); // 1 Jan 2011, 00:00:00
+new Date(2011, 0, 1); // the same, hours etc are 0 by default
+
+getFullYear()
+getMonth()
+getDate()
+getHours(), minutes(), seconds(), miliseconds()
+
+getDay()
+Get the day of week, from 0 (Sunday) to 6 (Saturday). The first day is always 
+Sunday, in some countries that’s not so, but can’t be changed.
+
