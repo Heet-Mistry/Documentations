@@ -47,7 +47,8 @@ typescript types
 > string 
 > boolean 
 > void = it is the return type of the function if we declare the variable to 
-         it then we can only assign the null and undefined to it.
+         it then we can only assign the null and undefined to it. this is 
+         basically for telling that the function here returns only nothing
 > null 
 > undefined 
 > any == wild card
@@ -124,7 +125,8 @@ function printId(id: number | string) {
 
 if we pass some number in the function and then call the method of the string 
 then ts will throw the error, we can make use of the narrowing here, with which 
-we can check on which type we are curently operating on. 
+we can check on which type we are curently operating on.  Whenever the union 
+types come in we will make use of the narrowing for error resolving. 
 
 function printId(id: number | string) {
   if (typeof id === "string") {
@@ -163,7 +165,7 @@ function printCoord(pt: Point) {
  
 printCoord({ x: 100, y: 100 });
 
-we can also make the custo type with the union by doing like,
+we can also make the custom type with the union by doing like,
 type ID = number | string;
 
 
@@ -172,7 +174,7 @@ interface Point {
   x: number;
   y: number;
 }
- 
+
 function printCoord(pt: Point) {
   console.log("The coordinate's x value is " + pt.x);
   console.log("The coordinate's y value is " + pt.y);
@@ -240,7 +242,8 @@ for that we have to make use of the type assertion.
 const myCanvas = document.getElementById("main_canvas") as HTMLCanvasElement;
 
 someties we want to impose some sort of the order on the type then we have to 
-make use of the doble type assertion here. we can do it by 
+make use of the doble type assertion here.This is the case when we 
+can not directly assert the types in it.  we can do it by 
 const a = (expr as any) as T;
 
 NOTE:
@@ -271,12 +274,19 @@ rather it will be generic, but for converting it into the literal we can make  u
 of the as const type inference. 
 const req = { url: "https://example.com", method: "GET" as "GET" } as const;
 
+const obj = {name:"dhairya",surname:"rupala"} when we write this then the type 
+obj will be {name:string,surname:string} when we do as const then we can not 
+change the obj.name its type will be const "dhairya".
+
+
 here the req's value can not be changed.
 req.url = "asdasd" = this will give the error
 
 TS has the same null and undefined types as the javascript. we have one option 
 in the tsconfig file, if the strictNullCheck option is set then, we can not 
-assign the null or undefined to any other type, otherwise we are able to do it. 
+assign the null or undefined to any other type, otherwise we are able to do it.
+So in the case of the strictNullChecks we have to make sure in the type narrowing 
+we are considering the case of the null and undefined.  
 
 it is for better chcecks. 
 
@@ -373,7 +383,7 @@ will work. This is because of the the declared types in typescript.
 
 
 NOTE:
-The void type can have the null or undefined as the value while the never 
+The void type can have the undefined as the value while the never 
 can not have any value.
 
 ** The never type **
@@ -402,6 +412,7 @@ Type 'Triangle' is not assignable to type 'never'.
   }
 }
 
+NOTE:
 we can not assign any value to the variable that has the never type. so we can 
 make use of the never type for checking the case which are not handled by us. 
 
@@ -485,6 +496,19 @@ type something = {
   onAction:(params)=>void;
 }
 
+Interfaces can also declare the function types. 
+interface SearchFunc {
+  (source: string, subString: string): boolean;
+}
+
+let mySearch: SearchFunc;
+mySearch = function (source: string, subString: string): boolean {
+  let result = source.search(subString);
+  return result > -1;
+};
+
+
+
 Interfaces are only for the object types. Interfaces can extend from another 
 interfaces. we can implement the class with the help of the interface or the 
 types. 
@@ -506,7 +530,7 @@ class Dog implements Animal{
 
 }
 
-Here we can add extra methods here. we ca here implement from the multiple 
+Here we can add extra methods here. we can here implement from the multiple 
 interfaces. by adding the interfaces with the comma separated values. 
 
 when we want to add union and all we should make use of the types not interfaces. 
@@ -541,7 +565,7 @@ else{
 
 if someone add something and forgot to handle the case it will give the error. 
 
-
+TODO: 
 there is the operator named definite assignment operator, which tells the typescript that 
 I will assure you that you will get the value here. 
 
@@ -627,7 +651,7 @@ for making some methods private public or protected.
 
 
 ** Generics **
-we cna make use of the type parameter for the generics. 
+we can make use of the type parameter for the generics. 
 function func<T>(list:T[]):T[]{
     return list;
 }
@@ -651,7 +675,7 @@ id on it then, we can make use of the extends keyword there for making it work.
 
 function func<T extends HashId>() then the T here is required to have the 
 HashId 
-
+TODO: 
 
 
 
@@ -717,7 +741,7 @@ enum Size{
 
 let mySize:Size = Size.medium 
 
-we can give the optinal parameter in the function by introducing the question 
+we can give the optional parameter in the function by introducing the question 
 mark, we can also give the default value, if the default value is not given then 
 it will take the undefined 
 
