@@ -1,7 +1,12 @@
-let obj = {}
-Object.defineProperty(obj,"name", {
-    value: "dhairya",
-    enumerable:false
-})
+function perform(task,cb) {
+    //
+}
 
-console.log(Object.getOwnPropertyNames(obj));
+console.log("Start task");
+
+// first read the maths book 
+// then read the science book 
+// complete the test 
+// you will get gift
+
+console.log("End task");

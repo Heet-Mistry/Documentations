@@ -25,6 +25,8 @@ let generator = generateSequence();
 for(let value of generator) {
   alert(value); // 1, then 2
 }
+here we can only see the 1 and 2 ths is because, the the last statement 
+in which the done is true is ignored by the for of iteration. 
 
 as the generators are the iterables we can make use of the spread operator here. 
 function* generateSequence() {
@@ -34,5 +36,146 @@ function* generateSequence() {
 }
 
 let sequence = [0, ...generateSequence()];
-
 alert(sequence); // 0, 1, 2, 3
+
+
+we can also create our own iterable with the help of the generator sequence. 
+let range = {
+  from: 1,
+  to: 5,
+
+  *[Symbol.iterator]() { // a shorthand for [Symbol.iterator]: function*()
+    for(let value = this.from; value <= this.to; value++) {
+      yield value;
+    }
+  }
+};
+
+alert( [...range] ); // 1,2,3,4,5
+
+** Generator composition **
+with the help of the generator composition we can generate some composite behaviour 
+to make use of the generator sequence. 
+
+function* generateSequence(start, end) {
+  for (let i = start; i <= end; i++) yield i;
+}
+
+function* generatePasswordCodes() {
+
+  // 0..9
+  yield* generateSequence(48, 57);
+
+  // A..Z
+  yield* generateSequence(65, 90);
+
+  // a..z
+  yield* generateSequence(97, 122);
+
+}
+
+let str = '';
+
+for(let code of generatePasswordCodes()) {
+  str += String.fromCharCode(code);
+}
+
+alert(str); // 0..9A..Za..z
+
+
+The yield* directive delegates the execution to another generator. This term 
+means that yield* gen iterates over the generator gen and transparently forwards 
+its yields outside. As if the values were yielded by the outer generator.
+
+** yield is the two way street **
+yield can not only just return the value but it can also, pass the value . 
+
+1. the first call to the generate should be with simple next() method for the 
+   first yield and then we can pass the arguments which can be stored inside the 
+   variables. 
+
+function* gen() {
+  // Pass a question to the outer code and wait for an answer
+  let result = yield "2 + 2 = ?"; // (*)
+
+  alert(result);
+}
+let generator = gen();
+let question = generator.next().value; // <-- yield returns the value
+generator.next(4); // --> pass the result into the generator
+
+
+** generator.throw **
+we can also pass the errors in the generators, not only the values so for that we 
+have to make use of the generator.throw functionality.
+
+function* gen() {
+  try {
+    let result = yield "2 + 2 = ?"; // (1)
+
+    alert("The execution does not reach here, because the exception is thrown above");
+  } catch(e) {
+    alert(e); // shows the error
+  }
+}
+let generator = gen();
+let question = generator.next().value;
+generator.throw(new Error("The answer is not found in my database")); // (2)
+
+
+we can also make the generator to stop by using the method, generator.return(value)
+what it will do is it will stop the execution of the generators. and return the 
+done object with the given value and the done is true.
+
+function* gen() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const g = gen();
+
+g.next();        // { value: 1, done: false }
+g.return('foo'); // { value: "foo", done: true }
+g.next();        // { value: undefined, done: true }
+
+** async iteration and generators **
+async iteration lets us to iterate over the data which comes asynchronously,
+chunk by chunk. async iteration is needed when the value comes asynchronously by some 
+sort of delay or the some sort of blocking. 
+
+for making the object iterable asynchronously we have to make the method
+Symbol.asynciterator in the object. also the next method should return the 
+promise that will be fullfilled with the next value. 
+
+for iterating over the async iterators we make use of the for await (item of some)
+
+we can not make use of the spread operator in the async generation. 
+
+let range = {
+    from: 0,
+    to: 5,
+    
+    [Symbol.asyncIterator]() {
+        return {
+            current: this.from,
+            last: this.to,
+
+            async next() {
+                await new Promise(resolve => setTimeout(resolve,this.current*1000));
+                if (this.current <= this.last) {
+                    return { value: this.current++, done: false }
+                }
+                else return { done: true }
+            }
+        }
+    }
+};
+
+(async () => {
+  for await (let value of range) { // (4)
+    console.log(value); // 1,2,3,4,5
+  }
+})()
+
+

@@ -1,0 +1,157 @@
+git is the distributed version control system. 
+
+git init = for initializing the repository 
+git add filename/. = for adding the changes to the staging area 
+git commit -m "commit message" = for giving the commit message to the commmit
+git status = for seeing the working tree
+
+> git remote 
+for adding the remote to our repo we can make use of the command 
+git remote add remotename remoteURL after setting the remote repo we can 
+push the local branches to the repo by doing 
+git push -u remotename localbranchname
+
+> git diff 
+git diff command displays the changes in the working tree if any and it compares
+with the previous snapshot of the history.
+git diff filename = compares with the HEAD 
+git diff commitHash filename = compares with particular commit 
+git diff branch1 branch2 = it will compares the diffs
+git diff branch1 branch2 specificFileName = it compares that specific file
+
+> git config 
+git stores the config under the 
+/.git/config = local repo specific settings 
+/.gitconfig = global setting we will make use of the --global flag
+
+git config --global user.name <name> // for setting the username globally 
+git config --local user.email <email> // for local repo only
+
+NOTE:
+Bare repos are meant for the storage purpose, direct pushing does not work on the 
+bare repos, so we can make the bare repo and when someone clones from it 
+they will not be able to directly commit on them, the changes will be in the local.
+
+(Partial add)
+let say we want to go through the changes before commiting then we can make use 
+of the git add -p command, for more granular approach for staging the files. 
+it will ask for each and every change if we want to stage it or not. 
+
+> git stash 
+let's say we are on the main branch and we have made some changes and we want to 
+switch to some feature branch then, first we will have to commit those 
+changes if we do not commit them then it will not allow to change the branch, 
+so we can save the changes in the stash for the timebeing, by the command 
+
+git stash = stash the current changes into stash list 
+git stash push -m "stash name" = we can stash the canges with the particular name
+git stash list = it will list all the stashes 
+git stash apply stashIndex = for popin the stashed changes
+
+Note that the stash is local to your Git repository; stashes are not transferred to 
+the server when you push. Also by default git won't stash the changes made to the 
+untracked or ignored files. 
+
+git stash -u = tells the git to also stash the untracked files
+git stash -a = tells the git to also stash the ignored files
+
+for clearing the stash 
+git stash clear 
+
+for clearing particular stash 
+git stash drop stash@{index}
+
+
+TIPS
+Command for showing the graph of the commits in the terminal 
+git log --graph 
+
+
+> amend and revert 
+we can make use of the ammend and revert TILL WE HAVE NOT PUSHED THE CHANGES 
+IN THE REMOTE, it lets you modify the commits. Let's say we have commited some 
+changes and we forgot to change one thing, then we can change that and add the 
+changes and commit it to the previous one with the help of the amend flag.
+
+git add .
+git commit --amend -m "some message"
+
+here the changes will be done in the last commit so the message will be updated 
+here the HASH of the commits will also be changed. 
+
+git revert commitHash = it will revert the changes of that commit and remove that 
+changes from the working history, it creates the new revert commit in the branch. so
+all the contents from the reverted commit will be lost. 
+
+
+> git clone REMOTE_URL
+if we have currently existing git repo we can clone it with the git clone command.
+it will fetch all details along with the .git dir and we can make changes there.
+when we use the git clone then the repo is already setup for the remote collab.
+it will automatically have the remote setup to the remote where we can 
+push the changes.  
+
+git clone is for the repo to repo collab. when we clone a repo, it will automatically
+create a remote called origin, which points to the original remote repo. it is 
+stored under the refs/remotes/origin. 
+
+
+
+
+> Pre commit hooks (git hooks)
+we can setup the husky precommit hook, the pre_commit file should include all the 
+scripts that has to be executed before the commits happen. 
+ref : https://typicode.github.io/husky/#/
+
+for ignoring the pre-commit we can make use of the 
+git commit -m "message" --no-verify
+this will ignore the precommit changes
+
+
+> .GITIGNORE 
+there are three types of git files 
+1. tracked 
+2. untracked 
+3. ignored
+
+Ignored files are usually build artifacts and machine generated files that can be 
+derived from your repository source or should otherwise not be committed. Some 
+common examples are: log, nodemodules, etc.
+
+>> References 
+there are three type of git references.
+1. tags/annotated tags 
+2. head
+3. branch
+
+HEAD is telling us what branch we are currently on. it usually points to the 
+name of the curent branch, but it can point to the commit too, case of the detached 
+scenario. HEAD moves when we checkout to the new branch, or make a commit in the 
+current branch. 
+
+>> Detached HEAD and dangling commits 
+we will see the detached head and dangling commits, when we checkout to other commit
+rather than the branch. 
+
+we can checkout to some particular commit with the command 
+git checkout commithash == after doing this we will be in that particular 
+commit state, here we are informed that we are in detached head state. 
+
+THE HEAD IS DETACHED WHENEVER IT IS POINTING TO THE COMMIT RATHER THAN THE BRANCH 
+TAG. WE CAN EVEN MAKE THE COMMITS AFTER THEM, BUT SINCE THEY ARE NOT POINTING TO 
+ANY BRANCH THEN THEY WILL BE CONSIDERED AS DETACHED COMMITS. FOR COMING 
+OUT OF THE DETACHED HEAD STATE WE JUST HAVE TO CHECKOUT TO THE BRANCH WE WERE IN, 
+OR WE CAN ALSO CREATE THE BRANCH FROM THAT COMMITS WE DID. LATEST HEAD ALWAYS 
+POINT TO THE BRANCH AND BRANCH POINT TO THE LATEST COMMIT.
+
+In the case where someone adds us as the collaborator, then we can directly 
+clone and we can push to any branch, but if we want to contri in someone else's 
+project then we have to make the fork, it will create the clone in my remote 
+and then I can directly push the changes, but in the case of the direct 
+clone first I will have to make the fork for that. 
+
+TIPS 
+git log --graph --oneline == good command for seeing the graphical history. 
+
+>> git remote 
+remotes are just the connection with the remote repos. 
